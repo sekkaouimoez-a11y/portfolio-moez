@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Portfolio Moez">
+<meta property="og:description" content="Scripting Luau, systèmes de jeu, IA, combat, VFX, interfaces et level design.">
+<meta property="og:image" content="img/abysse-hall.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Cpath d=%22M8 0l8 8-8 8-8-8z%22 fill=%22%23f5c518%22/%3E%3C/svg%3E">
+<title>Portfolio Moez</title>
+<meta name="description" content="Portfolio de Moez, développeur Roblox : scripting Luau, systèmes de jeu, IA, combat, VFX, interfaces et level design.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout : une plongée. Rail de profondeur fixe à gauche, sections empilées de la surface (0 m) au fond (3 214 m). */
+:root {
+  --abyss: #07131b;      /* fond : eau profonde */
+  --hull: #0e2130;       /* surfaces : coque */
+  --hull-2: #132b3d;
+  --rivet: #23415a;      /* filets, bordures */
+  --steel: #93a9b5;      /* texte secondaire */
+  --foam: #e8f0f2;       /* texte principal */
+  --hazard: #f5c518;     /* jaune sécurité du sous-marin AB-07 */
+  --hazard-ink: #1a1400; /* texte sur jaune */
+  --sonar: #4fd8c4;      /* lectures sonar, liens */
+  --alert: #ef5a4f;      /* alerte rouge */
+  --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
+  --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
+  --step-2: clamp(1.6rem, 1.35rem + 1.2vw, 2.3rem);
+  --step-3: clamp(2.4rem, 1.8rem + 3vw, 4.2rem);
+  --step-4: clamp(3.6rem, 2.4rem + 6.5vw, 8rem);
+  --rail: 0px;
+  color-scheme: dark;
+}
+@media (min-width: 1100px) { :root { --rail: 92px; } }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--abyss);
+  color: var(--foam);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+:root:not([data-lang="en"]) [lang="en"] { display: none !important; }
+:root[data-lang="en"] [lang="fr"] { display: none !important; }
+
+a { color: var(--sonar); text-underline-offset: 3px; }
+a:hover { color: var(--foam); }
+:focus-visible { outline: 2px solid var(--hazard); outline-offset: 3px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 0.95; letter-spacing: 0.01em; text-wrap: balance; margin: 0; text-transform: uppercase; }
+p { margin: 0; }
+img, video { max-width: 100%; display: block; }
+.mono { font-family: var(--font-mono); }
+
+.wrap {
+  width: 100%;
+  max-width: calc(1180px + var(--rail));
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 1100px) { .wrap { padding-left: calc(var(--rail) + 40px); padding-right: 40px; } }
+
+/* ---------- barre du haut ---------- */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--abyss) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rivet);
+}
+.top .wrap { display: flex; align-items: center; gap: 20px; padding-block: 12px; }
+.brand { font-family: var(--font-display); font-weight: 900; font-size: 1.5rem; letter-spacing: 0.04em; color: var(--foam); text-decoration: none; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+.brand i { width: 14px; height: 14px; background: var(--hazard); display: inline-block; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.nav { display: flex; gap: 22px; margin-left: auto; }
+.nav a { color: var(--steel); text-decoration: none; font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+.nav a:hover { color: var(--foam); }
+.lang { display: inline-flex; border: 1px solid var(--rivet); border-radius: 999px; overflow: hidden; flex-shrink: 0; }
+.lang button { appearance: none; border: 0; background: transparent; color: var(--steel); font: 600 0.78rem var(--font-mono); padding: 6px 11px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--hazard); color: var(--hazard-ink); }
+@media (max-width: 760px) { .nav { display: none; } .lang { margin-left: auto; } }
+
+/* ---------- rail de profondeur ---------- */
+.rail {
+  position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail); z-index: 10;
+  display: none; border-right: 1px solid var(--rivet);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--hull) 60%, var(--abyss)) 0%, var(--abyss) 100%);
+}
+@media (min-width: 1100px) { .rail { display: block; } }
+.rail-track { position: absolute; left: 22px; top: 96px; bottom: 84px; width: 2px; background: repeating-linear-gradient(180deg, var(--rivet) 0 1px, transparent 1px 14px); }
+.rail-tick { position: absolute; left: -2px; display: flex; align-items: center; gap: 8px; transform: translateY(-50%); background: none; border: 0; padding: 0; cursor: pointer; color: var(--steel); text-align: left; }
+.rail-tick::before { content: ""; width: 22px; height: 2px; background: var(--steel); }
+.rail-tick span { font: 600 0.62rem/1.15 var(--font-mono); letter-spacing: 0.06em; white-space: nowrap; }
+.rail-tick.on { color: var(--hazard); }
+.rail-tick.on::before { background: var(--hazard); }
+.rail-probe { position: absolute; left: -8px; width: 18px; height: 18px; border: 2px solid var(--hazard); border-radius: 50%; transform: translateY(-50%); box-shadow: 0 0 0 6px color-mix(in srgb, var(--hazard) 18%, transparent); transition: top 0.12s linear; }
+.rail-readout { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: 600 0.7rem var(--font-mono); color: var(--hazard); }
+.rail-readout small { display: block; color: var(--steel); font-size: 0.58rem; letter-spacing: 0.1em; }
+
+/* ---------- héros ---------- */
+.hero { position: relative; padding-block: clamp(48px, 8vw, 110px) clamp(40px, 6vw, 80px); overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 78% 30%, color-mix(in srgb, var(--sonar) 10%, transparent), transparent 70%),
+    radial-gradient(40% 60% at 10% 100%, color-mix(in srgb, var(--hazard) 6%, transparent), transparent 70%);
+}
+.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+@media (max-width: 900px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
+.eyebrow { font: 600 var(--step--1) var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--sonar); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sonar); box-shadow: 0 0 0 0 var(--sonar); animation: ping 2.4s infinite; }
+@keyframes ping { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--sonar) 60%, transparent); } 80%,100% { box-shadow: 0 0 0 12px transparent; } }
+@media (prefers-reduced-motion: reduce) { .eyebrow .dot { animation: none; } }
+.hero h1 { font-size: var(--step-4); font-weight: 900; margin-top: 18px; letter-spacing: 0.005em; }
+.hero h1 em { font-style: normal; color: var(--hazard); display: block; font-size: 0.42em; letter-spacing: 0.03em; margin-top: 10px; }
+.lead { font-size: var(--step-1); color: var(--foam); max-width: 34ch; margin-top: 22px; line-height: 1.45; }
+.sub { color: var(--steel); max-width: 52ch; margin-top: 14px; }
+.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 20px; font: 700 0.95rem var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border-radius: 4px; border: 1px solid transparent; }
+.btn-primary { background: var(--hazard); color: var(--hazard-ink); }
+.btn-primary:hover { color: var(--hazard-ink); filter: brightness(1.08); }
+.btn-ghost { border-color: var(--rivet); color: var(--foam); }
+.btn-ghost:hover { border-color: var(--sonar); color: var(--foam); }
+
+.porthole { position: relative; }
+.porthole-main { position: relative; border-radius: 6px; overflow: hidden; border: 1px solid var(--rivet); aspect-ratio: 16 / 10; max-width: 100%; background: var(--hull); }
+.porthole-main img { width: 100%; height: 100%; object-fit: cover; }
+.porthole-main::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--abyss) 70%, transparent)); pointer-events: none; }
+.porthole-tag { position: absolute; left: 14px; bottom: 12px; z-index: 2; font: 600 0.72rem var(--font-mono); letter-spacing: 0.08em; color: var(--foam); text-transform: uppercase; }
+.porthole-inset { position: absolute; right: -10px; bottom: -34px; width: 46%; border-radius: 6px; overflow: hidden; border: 3px solid var(--abyss); outline: 1px solid var(--rivet); box-shadow: 0 18px 40px rgba(0,0,0,0.5); aspect-ratio: 16 / 10; max-width: 100%; }
+.porthole-inset img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 900px) { .porthole-inset { right: 8px; bottom: -24px; width: 44%; } }
+
+.gauges { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(56px, 7vw, 84px); border-top: 1px solid var(--rivet); border-bottom: 1px solid var(--rivet); }
+.gauge { padding: 18px 18px 18px 0; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.gauge + .gauge { padding-left: 18px; border-left: 1px solid var(--rivet); }
+.gauge b { font: 800 var(--step-2) var(--font-display); color: var(--foam); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.gauge span { color: var(--steel); font-size: var(--step--1); line-height: 1.35; }
+@media (max-width: 720px) {
+  .gauges { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .gauge:nth-child(3) { padding-left: 0; border-left: 0; }
+  .gauge:nth-child(n+3) { border-top: 1px solid var(--rivet); }
+}
+
+/* ---------- bandeau de danger ---------- */
+.hazard-band { height: 10px; background: repeating-linear-gradient(-45deg, var(--hazard) 0 14px, var(--abyss) 14px 28px); opacity: 0.9; }
+
+/* ---------- sections ---------- */
+section.block { padding-block: clamp(64px, 9vw, 120px); border-top: 1px solid var(--rivet); }
+.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: end; margin-bottom: clamp(32px, 5vw, 56px); }
+@media (max-width: 800px) { .sec-head { grid-template-columns: minmax(0, 1fr); } }
+.depth { font: 600 var(--step--1) var(--font-mono); color: var(--hazard); letter-spacing: 0.1em; text-transform: uppercase; }
+.sec-head h2 { font-size: var(--step-3); margin-top: 10px; }
+.sec-head p { color: var(--steel); max-width: 52ch; }
+
+/* compétences */
+.skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--rivet); border: 1px solid var(--rivet); }
+@media (max-width: 980px) { .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .skills { grid-template-columns: minmax(0, 1fr); } }
+.skill { background: var(--abyss); padding: 24px 22px 26px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.skill h3 { font-size: var(--step-1); letter-spacing: 0.03em; display: flex; align-items: baseline; gap: 10px; }
+.skill h3 code { font: 600 0.7rem var(--font-mono); color: var(--sonar); letter-spacing: 0.04em; text-transform: none; }
+.skill p { color: var(--steel); font-size: 0.97rem; }
+.skill ul { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.skill li { font: 500 0.72rem var(--font-mono); color: var(--foam); background: var(--hull); border: 1px solid var(--rivet); padding: 3px 8px; border-radius: 3px; }
+
+.tools { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; color: var(--steel); font-size: var(--step--1); }
+.tools strong { font: 600 var(--step--1) var(--font-mono); color: var(--foam); letter-spacing: 0.08em; text-transform: uppercase; }
+.tools span { font-family: var(--font-mono); }
+.tools span + span::before { content: "/"; color: var(--rivet); margin-right: 18px; }
+
+/* projets */
+.project { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); padding-block: clamp(40px, 6vw, 72px); }
+.project + .project { border-top: 1px dashed var(--rivet); }
+@media (max-width: 960px) { .project { grid-template-columns: minmax(0, 1fr); } }
+.project.flip .media { order: 2; }
+@media (max-width: 960px) { .project.flip .media { order: 0; } }
+.media { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.screen { position: relative; border: 1px solid var(--rivet); border-radius: 6px; overflow: hidden; background: #000; aspect-ratio: 16 / 9; max-width: 100%; }
+.screen img, .screen video { width: 100%; height: 100%; object-fit: cover; }
+.screen.contain img, .screen.contain video { object-fit: contain; }
+.screen figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 14px 10px; font-size: 0.86rem; color: var(--foam); background: linear-gradient(180deg, transparent, rgba(3,10,15,0.85)); }
+.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+.thumbs button { appearance: none; padding: 0; border: 1px solid var(--rivet); border-radius: 4px; overflow: hidden; background: var(--hull); cursor: pointer; aspect-ratio: 16 / 10; max-width: 100%; opacity: 0.62; transition: opacity 0.15s, border-color 0.15s; }
+.thumbs button:hover { opacity: 1; }
+.thumbs button[aria-current="true"] { opacity: 1; border-color: var(--hazard); }
+.thumbs img { width: 100%; height: 100%; object-fit: cover; }
+
+.info { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font: 600 0.7rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border-radius: 3px; border: 1px solid var(--rivet); color: var(--steel); }
+.chip.live { color: var(--hazard-ink); background: var(--hazard); border-color: var(--hazard); }
+.chip.wip { color: var(--sonar); border-color: color-mix(in srgb, var(--sonar) 50%, var(--rivet)); }
+.info h3 { font-size: var(--step-3); }
+.info h3 small { display: block; font-family: var(--font-body); font-weight: 500; font-size: var(--step-0); text-transform: none; color: var(--steel); letter-spacing: 0; margin-top: 10px; line-height: 1.4; }
+.info > p { color: var(--foam); }
+.systems { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.systems li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 10px; color: var(--steel); font-size: 0.97rem; line-height: 1.5; }
+.systems li::before { content: ""; width: 8px; height: 8px; margin-top: 8px; background: var(--hazard); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.systems b { color: var(--foam); font-weight: 600; }
+.readouts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--rivet); border-radius: 4px; background: var(--hull); }
+.readouts div { padding: 12px 14px; min-width: 0; }
+.readouts div + div { border-left: 1px solid var(--rivet); }
+.readouts b { display: block; font: 600 1.15rem var(--font-mono); color: var(--hazard); font-variant-numeric: tabular-nums; }
+.readouts span { font-size: 0.78rem; color: var(--steel); line-height: 1.3; display: block; }
+@media (max-width: 340px) { .readouts { grid-template-columns: minmax(0, 1fr); } .readouts div + div { border-left: 0; border-top: 1px solid var(--rivet); } }
+
+details.code { border: 1px solid var(--rivet); border-radius: 4px; background: #050d13; }
+details.code summary { cursor: pointer; list-style: none; padding: 11px 14px; font: 600 0.78rem var(--font-mono); color: var(--sonar); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+details.code summary::-webkit-details-marker { display: none; }
+details.code summary::after { content: "+"; color: var(--steel); }
+details.code[open] summary::after { content: "−"; }
+details.code summary span { color: var(--steel); font-weight: 400; }
+.code-body { border-top: 1px solid var(--rivet); }
+.code-body p { padding: 12px 14px 0; color: var(--steel); font-size: 0.9rem; }
+pre { margin: 0; padding: 14px; overflow-x: auto; font: 400 0.8rem/1.6 var(--font-mono); color: #cfe0e6; tab-size: 2; }
+.k { color: #f5c518; } .s { color: #8fe3b0; } .c { color: #6c8794; font-style: italic; } .n { color: #f59d6c; } .f { color: #7fd3f0; }
+
+.other { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 12px; }
+@media (max-width: 760px) { .other { grid-template-columns: minmax(0, 1fr); } }
+.card { border: 1px solid var(--rivet); border-radius: 6px; padding: 22px; background: var(--hull); display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.card h4 { margin: 0; font: 800 var(--step-1) var(--font-display); text-transform: uppercase; letter-spacing: 0.03em; }
+.card p { color: var(--steel); font-size: 0.96rem; }
+
+/* méthode */
+.method { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; counter-reset: step; }
+@media (max-width: 900px) { .method { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .method { grid-template-columns: minmax(0, 1fr); } }
+.step { padding: 0 22px 0 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; position: relative; }
+.step::before { counter-increment: step; content: "0" counter(step); font: 900 var(--step-3) var(--font-display); color: transparent; -webkit-text-stroke: 1px var(--rivet); line-height: 1; }
+.step h3 { font-size: var(--step-1); letter-spacing: 0.03em; }
+.step p { color: var(--steel); font-size: 0.96rem; }
+@media (max-width: 900px) { .method { gap: 32px 0; } }
+
+/* contact */
+.contact { background: var(--hull); }
+.contact-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
+@media (max-width: 860px) { .contact-grid { grid-template-columns: minmax(0, 1fr); } }
+.contact h2 { font-size: var(--step-3); margin-top: 10px; }
+.contact-grid > div > p { color: var(--steel); margin-top: 16px; max-width: 46ch; }
+.channels { display: grid; gap: 12px; }
+.channel { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 16px 18px; border: 1px solid var(--rivet); border-radius: 6px; background: var(--abyss); }
+.channel small { display: block; font: 600 0.7rem var(--font-mono); color: var(--steel); letter-spacing: 0.1em; text-transform: uppercase; }
+.channel strong { font: 600 1.05rem var(--font-mono); color: var(--foam); overflow-wrap: anywhere; }
+.channel.todo strong { color: var(--alert); }
+.copy { appearance: none; border: 1px solid var(--rivet); background: transparent; color: var(--foam); font: 600 0.75rem var(--font-mono); padding: 7px 12px; border-radius: 4px; cursor: pointer; }
+.copy:hover { border-color: var(--hazard); color: var(--hazard); }
+.avail { display: flex; align-items: center; gap: 10px; margin-top: 22px; font: 600 0.82rem var(--font-mono); color: var(--sonar); letter-spacing: 0.06em; text-transform: uppercase; }
+
+footer { border-top: 1px solid var(--rivet); }
+footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--steel); font: 400 0.78rem var(--font-mono); }
+</style>
+</head>
+<body>
+
+<nav class="rail" aria-label="Profondeur">
+  <div class="rail-track" id="rail-track"><div class="rail-probe" id="rail-probe"></div></div>
+  <div class="rail-readout"><span id="rail-depth">0 m</span><small lang="fr">PROFONDEUR</small><small lang="en">DEPTH</small></div>
+</nav>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#surface"><i></i>Moez</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#competences"><span lang="fr">Compétences</span><span lang="en">Skills</span></a>
+      <a href="#projets"><span lang="fr">Projets</span><span lang="en">Projects</span></a>
+      <a href="#methode"><span lang="fr">Méthode</span><span lang="en">Process</span></a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Langue / Language">
+      <button type="button" id="lang-fr" data-set-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" id="lang-en" data-set-lang="en" aria-pressed="false">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="surface" data-depth="0" data-label-fr="SURFACE" data-label-en="SURFACE">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow"><span class="dot"></span><span lang="fr">Disponible pour des missions Roblox</span><span lang="en">Available for Roblox commissions</span></p>
+        <h1>Moez<em lang="fr">Développeur Roblox</em><em lang="en">Roblox Developer</em></h1>
+        <p class="lead" lang="fr">Scripting, systèmes, IA, combat, VFX, interfaces et build : je prends en charge toutes les tâches de votre jeu Roblox.</p>
+        <p class="lead" lang="en">Scripting, systems, AI, combat, VFX, UI and building: I take on every kind of task your Roblox game needs.</p>
+        <p class="sub" lang="fr">Je code en Luau des jeux complets : un jeu d'horreur coopératif sur trois places et un tycoon de samouraïs avec combat PvP, tous deux construits de zéro.</p>
+        <p class="sub" lang="en">I write complete games in Luau: a three-place co-op horror game and a samurai tycoon with PvP combat, both built from scratch.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#projets"><span lang="fr">Voir les projets</span><span lang="en">See the projects</span> ↓</a>
+          <a class="btn btn-ghost" href="#contact"><span lang="fr">Me contacter</span><span lang="en">Contact me</span></a>
+        </div>
+      </div>
+      <div class="porthole">
+        <div class="porthole-main">
+          <img src="img/abysse-bassin.jpg" alt="Le sous-marin jaune AB-07 suspendu au-dessus du bassin de la Station Abysse" width="1071" height="593">
+          <span class="porthole-tag">Station Abysse · lobby</span>
+        </div>
+        <div class="porthole-inset">
+          <img src="img/tycoon-temple.jpg" alt="Le Grand Temple du Tycoon Samouraï entouré de cerisiers" width="1399" height="665" loading="lazy">
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="gauges">
+        <div class="gauge"><b>22 000</b><span lang="fr">lignes de Luau écrites</span><span lang="en">lines of Luau written</span></div>
+        <div class="gauge"><b>4</b><span lang="fr">jeux et prototypes</span><span lang="en">games and prototypes</span></div>
+        <div class="gauge"><b>2</b><span lang="fr">places publiées sur Roblox</span><span lang="en">places published on Roblox</span></div>
+        <div class="gauge"><b>100&nbsp;%</b><span lang="fr">des interfaces construites en code</span><span lang="en">of UI built in code</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hazard-band" aria-hidden="true"></div>
+
+  <section class="block" id="competences" data-depth="320" data-label-fr="COMPÉTENCES" data-label-en="SKILLS">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="depth">−320 m</p>
+          <h2 lang="fr">Ce que je fais pour votre jeu</h2>
+          <h2 lang="en">What I can do for your game</h2>
+        </div>
+        <p lang="fr">Du petit correctif au système complet. Chaque compétence ci-dessous est utilisée dans les projets plus bas.</p>
+        <p lang="en">From a quick fix to a full system. Every skill below is used in the projects further down.</p>
+      </div>
+
+      <div class="skills">
+        <article class="skill">
+          <h3><span lang="fr">Scripting &amp; architecture</span><span lang="en">Scripting &amp; architecture</span></h3>
+          <p lang="fr">Code Luau modulaire, séparation client/serveur propre, ModuleScripts partagés et configuration centralisée.</p>
+          <p lang="en">Modular Luau, clean client/server split, shared ModuleScripts and a single config file.</p>
+          <ul><li>Luau</li><li>ModuleScripts</li><li>RemoteEvents</li><li>RemoteFunctions</li><li>Attributes</li></ul>
+        </article>
+        <article class="skill">
+          <h3><span lang="fr">Systèmes de jeu</span><span lang="en">Game systems</span></h3>
+          <p lang="fr">Tycoon, inventaire, quêtes, niveaux, succès, coffres, forge, événements saisonniers, classements.</p>
+          <p lang="en">Tycoons, inventory, quests, levels, achievements, chests, crafting, seasonal events, leaderboards.</p>
+          <ul><li>Tycoon</li><li>Progression</li><li>Économie</li><li>Events</li></ul>
+        </article>
+        <article class="skill">
+          <h3><span lang="fr">Combat &amp; VFX</span><span lang="en">Combat &amp; VFX</span></h3>
+          <p lang="fr">Hitbox côté serveur, combos, garde, parade, esquive, pouvoirs, et effets en Beams, Trails et particules.</p>
+          <p lang="en">Server-side hitboxes, combos, block, parry, dodge, special powers, and effects with Beams, Trails and particles.</p>
+          <ul><li>Hitbox</li><li>ParticleEmitter</li><li>Beam</li><li>Caméra</li></ul>
+        </article>
+        <article class="skill">
+          <h3><span lang="fr">IA de PNJ</span><span lang="en">NPC AI</span></h3>
+          <p lang="fr">Monstres et ennemis avec machine à états, champ de vision par raycast, ouïe, poursuite et fouille.</p>
+          <p lang="en">Monsters and enemies with state machines, raycast line of sight, hearing, chase and search.</p>
+          <ul><li>PathfindingService</li><li>Raycast</li><li>State machine</li></ul>
+        </article>
+        <article class="skill">
+          <h3><span lang="fr">Interfaces (UI/UX)</span><span lang="en">UI / UX</span></h3>
+          <p lang="fr">Menus, boutiques, HUD, écrans de chargement et aperçus 3D, adaptés au PC, au mobile et à la manette.</p>
+          <p lang="en">Menus, shops, HUDs, loading screens and 3D previews for PC, mobile and gamepad.</p>
+          <ul><li>ViewportFrame</li><li>UIScale</li><li>TweenService</li><li>Mobile</li></ul>
+        </article>
+        <article class="skill">
+          <h3><span lang="fr">Multijoueur</span><span lang="en">Multiplayer</span></h3>
+          <p lang="fr">Lobbies, files d'attente par équipe, téléportation de groupe vers des serveurs réservés.</p>
+          <p lang="en">Lobbies, team queues, and group teleports to reserved servers.</p>
+          <ul><li>TeleportService</li><li>Reserved servers</li><li>TeleportData</li></ul>
+        </article>
+        <article class="skill">
+          <h3><span lang="fr">Données &amp; monétisation</span><span lang="en">Data &amp; monetization</span></h3>
+          <p lang="fr">Sauvegardes qui protègent la progression, classements mondiaux, Developer Products et Game Passes.</p>
+          <p lang="en">Saves that protect player progress, global leaderboards, Developer Products and Game Passes.</p>
+          <ul><li>DataStore</li><li>OrderedDataStore</li><li>ProcessReceipt</li></ul>
+        </article>
+        <article class="skill">
+          <h3><span lang="fr">Build &amp; level design</span><span lang="en">Building &amp; level design</span></h3>
+          <p lang="fr">Niveaux entiers générés par script, éclairage, ambiance sonore, terrain et narration par le décor.</p>
+          <p lang="en">Whole levels generated by script, lighting, ambient sound, terrain and environmental storytelling.</p>
+          <ul><li>Terrain</li><li>Lighting</li><li>Streaming</li><li>Horreur</li></ul>
+        </article>
+        <article class="skill">
+          <h3><span lang="fr">Animation &amp; rigging</span><span lang="en">Animation &amp; rigging</span></h3>
+          <p lang="fr">Rigs Motor6D montés en code et animations procédurales : démarche, tentacules, poses de combat.</p>
+          <p lang="en">Motor6D rigs built in code and procedural animation: walk cycles, tentacles, combat poses.</p>
+          <ul><li>Motor6D</li><li>R15 / R6</li><li>Procédural</li></ul>
+        </article>
+      </div>
+
+      <div class="tools">
+        <strong lang="fr">Outils</strong><strong lang="en">Tools</strong>
+        <span>Roblox Studio</span><span>Luau</span><span>Rojo</span><span>Git</span><span>Node.js</span><span>VS Code</span><span>Blender</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="projets" data-depth="1200" data-label-fr="PROJETS" data-label-en="PROJECTS">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="depth">−1 200 m</p>
+          <h2 lang="fr">Projets</h2>
+          <h2 lang="en">Projects</h2>
+        </div>
+        <p lang="fr">Des jeux que j'ai conçus et codés seul. Les captures viennent de Roblox Studio et des tests en jeu.</p>
+        <p lang="en">Games I designed and coded on my own. Screenshots come from Roblox Studio and in-game tests.</p>
+      </div>
+
+      <!-- Projet : jeu d'horreur sous-marin -->
+      <article class="project" id="abysse">
+        <div class="media" data-gallery>
+          <figure class="screen" style="margin:0">
+            <img data-main src="img/abysse-hall.jpg" alt="Le hall de la Station Abysse avec les sas d'équipe" width="1400" height="688">
+            <figcaption data-cap><span lang="fr">Le hall et ses sas d'équipe, où les joueurs forment leur groupe.</span><span lang="en">The hall and its team airlocks, where players form their group.</span></figcaption>
+          </figure>
+          <div class="thumbs">
+            <button type="button" aria-current="true" data-src="img/abysse-hall.jpg" data-fr="Le hall et ses sas d'équipe, où les joueurs forment leur groupe." data-en="The hall and its team airlocks, where players form their group."><img src="img/abysse-hall.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/abysse-sonar.jpg" data-fr="Le poste de contrôle : sonar, état des sas et alerte de coque racontent l'histoire." data-en="The control station: sonar, airlock status and hull warnings tell the story."><img src="img/abysse-sonar.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/abysse-sas-trio.jpg" data-fr="Sas TRIO : compteur de joueurs en direct et porte blindée." data-en="TRIO airlock: live player counter and armored door."><img src="img/abysse-sas-trio.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/abysse-sas-solo.jpg" data-fr="Sas SOLO et couloir des sas DUO et TRIO." data-en="SOLO airlock and the DUO / TRIO corridor."><img src="img/abysse-sas-solo.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/abysse-equipe.jpg" data-fr="L'aile des équipes de 4, avec le graffiti « NE DESCENDEZ PAS »." data-en="The 4-player wing, with the “DON'T GO DOWN” graffiti."><img src="img/abysse-equipe.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/abysse-bassin.jpg" data-fr="Le sous-marin AB-07 suspendu au-dessus du bassin." data-en="The AB-07 submarine hanging over the pool."><img src="img/abysse-bassin.jpg" alt="" loading="lazy"></button>
+          </div>
+        </div>
+        <div class="info">
+          <div class="tags">
+            <span class="chip live"><span lang="fr">Lobby + niveau 1 publiés</span><span lang="en">Lobby + level 1 published</span></span>
+            <span class="chip"><span lang="fr">Horreur coop · 1 à 4 joueurs</span><span lang="en">Co-op horror · 1–4 players</span></span>
+          </div>
+          <h3><span lang="fr">Jeu d'horreur sous-marin</span><span lang="en">Underwater horror game</span>
+            <small lang="fr">Lobby « Station Abysse », niveau 1 dans un sous-marin géant, niveau 2 sur le yacht <i>Leviathan</i>.</small>
+            <small lang="en">“Station Abysse” lobby, level 1 inside a giant submarine, level 2 on the <i>Leviathan</i> yacht.</small>
+          </h3>
+          <p lang="fr">L'équipe se forme dans un sas, part dans son propre serveur, puis fouille le niveau pour trouver clés, badges et code du coffre en se cachant des monstres.</p>
+          <p lang="en">The team forms in an airlock, travels to its own server, then searches the level for keys, badges and a safe code while hiding from monsters.</p>
+          <ul class="systems" lang="fr">
+            <li><span><b>Matchmaking par sas.</b> 8 sas (solo à 4 joueurs), comptes à rebours, puis téléportation du groupe vers un serveur réservé avec ses données d'équipe.</span></li>
+            <li><span><b>IA de monstre.</b> Vue en cône vérifiée par raycast, ouïe, fouille de la dernière position, pathfinding recalculé et réapparition hors de vue.</span></li>
+            <li><span><b>Cachettes animées.</b> Armoires, casiers, lits et échelles avec caméra dans la fente et regard limité.</span></li>
+            <li><span><b>Armes contrôlées par le serveur.</b> Cadence, chargeur, portée et tirs dans la tête vérifiés côté serveur.</span></li>
+            <li><span><b>Mort, spectateur et résurrection en Robux</b> avec un ProcessReceipt correct.</span></li>
+            <li><span><b>Décors générés par script</b> : un sous-marin de 1 926 studs et un yacht de 3 852 studs, reconstruits à l'identique.</span></li>
+            <li><span><b>Tests automatisés en jeu</b> et outil Node.js qui pilote Roblox Studio depuis le terminal.</span></li>
+          </ul>
+          <ul class="systems" lang="en">
+            <li><span><b>Airlock matchmaking.</b> 8 airlocks (solo to 4 players), countdowns, then a group teleport to a reserved server with team data.</span></li>
+            <li><span><b>Monster AI.</b> Raycast-checked vision cone, hearing, last-known-position search, recalculated pathfinding and respawn out of sight.</span></li>
+            <li><span><b>Animated hiding spots.</b> Wardrobes, lockers, beds and ladders with a peek-through camera and clamped look.</span></li>
+            <li><span><b>Server-authoritative guns.</b> Fire rate, magazine, range and headshots validated on the server.</span></li>
+            <li><span><b>Death, spectate and Robux revive</b> with a correct ProcessReceipt.</span></li>
+            <li><span><b>Script-generated maps</b>: a 1,926-stud submarine and a 3,852-stud yacht, rebuilt identically every time.</span></li>
+            <li><span><b>Automated in-game tests</b> and a Node.js tool that drives Roblox Studio from the terminal.</span></li>
+          </ul>
+          <div class="readouts">
+            <div><b>10 900</b><span lang="fr">lignes de Luau</span><span lang="en">lines of Luau</span></div>
+            <div><b>3</b><span lang="fr">places reliées</span><span lang="en">linked places</span></div>
+            <div><b>166</b><span lang="fr">cachettes au niveau 1</span><span lang="en">hiding spots in level 1</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Projet : Tycoon Samouraï -->
+      <article class="project flip" id="tycoon">
+        <div class="media" data-gallery>
+          <figure class="screen" style="margin:0">
+            <img data-main src="img/tycoon-village.jpg" alt="Vue aérienne du village et des bases de clans du Tycoon Samouraï" width="1399" height="665" loading="lazy">
+            <figcaption data-cap><span lang="fr">Les 8 bases de clans autour du Grand Temple.</span><span lang="en">The 8 clan bases around the Great Temple.</span></figcaption>
+          </figure>
+          <div class="thumbs">
+            <button type="button" aria-current="true" data-src="img/tycoon-village.jpg" data-fr="Les 8 bases de clans autour du Grand Temple." data-en="The 8 clan bases around the Great Temple."><img src="img/tycoon-village.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/tycoon-combat-ui.jpg" data-fr="En jeu : HUD, quêtes, clans, compétences et boutons tactiles BLOC et CAPACITÉ." data-en="In game: HUD, quests, clans, skills and the BLOCK and ABILITY touch buttons."><img src="img/tycoon-combat-ui.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/tycoon-arsenal-ui.jpg" data-fr="Barre d'armes, compétences et vie, katana en main." data-en="Weapon bar, skills and health, katana in hand."><img src="img/tycoon-arsenal-ui.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/tycoon-temple.jpg" data-fr="La place centrale : pagode, torii et cerisiers." data-en="The central square: pagoda, torii gates and cherry trees."><img src="img/tycoon-temple.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/tycoon-base-phenix.jpg" data-fr="La base du Clan du Phénix Rouge, avec son pad de prise et ses lasers." data-en="The Red Phoenix Clan base, with its claim pad and lasers."><img src="img/tycoon-base-phenix.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/tycoon-arene-shogun.jpg" data-fr="L'arène du Shogun, une des 3 arènes PvP." data-en="The Shogun arena, one of 3 PvP arenas."><img src="img/tycoon-arene-shogun.jpg" alt="" loading="lazy"></button>
+            <button type="button" data-src="img/tycoon-portails.jpg" data-fr="Les portails vers les arènes, avec le nombre de joueurs en direct." data-en="Portals to the arenas, with live player counts."><img src="img/tycoon-portails.jpg" alt="" loading="lazy"></button>
+          </div>
+        </div>
+        <div class="info">
+          <div class="tags">
+            <span class="chip wip"><span lang="fr">En développement avancé</span><span lang="en">Late development</span></span>
+            <span class="chip"><span lang="fr">Tycoon + combat PvP</span><span lang="en">Tycoon + PvP combat</span></span>
+          </div>
+          <h3>Tycoon Samouraï
+            <small lang="fr">Japon féodal : 8 clans, chacun avec sa maison sur 3 étages, son animal et son pouvoir.</small>
+            <small lang="en">Feudal Japan: 8 clans, each with a 3-floor house, an animal and a special power.</small>
+          </h3>
+          <p lang="fr">Chaque joueur construit la base de son clan pour gagner des Ryō, s'équipe à la forge et se bat au village ou dans les arènes.</p>
+          <p lang="en">Each player builds their clan base to earn Ryō, gears up at the forge and fights in the village or the arenas.</p>
+          <ul class="systems" lang="fr">
+            <li><span><b>Boucle tycoon</b> : 27 achats par base avec prérequis, générateurs, coffre à vider, lasers et gardiens contre les intrus.</span></li>
+            <li><span><b>Combat côté serveur</b> : 29 armes en 6 styles, combo de 3 coups, garde directionnelle, parade, bris de garde et esquive.</span></li>
+            <li><span><b>8 pouvoirs de clan</b> avec VFX texturés, préchargés, et un mode performance pour mobile.</span></li>
+            <li><span><b>Arènes et ennemis</b> : 3 arènes PvP par portails, 4 Oni avec IA et réapparition.</span></li>
+            <li><span><b>Méta-jeu</b> : niveaux 1 à 100, quêtes du jour, roue, forge +10, coffres, renaissance et événement Halloween.</span></li>
+            <li><span><b>Sauvegarde et classements</b> : DataStore avec nouvelles tentatives, 3 classements mondiaux en OrderedDataStore.</span></li>
+            <li><span><b>Interface 100 % en code</b> : 13 menus, boutique à 10 onglets, aperçus 3D, PC, mobile et manette.</span></li>
+          </ul>
+          <ul class="systems" lang="en">
+            <li><span><b>Tycoon loop</b>: 27 purchases per base with prerequisites, generators, a collector, lasers and guardians against intruders.</span></li>
+            <li><span><b>Server-side combat</b>: 29 weapons in 6 styles, 3-hit combos, directional block, parry, guard break and dodge.</span></li>
+            <li><span><b>8 clan powers</b> with preloaded textured VFX and a performance mode for mobile.</span></li>
+            <li><span><b>Arenas and enemies</b>: 3 PvP arenas through portals, 4 Oni with AI and respawn.</span></li>
+            <li><span><b>Meta game</b>: levels 1–100, daily quests, a wheel, +10 forge, chests, rebirth and a Halloween event.</span></li>
+            <li><span><b>Saves and leaderboards</b>: DataStore with retries, 3 global leaderboards on OrderedDataStore.</span></li>
+            <li><span><b>UI fully in code</b>: 13 menus, a 10-tab shop, 3D previews, PC, mobile and gamepad.</span></li>
+          </ul>
+          <div class="readouts">
+            <div><b>9 700</b><span lang="fr">lignes de Luau</span><span lang="en">lines of Luau</span></div>
+            <div><b>29</b><span lang="fr">armes</span><span lang="en">weapons</span></div>
+            <div><b>8</b><span lang="fr">pouvoirs de clan</span><span lang="en">clan powers</span></div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Projet : attaque Pouvoir -->
+      <article class="project" id="pouvoir">
+        <div class="media">
+          <figure class="screen contain" style="margin:0">
+            <video src="img/pouvoir.mp4" poster="img/pouvoir-1.jpg" autoplay muted loop playsinline aria-label="Animation de l'attaque Pouvoir : tour d'anneaux runiques, faisceau et dôme d'énergie"></video>
+            <figcaption><span lang="fr">Extrait de la séquence, tous les effets sont générés en code.</span><span lang="en">Clip of the sequence, every effect is generated in code.</span></figcaption>
+          </figure>
+        </div>
+        <div class="info">
+          <div class="tags">
+            <span class="chip"><span lang="fr">VFX · combat</span><span lang="en">VFX · combat</span></span>
+            <span class="chip"><span lang="fr">Prototype</span><span lang="en">Prototype</span></span>
+          </div>
+          <h3><span lang="fr">Attaque « Pouvoir »</span><span lang="en">“Pouvoir” special attack</span>
+            <small lang="fr">Une attaque spéciale cinématique d'environ 15 secondes, recréée d'après une vidéo de référence.</small>
+            <small lang="en">A cinematic special attack of about 15 seconds, recreated from a reference video.</small>
+          </h3>
+          <ul class="systems" lang="fr">
+            <li><span><b>Le serveur décide</b> : recharge par joueur, position prise côté serveur, dégâts appliqués une seule fois par cible au moment de l'explosion.</span></li>
+            <li><span><b>Les clients affichent</b> : tous les effets tournent en local, ce qui économise le réseau.</span></li>
+            <li><span><b>Cercles magiques dessinés en code</b> : anneaux, hexagramme, chiffres romains et 36 runes, sans aucune image importée.</span></li>
+            <li><span><b>Caméra cinématique</b> scriptée, secousse, passage à la nuit et post-traitement Bloom et ColorCorrection.</span></li>
+            <li><span><b>Nettoyage garanti</b> : la séquence est protégée par pcall et remet toujours l'éclairage et la caméra en place.</span></li>
+          </ul>
+          <ul class="systems" lang="en">
+            <li><span><b>The server decides</b>: per-player cooldown, server-side position, damage applied once per target when the blast lands.</span></li>
+            <li><span><b>Clients render</b>: every effect runs locally, which saves bandwidth.</span></li>
+            <li><span><b>Magic circles drawn in code</b>: rings, hexagram, roman numerals and 36 runes, with no imported images.</span></li>
+            <li><span><b>Scripted cinematic camera</b>, screen shake, a switch to night and Bloom and ColorCorrection post-processing.</span></li>
+            <li><span><b>Guaranteed cleanup</b>: the sequence runs under pcall and always restores lighting and camera.</span></li>
+          </ul>
+          <div class="readouts">
+            <div><b>527</b><span lang="fr">lignes de Luau</span><span lang="en">lines of Luau</span></div>
+            <div><b>6</b><span lang="fr">phases minutées</span><span lang="en">timed phases</span></div>
+            <div><b>0</b><span lang="fr">image importée</span><span lang="en">imported images</span></div>
+          </div>
+        </div>
+      </article>
+
+      <div class="other">
+        <article class="card">
+          <div class="tags"><span class="chip wip"><span lang="fr">En conception</span><span lang="en">In design</span></span></div>
+          <h4>Floor Zero</h4>
+          <p lang="fr">Jeu d'extraction coopératif à 10 étages : monstre qui accélère à chaque étage, butin pondéré par rareté, améliorations permanentes. Projet structuré pour Rojo avec services séparés (données, étages, IA, boutique, monétisation).</p>
+          <p lang="en">A 10-floor co-op extraction game: a monster that speeds up every floor, rarity-weighted loot, permanent upgrades. Built for Rojo with separate services (data, floors, AI, shop, monetization).</p>
+        </article>
+        <article class="card">
+          <div class="tags"><span class="chip"><span lang="fr">Outillage</span><span lang="en">Tooling</span></span></div>
+          <h4 lang="fr">Pilotage de Studio en ligne de commande</h4>
+          <h4 lang="en">Driving Studio from the command line</h4>
+          <p lang="fr">Un client Node.js qui envoie les scripts dans Studio, lance les tests en mode Play et prend des captures, sur plusieurs places à la fois. C'est comme ça que je teste chaque système avant de le livrer.</p>
+          <p lang="en">A Node.js client that pushes scripts into Studio, runs tests in Play mode and takes screenshots across several places. That is how I test each system before delivering it.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="methode" data-depth="2400" data-label-fr="MÉTHODE" data-label-en="PROCESS">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="depth">−2 400 m</p>
+          <h2 lang="fr">Comment je travaille</h2>
+          <h2 lang="en">How I work</h2>
+        </div>
+        <p lang="fr">Une tâche claire, un résultat testé, et un code que votre équipe peut reprendre.</p>
+        <p lang="en">A clear task, a tested result, and code your team can pick up.</p>
+      </div>
+      <div class="method">
+        <div class="step">
+          <h3><span lang="fr">Le brief</span><span lang="en">The brief</span></h3>
+          <p lang="fr">On fixe ensemble ce que la tâche doit faire, sur quelle place, et comment on saura qu'elle est finie.</p>
+          <p lang="en">We agree on what the task must do, in which place, and how we'll know it's done.</p>
+        </div>
+        <div class="step">
+          <h3><span lang="fr">Un premier jet jouable</span><span lang="en">A playable first pass</span></h3>
+          <p lang="fr">Vous voyez vite une version qui marche en jeu, avec une capture ou une vidéo, pour corriger le cap tôt.</p>
+          <p lang="en">You quickly see a version that works in game, with a screenshot or clip, so we can adjust early.</p>
+        </div>
+        <div class="step">
+          <h3><span lang="fr">Testé dans Studio</span><span lang="en">Tested in Studio</span></h3>
+          <p lang="fr">Je teste chaque système en mode Play, avec des scripts de test quand c'est utile, côté serveur comme côté client.</p>
+          <p lang="en">I test every system in Play mode, with test scripts when useful, on both server and client.</p>
+        </div>
+        <div class="step">
+          <h3><span lang="fr">Livraison propre</span><span lang="en">Clean handoff</span></h3>
+          <p lang="fr">Code commenté et rangé en modules, réglages regroupés dans une config, et une courte notice d'utilisation.</p>
+          <p lang="en">Commented code organized in modules, settings grouped in one config, and a short how-to.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block contact" id="contact" data-depth="3214" data-label-fr="CONTACT" data-label-en="CONTACT">
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <p class="depth">−3 214 m</p>
+          <h2 lang="fr">Une tâche pour votre jeu ?</h2>
+          <h2 lang="en">Got a task for your game?</h2>
+          <p lang="fr">Script, système complet, correction de bug, interface ou VFX : écrivez-moi sur Discord avec ce dont vous avez besoin et je vous réponds rapidement.</p>
+          <p lang="en">A script, a full system, a bug fix, UI or VFX: message me on Discord with what you need and I'll get back to you quickly.</p>
+          <p class="avail"><span class="eyebrow" style="gap:0"><span class="dot"></span></span><span lang="fr">Disponible maintenant · français et anglais</span><span lang="en">Available now · French and English</span></p>
+        </div>
+        <div class="channels">
+          <div class="channel">
+            <div><small>Discord</small><strong data-copy-text>moez_21</strong></div>
+            <button type="button" class="copy" id="copy-discord"><span lang="fr">Copier</span><span lang="en">Copy</span></button>
+          </div>
+          <div class="channel">
+            <div><small>Roblox</small><strong data-copy-text>Moez200821</strong></div>
+            <button type="button" class="copy" id="copy-roblox"><span lang="fr">Copier</span><span lang="en">Copy</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Moez</span>
+    <span lang="fr">Captures réalisées dans Roblox Studio</span><span lang="en">Screenshots taken in Roblox Studio</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+
+  /* ---------- langue ---------- */
+  function setLang(l) {
+    root.setAttribute('data-lang', l);
+    root.setAttribute('lang', l);
+    document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === l));
+    });
+    document.querySelectorAll('[data-gallery]').forEach(syncCaption);
+    try { localStorage.setItem('lang', l); } catch (e) {}
+    placeTicks();
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('lang'); } catch (e) {}
+  var initial = saved || ((navigator.language || 'fr').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en');
+  document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+    b.addEventListener('click', function () { setLang(b.getAttribute('data-set-lang')); });
+  });
+
+  /* ---------- galeries ---------- */
+  function syncCaption(g) {
+    var cur = g.querySelector('.thumbs [aria-current="true"]');
+    var cap = g.querySelector('[data-cap]');
+    if (!cur || !cap) return;
+    var l = root.getAttribute('data-lang') === 'en' ? 'en' : 'fr';
+    cap.textContent = cur.getAttribute('data-' + l);
+  }
+  document.querySelectorAll('[data-gallery]').forEach(function (g) {
+    var main = g.querySelector('[data-main]');
+    g.querySelectorAll('.thumbs button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        g.querySelectorAll('.thumbs button').forEach(function (x) { x.setAttribute('aria-current', 'false'); });
+        b.setAttribute('aria-current', 'true');
+        main.src = b.getAttribute('data-src');
+        syncCaption(g);
+      });
+    });
+  });
+
+
+  /* ---------- copier ---------- */
+  document.querySelectorAll('.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var t = btn.parentElement.querySelector('[data-copy-text]');
+      var text = t ? t.textContent.trim() : '';
+      function done() { var old = btn.innerHTML; btn.textContent = '✓'; setTimeout(function () { btn.innerHTML = old; }, 1400); }
+      function fallback() { var r = document.createRange(); r.selectNodeContents(t); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
+      else fallback();
+    });
+  });
+
+  /* ---------- rail de profondeur ---------- */
+  var track = document.getElementById('rail-track');
+  var probe = document.getElementById('rail-probe');
+  var readout = document.getElementById('rail-depth');
+  var sections = Array.prototype.slice.call(document.querySelectorAll('[data-depth]'));
+  var MAX = 3214;
+  var ticks = [];
+  function placeTicks() {
+    ticks.forEach(function (t) { t.remove(); });
+    ticks = [];
+    var l = root.getAttribute('data-lang') === 'en' ? 'en' : 'fr';
+    sections.forEach(function (s) {
+      var d = +s.getAttribute('data-depth');
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'rail-tick';
+      b.style.top = (d / MAX * 100) + '%';
+      b.innerHTML = '<span>' + (d ? '−' + d.toLocaleString('fr-FR') : '0') + ' m<br>' + s.getAttribute('data-label-' + l) + '</span>';
+      b.addEventListener('click', function () { s.scrollIntoView(); });
+      track.appendChild(b);
+      ticks.push(b);
+    });
+    onScroll();
+  }
+  function depthAt(y) {
+    // interpole la profondeur entre les sections selon la position de lecture
+    var probeY = y + window.innerHeight * 0.35;
+    var tops = sections.map(function (s) { return s.getBoundingClientRect().top + window.scrollY; });
+    for (var i = sections.length - 1; i >= 0; i--) {
+      if (probeY >= tops[i]) {
+        var d0 = +sections[i].getAttribute('data-depth');
+        if (i === sections.length - 1) return { d: d0, i: i };
+        var d1 = +sections[i + 1].getAttribute('data-depth');
+        var f = (probeY - tops[i]) / Math.max(1, tops[i + 1] - tops[i]);
+        return { d: d0 + (d1 - d0) * Math.min(1, f), i: i };
+      }
+    }
+    return { d: 0, i: 0 };
+  }
+  var raf = 0;
+  function onScroll() {
+    if (raf) return;
+    raf = requestAnimationFrame(function () {
+      raf = 0;
+      var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      var r = atBottom ? { d: MAX, i: sections.length - 1 } : depthAt(window.scrollY);
+      probe.style.top = (r.d / MAX * 100) + '%';
+      readout.textContent = (r.d < 1 ? '0' : '−' + Math.round(r.d).toLocaleString('fr-FR')) + ' m';
+      ticks.forEach(function (t, i) { t.classList.toggle('on', i === r.i); });
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+
+  setLang(initial);
+})();
+</script>
+
+</body>
+</html>
