@@ -197,13 +197,6 @@ section { padding-block: clamp(56px, 8vw, 110px); }
 @keyframes boot { 0% { opacity: 0; } 25%, 70% { opacity: 1; } 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .boot::after { animation: none; } .sel::after { transition: none; } }
 
-.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: clamp(32px, 4vw, 52px) 0 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); overflow: hidden; }
-@media (min-width: 760px) { .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-.stat { padding: 18px 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; }
-.stat dt { font-family: var(--font-display); font-weight: 600; font-size: var(--s-2); line-height: 1.1; letter-spacing: -.02em; }
-.stat dd { margin: 4px 0 0; color: var(--muted); font-size: .92rem; line-height: 1.35; }
-@media (min-width: 760px) { .stat { border-bottom: 0; } .stat:last-child { border-right: 0; } }
-@media (max-width: 759.98px) { .stat:nth-child(2n) { border-right: 0; } .stat:nth-last-child(-n+2) { border-bottom: 0; } }
 
 /* ---------- Projets ---------- */
 .projects { display: grid; gap: clamp(64px, 9vw, 120px); }
@@ -420,12 +413,6 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
         </div>
       </div>
 
-      <dl class="stats">
-        <div class="stat"><dt>76 000+</dt><dd><span lang="fr">lignes de Luau écrites</span><span lang="en">lines of Luau written</span></dd></div>
-        <div class="stat"><dt>6</dt><dd><span lang="fr">jeux et prototypes</span><span lang="en">games and prototypes</span></dd></div>
-        <div class="stat"><dt>100 %</dt><dd><span lang="fr">des interfaces construites en code</span><span lang="en">of UI built in code</span></dd></div>
-        <div class="stat"><dt>2</dt><dd><span lang="fr">langues dans mes jeux : français et anglais</span><span lang="en">languages in my games: French and English</span></dd></div>
-      </dl>
     </div>
   </section>
 
