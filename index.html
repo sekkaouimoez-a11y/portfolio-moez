@@ -3,717 +3,916 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta property="og:title" content="Portfolio Moez">
-<meta property="og:description" content="Scripting Luau, systèmes de jeu, IA, combat, VFX, interfaces et level design.">
-<meta property="og:image" content="img/hadal-vignette.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Cpath d=%22M8 0l8 8-8 8-8-8z%22 fill=%22%23f5c518%22/%3E%3C/svg%3E">
 <title>Portfolio Moez</title>
-<meta name="description" content="Portfolio de Moez, développeur Roblox : scripting Luau, systèmes de jeu, IA, combat, VFX, interfaces et level design.">
+<meta name="description" content="Moez, développeur Roblox : scripting Luau, systèmes de jeu, combat, VFX, IA, interfaces, multijoueur et level design. Vidéos tournées dans Roblox Studio.">
+<meta property="og:title" content="Portfolio Moez · Développeur Roblox">
+<meta property="og:description" content="Scripting Luau, systèmes, combat, VFX, interfaces et build : quatre jeux filmés dans Roblox Studio.">
+<meta property="og:image" content="https://sekkaouimoez-a11y.github.io/portfolio-moez/img/og.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#121419">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Crect x=%222%22 y=%222%22 width=%2212%22 height=%2212%22 rx=%221.5%22 fill=%22%2300a2ff%22/%3E%3Crect x=%225.5%22 y=%225.5%22 width=%225%22 height=%225%22 fill=%22%23121419%22/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800;900&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="preload" as="image" href="img/v/reel.jpg">
 <style>
-/* Layout : une plongée. Rail de profondeur fixe à gauche, sections empilées de la surface (0 m) au fond (3 214 m). */
+/* Idée : la page emprunte la grammaire de Roblox Studio.
+   Explorateur = navigation, viewport = bande démo, panneau Propriétés = fiche de chaque jeu,
+   cadre de sélection bleu au survol, fenêtre Sortie = méthode de travail.
+   Chaque jeu a sa couleur, reprise dans la frise de la bande démo et dans le tableau des compétences. */
 :root {
-  --abyss: #07131b;      /* fond : eau profonde */
-  --hull: #0e2130;       /* surfaces : coque */
-  --hull-2: #132b3d;
-  --rivet: #23415a;      /* filets, bordures */
-  --steel: #93a9b5;      /* texte secondaire */
-  --foam: #e8f0f2;       /* texte principal */
-  --hazard: #f5c518;     /* jaune sécurité du sous-marin AB-07 */
-  --hazard-ink: #1a1400; /* texte sur jaune */
-  --sonar: #4fd8c4;      /* lectures sonar, liens */
-  --alert: #ef5a4f;      /* alerte rouge */
-  --font-display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
-  --font-body: "Barlow", "Segoe UI", system-ui, sans-serif;
+  --ink: #121419;        /* fond, graphite de Studio */
+  --panel: #191c23;      /* panneaux */
+  --panel-2: #20242d;    /* barres d'outils, en-têtes */
+  --line: #2b303b;       /* séparateurs */
+  --line-2: #3a4150;
+  --text: #edf0f5;
+  --muted: #a2aab8;
+  --dim: #6c7484;
+  --select: #00a2ff;     /* bleu de sélection de Studio */
+  --select-soft: rgba(0, 162, 255, .16);
+  --c-pack: #ffc83d;     /* or des cartes rares */
+  --c-tread: #5ee3ff;    /* néon des tapis */
+  --c-tycoon: #ff6b6b;   /* laque rouge des clans */
+  --c-meteor: #b59bff;   /* violet cosmique */
+  --c-power: #ffa24c;    /* cercles de feu du prototype */
+  --ok: #79e08a;
+  --font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
-  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
-  --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
-  --step-2: clamp(1.6rem, 1.35rem + 1.2vw, 2.3rem);
-  --step-3: clamp(2.4rem, 1.8rem + 3vw, 4.2rem);
-  --step-4: clamp(3.6rem, 2.4rem + 6.5vw, 8rem);
-  --rail: 0px;
+  --s--1: clamp(.82rem, .8rem + .1vw, .88rem);
+  --s-0: clamp(1rem, .97rem + .15vw, 1.08rem);
+  --s-1: clamp(1.15rem, 1.08rem + .35vw, 1.35rem);
+  --s-2: clamp(1.45rem, 1.25rem + .9vw, 2rem);
+  --s-3: clamp(1.9rem, 1.5rem + 2vw, 3.1rem);
+  --s-4: clamp(3.4rem, 2rem + 7vw, 8.2rem);
+  --explorer: 0px;
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
   color-scheme: dark;
 }
-@media (min-width: 1100px) { :root { --rail: 92px; } }
+@media (min-width: 1100px) { :root { --explorer: 252px; } }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; -webkit-text-size-adjust: 100%; }
+@media (min-width: 1100px) { html { scroll-padding-top: 24px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   margin: 0;
-  background: var(--abyss);
-  color: var(--foam);
+  background: var(--ink);
+  color: var(--text);
   font-family: var(--font-body);
-  font-size: var(--step-0);
+  font-size: var(--s-0);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
 :root:not([data-lang="en"]) [lang="en"] { display: none !important; }
 :root[data-lang="en"] [lang="fr"] { display: none !important; }
-
-a { color: var(--sonar); text-underline-offset: 3px; }
-a:hover { color: var(--foam); }
-:focus-visible { outline: 2px solid var(--hazard); outline-offset: 3px; border-radius: 2px; }
-h1, h2, h3 { font-family: var(--font-display); font-weight: 800; line-height: 0.95; letter-spacing: 0.01em; text-wrap: balance; margin: 0; text-transform: uppercase; }
-p { margin: 0; }
 img, video { max-width: 100%; display: block; }
-.mono { font-family: var(--font-mono); }
+a { color: var(--select); text-underline-offset: 3px; }
+a:hover { color: var(--text); }
+:focus-visible { outline: 2px solid var(--select); outline-offset: 3px; border-radius: 3px; }
+button { font: inherit; color: inherit; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.skip { position: absolute; left: -999px; top: 8px; z-index: 50; background: var(--select); color: #001018; padding: 8px 14px; border-radius: 6px; font-weight: 700; }
+.skip:focus { left: 12px; }
 
-.wrap {
-  width: 100%;
-  max-width: calc(1180px + var(--rail));
-  margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
+/* ---------- Explorateur (navigation) ---------- */
+.explorer {
+  position: fixed; inset: 0 auto 0 0; width: var(--explorer); z-index: 30;
+  background: var(--panel); border-right: 1px solid var(--line);
+  display: flex; flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px);
 }
-@media (min-width: 1100px) { .wrap { padding-left: calc(var(--rail) + 40px); padding-right: 40px; } }
-
-/* ---------- barre du haut ---------- */
-.top {
-  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
-  background: color-mix(in srgb, var(--abyss) 88%, transparent);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--rivet);
+.pane-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  height: 40px; padding: 0 12px 0 14px; background: var(--panel-2); border-bottom: 1px solid var(--line);
+  font-size: .86rem; font-weight: 600; color: var(--muted);
 }
-.top .wrap { display: flex; align-items: center; gap: 20px; padding-block: 12px; }
-.brand { font-family: var(--font-display); font-weight: 900; font-size: 1.5rem; letter-spacing: 0.04em; color: var(--foam); text-decoration: none; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
-.brand i { width: 14px; height: 14px; background: var(--hazard); display: inline-block; clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
-.nav { display: flex; gap: 22px; margin-left: auto; }
-.nav a { color: var(--steel); text-decoration: none; font-size: var(--step--1); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
-.nav a:hover { color: var(--foam); }
-.lang { display: inline-flex; border: 1px solid var(--rivet); border-radius: 999px; overflow: hidden; flex-shrink: 0; }
-.lang button { appearance: none; border: 0; background: transparent; color: var(--steel); font: 600 0.78rem var(--font-mono); padding: 6px 11px; cursor: pointer; }
-.lang button[aria-pressed="true"] { background: var(--hazard); color: var(--hazard-ink); }
-@media (max-width: 760px) { .nav { display: none; } .lang { margin-left: auto; } }
-
-/* ---------- rail de profondeur ---------- */
-.rail {
-  position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail); z-index: 10;
-  display: none; border-right: 1px solid var(--rivet);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--hull) 60%, var(--abyss)) 0%, var(--abyss) 100%);
+.tree { list-style: none; margin: 0; padding: 8px 0; font-size: .93rem; overflow-y: auto; flex: 1; }
+.tree ul { list-style: none; margin: 0; padding: 0; }
+.tree a {
+  display: flex; align-items: center; gap: 8px; min-height: 30px; padding: 3px 12px 3px calc(12px + var(--lvl, 0) * 18px);
+  color: var(--text); text-decoration: none; border-left: 2px solid transparent;
 }
-@media (min-width: 1100px) { .rail { display: block; } }
-.rail-track { position: absolute; left: 22px; top: 96px; bottom: 84px; width: 2px; background: repeating-linear-gradient(180deg, var(--rivet) 0 1px, transparent 1px 14px); }
-.rail-tick { position: absolute; left: -2px; display: flex; align-items: center; gap: 8px; transform: translateY(-50%); background: none; border: 0; padding: 0; cursor: pointer; color: var(--steel); text-align: left; }
-.rail-tick::before { content: ""; width: 22px; height: 2px; background: var(--steel); }
-.rail-tick span { font: 600 0.62rem/1.15 var(--font-mono); letter-spacing: 0.06em; white-space: nowrap; }
-.rail-tick.on { color: var(--hazard); }
-.rail-tick.on::before { background: var(--hazard); }
-.rail-probe { position: absolute; left: -8px; width: 18px; height: 18px; border: 2px solid var(--hazard); border-radius: 50%; transform: translateY(-50%); box-shadow: 0 0 0 6px color-mix(in srgb, var(--hazard) 18%, transparent); transition: top 0.12s linear; }
-.rail-readout { position: absolute; left: 0; right: 0; bottom: 12px; text-align: center; font: 600 0.7rem var(--font-mono); color: var(--hazard); }
-.rail-readout small { display: block; color: var(--steel); font-size: 0.58rem; letter-spacing: 0.1em; }
+.tree a:hover { background: rgba(255,255,255,.04); }
+.tree a[aria-current="true"] { background: var(--select-soft); border-left-color: var(--select); }
+.tree .twisty { width: 10px; color: var(--dim); font-size: .7rem; flex: none; }
+.tree svg { width: 16px; height: 16px; flex: none; }
+.tree .ico-folder { color: #e8c26a; }
+.tree .ico-part { color: var(--part, var(--muted)); }
+.tree small { color: var(--dim); font-size: .78rem; margin-left: auto; }
+.explorer-foot { border-top: 1px solid var(--line); padding: 14px; display: grid; gap: 10px; padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px)); }
+.avail { display: flex; align-items: center; gap: 8px; font-size: .88rem; color: var(--muted); }
+.dot-live { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(121,224,138,.18); flex: none; }
 
-/* ---------- héros ---------- */
-.hero { position: relative; padding-block: clamp(48px, 8vw, 110px) clamp(40px, 6vw, 80px); overflow: hidden; }
-.hero::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
+.lang { display: inline-flex; border: 1px solid var(--line-2); border-radius: 6px; overflow: hidden; }
+.lang button { background: none; border: 0; padding: 3px 9px; font-size: .78rem; font-weight: 700; color: var(--muted); cursor: pointer; }
+.lang button[aria-pressed="true"] { background: var(--select); color: #00121d; }
+
+.topbar { display: none; }
+@media (max-width: 1099.98px) {
+  .explorer { width: min(300px, 86vw); transform: translateX(-102%); transition: transform .22s ease; box-shadow: 0 0 0 100vmax rgba(0,0,0,0); }
+  .explorer.open { transform: none; box-shadow: 0 0 0 100vmax rgba(5,6,9,.6); }
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    position: sticky; top: 0; z-index: 20; height: calc(56px + env(safe-area-inset-top, 0px));
+    padding: env(safe-area-inset-top, 0px) var(--gutter-r) 0 var(--gutter);
+    background: rgba(18,20,25,.92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; }
+  .menu-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 8px; padding: 7px 12px; font-size: .9rem; font-weight: 600; cursor: pointer; }
+  .topbar-right { display: flex; align-items: center; gap: 10px; }
+}
+@media (prefers-reduced-motion: reduce) { .explorer { transition: none; } }
+
+/* ---------- Mise en page ---------- */
+main { margin-left: var(--explorer); }
+.wrap { width: 100%; max-width: 1240px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter-r); }
+@media (min-width: 700px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+section { padding-block: clamp(56px, 8vw, 110px); }
+.sec-head { display: grid; gap: 14px; margin-bottom: clamp(28px, 4vw, 48px); max-width: 68ch; }
+.sec-head h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--s-3); line-height: 1.05; letter-spacing: -.02em; }
+.sec-head p { color: var(--muted); font-size: var(--s-1); line-height: 1.5; }
+
+/* ---------- Accueil ---------- */
+.hero { padding-top: clamp(28px, 4vw, 56px); padding-bottom: clamp(40px, 5vw, 64px); }
+.hero-grid { display: grid; gap: clamp(24px, 3vw, 44px); align-items: start; }
+@media (min-width: 980px) { .hero-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+.hero-copy { display: grid; gap: 18px; align-content: start; min-width: 0; padding-top: 6px; }
+.hero h1 { font-family: var(--font-display); font-weight: 800; font-size: var(--s-4); line-height: .9; letter-spacing: -.045em; }
+.role { font-family: var(--font-display); font-weight: 500; font-size: var(--s-1); color: var(--muted); letter-spacing: -.01em; }
+.lede { font-size: var(--s-1); line-height: 1.5; max-width: 34ch; }
+.note { color: var(--muted); font-size: .95rem; max-width: 42ch; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 18px; border-radius: 10px;
+  font-weight: 700; text-decoration: none; border: 1px solid var(--line-2); color: var(--text); background: var(--panel-2); cursor: pointer;
+}
+.btn:hover { border-color: var(--select); color: var(--text); }
+.btn.primary { background: var(--select); border-color: var(--select); color: #00121d; }
+.btn.primary:hover { background: #33b5ff; color: #00121d; }
+.btn svg { width: 18px; height: 18px; flex: none; }
+
+/* viewport de la bande démo */
+.viewport { position: relative; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #000; min-width: 0; }
+.vp-bar { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 8px 0 0; background: var(--panel-2); border-bottom: 1px solid var(--line); font-size: .86rem; }
+.vp-tab { display: flex; align-items: center; gap: 8px; height: 100%; padding: 0 14px; background: var(--ink); border-right: 1px solid var(--line); color: var(--text); font-weight: 600; white-space: nowrap; }
+.vp-tab svg { width: 14px; height: 14px; color: var(--select); }
+.vp-now { flex: 1; min-width: 0; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vp-now a { color: var(--text); font-weight: 600; text-decoration: none; }
+.vp-now a:hover { color: var(--select); }
+.vp-now i { font-style: normal; display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin: 0 6px 0 2px; vertical-align: 0; background: var(--g, var(--select)); }
+.icon-btn { display: inline-grid; place-items: center; width: 32px; height: 28px; border-radius: 6px; border: 1px solid var(--line-2); background: var(--panel); cursor: pointer; flex: none; }
+.icon-btn:hover { border-color: var(--select); }
+.icon-btn svg { width: 14px; height: 14px; }
+.screen { position: relative; aspect-ratio: 16 / 9; background: #05070a center / cover no-repeat; }
+.screen video { width: 100%; height: 100%; object-fit: cover; }
+.timeline { display: flex; gap: 2px; padding: 10px; background: var(--panel); border-top: 1px solid var(--line); }
+.timeline button { position: relative; flex: var(--w) 1 0; height: 10px; padding: 0; border: 0; border-radius: 2px; background: var(--g); opacity: .35; cursor: pointer; overflow: hidden; }
+.timeline button:hover, .timeline button.on { opacity: 1; }
+.timeline button span { position: absolute; inset: 0 auto 0 0; width: var(--p, 0%); background: rgba(255,255,255,.55); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 0 10px 12px; background: var(--panel); font-size: .84rem; color: var(--muted); }
+.legend button { display: inline-flex; align-items: center; gap: 7px; background: none; border: 0; padding: 2px 0; color: inherit; cursor: pointer; }
+.legend button:hover { color: var(--text); }
+.legend i { width: 9px; height: 9px; border-radius: 2px; background: var(--g); }
+
+/* cadre de sélection façon Studio : contour bleu et poignées aux coins */
+.sel { position: relative; }
+.sel::after {
+  content: ""; position: absolute; inset: -5px; pointer-events: none; border: 1.5px solid var(--select); border-radius: 3px; opacity: 0; transition: opacity .15s;
   background:
-    radial-gradient(60% 50% at 78% 30%, color-mix(in srgb, var(--sonar) 10%, transparent), transparent 70%),
-    radial-gradient(40% 60% at 10% 100%, color-mix(in srgb, var(--hazard) 6%, transparent), transparent 70%);
+    linear-gradient(var(--select), var(--select)) left top / 8px 8px no-repeat,
+    linear-gradient(var(--select), var(--select)) right top / 8px 8px no-repeat,
+    linear-gradient(var(--select), var(--select)) left bottom / 8px 8px no-repeat,
+    linear-gradient(var(--select), var(--select)) right bottom / 8px 8px no-repeat;
 }
-.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
-@media (max-width: 900px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
-.eyebrow { font: 600 var(--step--1) var(--font-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--sonar); display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.eyebrow .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sonar); box-shadow: 0 0 0 0 var(--sonar); animation: ping 2.4s infinite; }
-@keyframes ping { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--sonar) 60%, transparent); } 80%,100% { box-shadow: 0 0 0 12px transparent; } }
-@media (prefers-reduced-motion: reduce) { .eyebrow .dot { animation: none; } }
-.hero h1 { font-size: var(--step-4); font-weight: 900; margin-top: 18px; letter-spacing: 0.005em; }
-.hero h1 em { font-style: normal; color: var(--hazard); display: block; font-size: 0.42em; letter-spacing: 0.03em; margin-top: 10px; }
-.lead { font-size: var(--step-1); color: var(--foam); max-width: 34ch; margin-top: 22px; line-height: 1.45; }
-.sub { color: var(--steel); max-width: 52ch; margin-top: 14px; }
-.cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-.btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 20px; font: 700 0.95rem var(--font-body); letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; border-radius: 4px; border: 1px solid transparent; }
-.btn-primary { background: var(--hazard); color: var(--hazard-ink); }
-.btn-primary:hover { color: var(--hazard-ink); filter: brightness(1.08); }
-.btn-ghost { border-color: var(--rivet); color: var(--foam); }
-.btn-ghost:hover { border-color: var(--sonar); color: var(--foam); }
+.sel:hover::after, .sel:focus-within::after { opacity: 1; }
+.viewport.sel::after { inset: 0; border-radius: 12px; }
+.boot::after { animation: boot 1.6s ease .5s 1 both; }
+@keyframes boot { 0% { opacity: 0; } 25%, 70% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .boot::after { animation: none; } .sel::after { transition: none; } }
 
-.porthole { position: relative; }
-.porthole-main { position: relative; border-radius: 6px; overflow: hidden; border: 1px solid var(--rivet); aspect-ratio: 16 / 10; max-width: 100%; background: var(--hull); }
-.porthole-main img { width: 100%; height: 100%; object-fit: cover; }
-.porthole-main::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, color-mix(in srgb, var(--abyss) 70%, transparent)); pointer-events: none; }
-.porthole-tag { position: absolute; left: 14px; bottom: 12px; z-index: 2; font: 600 0.72rem var(--font-mono); letter-spacing: 0.08em; color: var(--foam); text-transform: uppercase; }
-.porthole-inset { position: absolute; right: -10px; bottom: -34px; width: 46%; border-radius: 6px; overflow: hidden; border: 3px solid var(--abyss); outline: 1px solid var(--rivet); box-shadow: 0 18px 40px rgba(0,0,0,0.5); aspect-ratio: 16 / 10; max-width: 100%; }
-.porthole-inset img { width: 100%; height: 100%; object-fit: cover; }
-@media (max-width: 900px) { .porthole-inset { right: 8px; bottom: -24px; width: 44%; } }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: clamp(32px, 4vw, 52px) 0 0; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); overflow: hidden; }
+@media (min-width: 760px) { .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.stat { padding: 18px 20px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; }
+.stat dt { font-family: var(--font-display); font-weight: 600; font-size: var(--s-2); line-height: 1.1; letter-spacing: -.02em; }
+.stat dd { margin: 4px 0 0; color: var(--muted); font-size: .92rem; line-height: 1.35; }
+@media (min-width: 760px) { .stat { border-bottom: 0; } .stat:last-child { border-right: 0; } }
+@media (max-width: 759.98px) { .stat:nth-child(2n) { border-right: 0; } .stat:nth-last-child(-n+2) { border-bottom: 0; } }
 
-.gauges { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(56px, 7vw, 84px); border-top: 1px solid var(--rivet); border-bottom: 1px solid var(--rivet); }
-.gauge { padding: 18px 18px 18px 0; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.gauge + .gauge { padding-left: 18px; border-left: 1px solid var(--rivet); }
-.gauge b { font: 800 var(--step-2) var(--font-display); color: var(--foam); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
-.gauge span { color: var(--steel); font-size: var(--step--1); line-height: 1.35; }
-@media (max-width: 720px) {
-  .gauges { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .gauge:nth-child(3) { padding-left: 0; border-left: 0; }
-  .gauge:nth-child(n+3) { border-top: 1px solid var(--rivet); }
+/* ---------- Projets ---------- */
+.projects { display: grid; gap: clamp(64px, 9vw, 120px); }
+.project { display: grid; gap: 22px; min-width: 0; }
+.p-head { display: grid; gap: 8px; }
+.p-title { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 14px; }
+.p-title h3 { font-family: var(--font-display); font-weight: 700; font-size: var(--s-2); line-height: 1.1; letter-spacing: -.02em; }
+.p-title .cube { width: 22px; height: 22px; color: var(--g); flex: none; }
+.pill { display: inline-flex; align-items: center; gap: 7px; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line-2); font-size: .82rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--g); }
+.p-tag { color: var(--muted); font-size: var(--s-1); }
+.p-body { display: grid; gap: 20px; align-items: start; }
+@media (min-width: 1000px) { .p-body { grid-template-columns: minmax(0, 1fr) 330px; } }
+.media { display: grid; gap: 10px; min-width: 0; }
+.stage { position: relative; aspect-ratio: 16 / 9; border-radius: 10px; background: #05070a; border: 1px solid var(--line); }
+.stage > video, .stage > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 9px; }
+.stage .play {
+  position: absolute; right: 12px; bottom: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 8px;
+  background: rgba(10,12,16,.75); border: 1px solid rgba(255,255,255,.18); font-size: .8rem; font-weight: 600; cursor: pointer; backdrop-filter: blur(6px);
 }
-
-/* ---------- bandeau de danger ---------- */
-.hazard-band { height: 10px; background: repeating-linear-gradient(-45deg, var(--hazard) 0 14px, var(--abyss) 14px 28px); opacity: 0.9; }
-
-/* ---------- sections ---------- */
-section.block { padding-block: clamp(64px, 9vw, 120px); border-top: 1px solid var(--rivet); }
-.sec-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 48px; align-items: end; margin-bottom: clamp(32px, 5vw, 56px); }
-@media (max-width: 800px) { .sec-head { grid-template-columns: minmax(0, 1fr); } }
-.depth { font: 600 var(--step--1) var(--font-mono); color: var(--hazard); letter-spacing: 0.1em; text-transform: uppercase; }
-.sec-head h2 { font-size: var(--step-3); margin-top: 10px; }
-.sec-head p { color: var(--steel); max-width: 52ch; }
-
-/* compétences */
-.skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--rivet); border: 1px solid var(--rivet); }
-@media (max-width: 980px) { .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 600px) { .skills { grid-template-columns: minmax(0, 1fr); } }
-.skill { background: var(--abyss); padding: 24px 22px 26px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.skill h3 { font-size: var(--step-1); letter-spacing: 0.03em; display: flex; align-items: baseline; gap: 10px; }
-.skill h3 code { font: 600 0.7rem var(--font-mono); color: var(--sonar); letter-spacing: 0.04em; text-transform: none; }
-.skill p { color: var(--steel); font-size: 0.97rem; }
-.skill ul { list-style: none; padding: 0; margin: 4px 0 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.skill li { font: 500 0.72rem var(--font-mono); color: var(--foam); background: var(--hull); border: 1px solid var(--rivet); padding: 3px 8px; border-radius: 3px; }
-
-.tools { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; color: var(--steel); font-size: var(--step--1); }
-.tools strong { font: 600 var(--step--1) var(--font-mono); color: var(--foam); letter-spacing: 0.08em; text-transform: uppercase; }
-.tools span { font-family: var(--font-mono); }
-.tools span + span::before { content: "/"; color: var(--rivet); margin-right: 18px; }
-
-/* projets */
-.project { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); padding-block: clamp(40px, 6vw, 72px); }
-.project + .project { border-top: 1px dashed var(--rivet); }
-@media (max-width: 960px) { .project { grid-template-columns: minmax(0, 1fr); } }
-.project.flip .media { order: 2; }
-@media (max-width: 960px) { .project.flip .media { order: 0; } }
-.media { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
-.screen { position: relative; border: 1px solid var(--rivet); border-radius: 6px; overflow: hidden; background: #000; aspect-ratio: 16 / 9; max-width: 100%; }
-.screen img, .screen video { width: 100%; height: 100%; object-fit: cover; }
-.screen.contain img, .screen.contain video { object-fit: contain; }
-.screen figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 14px 10px; font-size: 0.86rem; color: var(--foam); background: linear-gradient(180deg, transparent, rgba(3,10,15,0.85)); }
-.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
-.thumbs button { appearance: none; padding: 0; border: 1px solid var(--rivet); border-radius: 4px; overflow: hidden; background: var(--hull); cursor: pointer; aspect-ratio: 16 / 10; max-width: 100%; opacity: 0.62; transition: opacity 0.15s, border-color 0.15s; }
+.stage .play svg { width: 12px; height: 12px; }
+.thumbs { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 6px; scrollbar-width: thin; }
+.thumbs.more { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 56px), transparent); }
+.thumbs button { position: relative; flex: 0 0 auto; width: 112px; aspect-ratio: 16 / 9; padding: 0; border: 1px solid var(--line-2); border-radius: 6px; overflow: hidden; background: #000; cursor: pointer; opacity: .62; }
 .thumbs button:hover { opacity: 1; }
-.thumbs button[aria-current="true"] { opacity: 1; border-color: var(--hazard); }
+.thumbs button[aria-current="true"] { opacity: 1; outline: 2px solid var(--select); outline-offset: 1px; }
 .thumbs img { width: 100%; height: 100%; object-fit: cover; }
-.teaser { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 16px; align-items: center; margin-top: 6px; padding: 12px; border: 1px solid var(--rivet); border-radius: 6px; background: var(--hull); }
-.teaser video { width: 100%; aspect-ratio: 9 / 16; max-width: 100%; object-fit: cover; border-radius: 4px; background: #000; }
-.teaser > div { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
-.teaser p { margin: 0; color: var(--steel); font-size: 0.92rem; }
-.teaser .teaser-label { font: 600 0.72rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--sonar); }
-@media (max-width: 420px) { .teaser { grid-template-columns: minmax(0, 120px) minmax(0, 1fr); } }
+.thumbs .vid-mark { position: absolute; left: 6px; bottom: 5px; display: inline-flex; align-items: center; gap: 4px; padding: 1px 6px; border-radius: 4px; background: rgba(0,0,0,.7); font-size: .7rem; font-weight: 700; }
+.thumbs .vid-mark svg { width: 9px; height: 9px; }
+.caption { color: var(--muted); font-size: .9rem; min-height: 1.5em; }
 
-.info { min-width: 0; display: flex; flex-direction: column; gap: 18px; }
-.tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.chip { font: 600 0.7rem var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 9px; border-radius: 3px; border: 1px solid var(--rivet); color: var(--steel); }
-.chip.live { color: var(--hazard-ink); background: var(--hazard); border-color: var(--hazard); }
-.chip.wip { color: var(--sonar); border-color: color-mix(in srgb, var(--sonar) 50%, var(--rivet)); }
-.info h3 { font-size: var(--step-3); }
-.info h3 small { display: block; font-family: var(--font-body); font-weight: 500; font-size: var(--step-0); text-transform: none; color: var(--steel); letter-spacing: 0; margin-top: 10px; line-height: 1.4; }
-.info > p { color: var(--foam); }
-.systems { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
-.systems li { display: grid; grid-template-columns: 14px minmax(0, 1fr); gap: 10px; color: var(--steel); font-size: 0.97rem; line-height: 1.5; }
-.systems li::before { content: ""; width: 8px; height: 8px; margin-top: 8px; background: var(--hazard); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
-.systems b { color: var(--foam); font-weight: 600; }
-.readouts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--rivet); border-radius: 4px; background: var(--hull); }
-.readouts div { padding: 12px 14px; min-width: 0; }
-.readouts div + div { border-left: 1px solid var(--rivet); }
-.readouts b { display: block; font: 600 1.15rem var(--font-mono); color: var(--hazard); font-variant-numeric: tabular-nums; }
-.readouts span { font-size: 0.78rem; color: var(--steel); line-height: 1.3; display: block; }
-@media (max-width: 340px) { .readouts { grid-template-columns: minmax(0, 1fr); } .readouts div + div { border-left: 0; border-top: 1px solid var(--rivet); } }
+/* panneau Propriétés */
+.props { border: 1px solid var(--line); border-radius: 10px; background: var(--panel); overflow: hidden; min-width: 0; }
+.props .pane-head { border-radius: 0; }
+.props .pane-head b { color: var(--text); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.prop-group { border-bottom: 1px solid var(--line); }
+.prop-group:last-child { border-bottom: 0; }
+.prop-group > p { padding: 7px 14px; font-size: .8rem; font-weight: 700; color: var(--muted); background: rgba(255,255,255,.02); }
+.prop-group > p::before { content: "▾"; color: var(--dim); margin-right: 6px; font-size: .7rem; }
+.props dl { margin: 0; display: grid; grid-template-columns: minmax(0, 46%) minmax(0, 1fr); }
+.props dt, .props dd { margin: 0; padding: 6px 14px; border-top: 1px solid var(--line); font-size: .9rem; line-height: 1.4; min-width: 0; }
+.props dt { font-family: var(--font-mono); font-size: .76rem; color: var(--muted); padding-top: 8px; border-right: 1px solid var(--line); overflow-wrap: anywhere; }
+.props dd { color: var(--text); }
+.props dd.num { font-family: var(--font-display); font-weight: 600; color: var(--g); }
 
-details.code { border: 1px solid var(--rivet); border-radius: 4px; background: #050d13; }
-details.code summary { cursor: pointer; list-style: none; padding: 11px 14px; font: 600 0.78rem var(--font-mono); color: var(--sonar); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-details.code summary::-webkit-details-marker { display: none; }
-details.code summary::after { content: "+"; color: var(--steel); }
-details.code[open] summary::after { content: "−"; }
-details.code summary span { color: var(--steel); font-weight: 400; }
-.code-body { border-top: 1px solid var(--rivet); }
-.code-body p { padding: 12px 14px 0; color: var(--steel); font-size: 0.9rem; }
-pre { margin: 0; padding: 14px; overflow-x: auto; font: 400 0.8rem/1.6 var(--font-mono); color: #cfe0e6; tab-size: 2; }
-.k { color: #f5c518; } .s { color: #8fe3b0; } .c { color: #6c8794; font-style: italic; } .n { color: #f59d6c; } .f { color: #7fd3f0; }
+.pitch { max-width: 70ch; font-size: var(--s-1); line-height: 1.55; }
+.pitch + .pitch { color: var(--muted); font-size: var(--s-0); margin-top: -8px; }
+.features { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px 36px; }
+@media (min-width: 820px) { .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.features li { position: relative; padding-left: 18px; color: var(--muted); line-height: 1.55; min-width: 0; }
+.features li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 1.5px; background: var(--g); }
+.features b { color: var(--text); font-weight: 600; }
 
-.other { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; margin-top: 12px; }
-@media (max-width: 760px) { .other { grid-template-columns: minmax(0, 1fr); } }
-.card { border: 1px solid var(--rivet); border-radius: 6px; padding: 22px; background: var(--hull); display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.card h4 { margin: 0; font: 800 var(--step-1) var(--font-display); text-transform: uppercase; letter-spacing: 0.03em; }
-.card p { color: var(--steel); font-size: 0.96rem; }
+.side-projects { display: grid; gap: 16px; margin-top: clamp(64px, 9vw, 110px); }
+@media (min-width: 820px) { .side-projects { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.side { padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.side h3 { font-family: var(--font-display); font-weight: 600; font-size: var(--s-1); letter-spacing: -.01em; }
+.side p { color: var(--muted); }
+.side .pill { justify-self: start; }
 
-/* méthode */
-.method { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; counter-reset: step; }
-@media (max-width: 900px) { .method { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 520px) { .method { grid-template-columns: minmax(0, 1fr); } }
-.step { padding: 0 22px 0 0; display: flex; flex-direction: column; gap: 10px; min-width: 0; position: relative; }
-.step::before { counter-increment: step; content: "0" counter(step); font: 900 var(--step-3) var(--font-display); color: transparent; -webkit-text-stroke: 1px var(--rivet); line-height: 1; }
-.step h3 { font-size: var(--step-1); letter-spacing: 0.03em; }
-.step p { color: var(--steel); font-size: 0.96rem; }
-@media (max-width: 900px) { .method { gap: 32px 0; } }
+/* ---------- Compétences ---------- */
+.matrix { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--panel); }
+.m-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 16px 18px; border-top: 1px solid var(--line); }
+.m-row:first-child { border-top: 0; }
+.m-head { display: none; }
+.m-skill h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.02rem; letter-spacing: -.01em; }
+.m-desc { color: var(--muted); font-size: .95rem; line-height: 1.5; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tags code { font-family: var(--font-mono); font-size: .74rem; padding: 2px 7px; border-radius: 4px; background: rgba(132,214,247,.08); color: #9fdcf6; border: 1px solid rgba(132,214,247,.14); }
+.m-dots { display: none; }
+.m-used { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: .84rem; color: var(--muted); }
+.m-used span { display: inline-flex; align-items: center; gap: 6px; }
+.m-used span::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--g); }
+@media (min-width: 900px) {
+  .m-row { grid-template-columns: minmax(0, 1fr) repeat(5, 64px); gap: 0 4px; align-items: center; }
+  .m-head { display: grid; position: sticky; top: 0; background: var(--panel-2); padding-block: 10px; }
+  .m-head span { font-size: .78rem; font-weight: 600; color: var(--muted); text-align: center; line-height: 1.25; }
+  .m-head span:first-child { text-align: left; }
+  .m-dots { display: contents; }
+  .m-dots i { justify-self: center; width: 14px; height: 14px; border-radius: 3px; border: 1.5px solid var(--line-2); }
+  .m-dots i.y { background: var(--g); border-color: var(--g); }
+  .m-used { display: none; }
+  .m-skill { display: grid; grid-template-columns: minmax(170px, 15rem) minmax(0, 1fr); gap: 4px 24px; padding-right: 18px; }
+  .m-skill .tags { grid-column: 2; margin-top: 2px; }
+}
+.tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; align-items: center; }
+.tools p { color: var(--muted); margin-right: 6px; font-weight: 600; }
+.tools span { padding: 5px 12px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel); font-size: .9rem; font-weight: 600; }
 
-/* contact */
-.contact { background: var(--hull); }
-.contact-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
-@media (max-width: 860px) { .contact-grid { grid-template-columns: minmax(0, 1fr); } }
-.contact h2 { font-size: var(--step-3); margin-top: 10px; }
-.contact-grid > div > p { color: var(--steel); margin-top: 16px; max-width: 46ch; }
-.channels { display: grid; gap: 12px; }
-.channel { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 16px 18px; border: 1px solid var(--rivet); border-radius: 6px; background: var(--abyss); }
-.channel small { display: block; font: 600 0.7rem var(--font-mono); color: var(--steel); letter-spacing: 0.1em; text-transform: uppercase; }
-.channel strong { font: 600 1.05rem var(--font-mono); color: var(--foam); overflow-wrap: anywhere; }
-.channel.todo strong { color: var(--alert); }
-.copy { appearance: none; border: 1px solid var(--rivet); background: transparent; color: var(--foam); font: 600 0.75rem var(--font-mono); padding: 7px 12px; border-radius: 4px; cursor: pointer; }
-.copy:hover { border-color: var(--hazard); color: var(--hazard); }
-.avail { display: flex; align-items: center; gap: 10px; margin-top: 22px; font: 600 0.82rem var(--font-mono); color: var(--sonar); letter-spacing: 0.06em; text-transform: uppercase; }
+/* ---------- Méthode : fenêtre Sortie ---------- */
+.output { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #0e1015; }
+.output ol { list-style: none; margin: 0; padding: 8px 0; counter-reset: step; }
+.output li { display: grid; grid-template-columns: 3.2em minmax(0, 1fr); gap: 0 12px; padding: 12px 18px; border-left: 3px solid transparent; counter-increment: step; }
+.output li::before { content: counter(step); font-family: var(--font-mono); color: var(--dim); font-size: .9rem; padding-top: 2px; text-align: right; }
+.output li:hover { background: rgba(255,255,255,.025); border-left-color: var(--select); }
+.output b { display: block; font-weight: 700; color: var(--text); }
+.output span { color: var(--muted); }
+.output .done { color: var(--ok); font-family: var(--font-mono); font-size: .86rem; padding: 10px 18px 14px calc(18px + 3.2em + 12px); border-top: 1px solid var(--line); }
+@media (max-width: 699.98px) { .output li { grid-template-columns: 1.4em minmax(0, 1fr); gap: 0 10px; padding: 12px 14px; } .output .done { padding-left: calc(14px + 1.4em + 10px); } }
 
-footer { border-top: 1px solid var(--rivet); }
-footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; color: var(--steel); font: 400 0.78rem var(--font-mono); }
+/* ---------- Contact ---------- */
+.contact-card { border: 1px solid var(--line); border-top: 3px solid var(--select); border-radius: 12px; background: var(--panel); padding: clamp(24px, 4vw, 48px); display: grid; gap: 26px; }
+@media (min-width: 900px) { .contact-card { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; } }
+.contact-card h2 { font-family: var(--font-display); font-weight: 700; font-size: var(--s-3); line-height: 1.05; letter-spacing: -.02em; }
+.contact-card .intro { display: grid; gap: 14px; }
+.contact-card .intro p { color: var(--muted); font-size: var(--s-1); line-height: 1.5; max-width: 46ch; }
+.handles { display: grid; gap: 12px; min-width: 0; }
+.handle { display: flex; align-items: center; gap: 14px; padding: 14px 14px 14px 18px; border: 1px solid var(--line-2); border-radius: 10px; background: var(--ink); min-width: 0; }
+.handle .who { display: grid; min-width: 0; flex: 1; }
+.handle .who span { color: var(--muted); font-size: .85rem; }
+.handle .who b { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.15rem, 1rem + 1vw, 1.6rem); letter-spacing: -.01em; overflow-wrap: anywhere; }
+.handle.discord { border-color: rgba(0,162,255,.45); }
+.copy { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--line-2); background: var(--panel-2); font-weight: 700; font-size: .9rem; cursor: pointer; flex: none; }
+.copy:hover { border-color: var(--select); }
+.copy svg { width: 15px; height: 15px; }
+
+footer { border-top: 1px solid var(--line); padding-block: 26px calc(26px + env(safe-area-inset-bottom, 0px)); color: var(--dim); font-size: .88rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
 </style>
 </head>
 <body>
+<a class="skip" href="#projets"><span lang="fr">Aller aux projets</span><span lang="en">Skip to projects</span></a>
 
-<nav class="rail" aria-label="Profondeur">
-  <div class="rail-track" id="rail-track"><div class="rail-probe" id="rail-probe"></div></div>
-  <div class="rail-readout"><span id="rail-depth">0 m</span><small lang="fr">PROFONDEUR</small><small lang="en">DEPTH</small></div>
-</nav>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-part" viewBox="0 0 16 16"><path d="M8 1.6l5.6 3.1v6.6L8 14.4l-5.6-3.1V4.7z" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M2.6 4.8L8 7.8l5.4-3M8 7.8v6.4" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 16 16"><path d="M1.5 3.5h4.2l1.5 1.6h7.3v7.4h-13z" fill="currentColor" fill-opacity=".25" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-film" viewBox="0 0 16 16"><rect x="1.5" y="3" width="13" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M6.5 6v4l3.5-2z" fill="currentColor"/></symbol>
+  <symbol id="i-play" viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 16 16"><path d="M4 2.5h3v11H4zM9 2.5h3v11H9z" fill="currentColor"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 16 16"><rect x="5" y="5" width="9" height="9" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M11 3.5V3a1.5 1.5 0 0 0-1.5-1.5H3A1.5 1.5 0 0 0 1.5 3v6.5A1.5 1.5 0 0 0 3 11h.5" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 16 16"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h9A1.5 1.5 0 0 1 14 3.5v6A1.5 1.5 0 0 1 12.5 11H7l-3.5 3v-3h0A1.5 1.5 0 0 1 2 9.5z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+</svg>
 
-<header class="top">
-  <div class="wrap">
-    <a class="brand" href="#surface"><i></i>Moez</a>
-    <nav class="nav" aria-label="Sections">
-      <a href="#competences"><span lang="fr">Compétences</span><span lang="en">Skills</span></a>
-      <a href="#projets"><span lang="fr">Projets</span><span lang="en">Projects</span></a>
-      <a href="#methode"><span lang="fr">Méthode</span><span lang="en">Process</span></a>
-      <a href="#contact">Contact</a>
-    </nav>
+<!-- Explorateur : la navigation de la page, en arbre comme dans Studio -->
+<aside class="explorer" id="explorer" aria-label="Navigation">
+  <div class="pane-head">
+    <span lang="fr">Explorateur</span><span lang="en">Explorer</span>
     <div class="lang" role="group" aria-label="Langue / Language">
-      <button type="button" id="lang-fr" data-set-lang="fr" aria-pressed="true">FR</button>
-      <button type="button" id="lang-en" data-set-lang="en" aria-pressed="false">EN</button>
+      <button type="button" data-set-lang="fr" aria-pressed="true">FR</button>
+      <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
     </div>
   </div>
-</header>
+  <ul class="tree">
+    <li><a href="#top" data-spy-link="top"><span class="twisty">▾</span><svg class="ico-part" style="--part: var(--select)"><use href="#i-part"/></svg>Moez</a>
+      <ul>
+        <li><a href="#top" style="--lvl:1" data-spy-link="top-reel"><span class="twisty"></span><svg style="color: var(--muted)"><use href="#i-film"/></svg><span lang="fr">Bande démo</span><span lang="en">Showreel</span><small>54 s</small></a></li>
+        <li><a href="#projets" style="--lvl:1" data-spy-link="projets"><span class="twisty">▾</span><svg class="ico-folder"><use href="#i-folder"/></svg><span lang="fr">Projets</span><span lang="en">Projects</span></a>
+          <ul>
+            <li><a href="#pack" style="--lvl:2" data-spy-link="pack"><span class="twisty"></span><svg class="ico-part" style="--part: var(--c-pack)"><use href="#i-part"/></svg>Pack Opener &amp; Collector</a></li>
+            <li><a href="#treadmill" style="--lvl:2" data-spy-link="treadmill"><span class="twisty"></span><svg class="ico-part" style="--part: var(--c-tread)"><use href="#i-part"/></svg>Treadmill Legends</a></li>
+            <li><a href="#tycoon" style="--lvl:2" data-spy-link="tycoon"><span class="twisty"></span><svg class="ico-part" style="--part: var(--c-tycoon)"><use href="#i-part"/></svg>Tycoon Samouraï</a></li>
+            <li><a href="#meteor" style="--lvl:2" data-spy-link="meteor"><span class="twisty"></span><svg class="ico-part" style="--part: var(--c-meteor)"><use href="#i-part"/></svg>Steal a Meteor</a></li>
+            <li><a href="#pouvoir" style="--lvl:2" data-spy-link="pouvoir"><span class="twisty"></span><svg class="ico-part" style="--part: var(--c-power)"><use href="#i-part"/></svg><span lang="fr">Attaque « Pouvoir »</span><span lang="en">“Pouvoir” attack</span></a></li>
+          </ul>
+        </li>
+        <li><a href="#competences" style="--lvl:1" data-spy-link="competences"><span class="twisty"></span><svg class="ico-folder"><use href="#i-folder"/></svg><span lang="fr">Compétences</span><span lang="en">Skills</span></a></li>
+        <li><a href="#methode" style="--lvl:1" data-spy-link="methode"><span class="twisty"></span><svg class="ico-folder"><use href="#i-folder"/></svg><span lang="fr">Méthode</span><span lang="en">Process</span></a></li>
+        <li><a href="#contact" style="--lvl:1" data-spy-link="contact"><span class="twisty"></span><svg class="ico-folder"><use href="#i-folder"/></svg>Contact</a></li>
+      </ul>
+    </li>
+  </ul>
+  <div class="explorer-foot">
+    <p class="avail"><span class="dot-live"></span><span lang="fr">Disponible pour des missions</span><span lang="en">Available for commissions</span></p>
+    <a class="btn primary" href="#contact"><svg><use href="#i-chat"/></svg><span lang="fr">Me contacter</span><span lang="en">Contact me</span></a>
+  </div>
+</aside>
 
-<main>
-  <section class="hero" id="surface" data-depth="0" data-label-fr="SURFACE" data-label-en="SURFACE">
-    <div class="wrap">
-      <div>
-        <p class="eyebrow"><span class="dot"></span><span lang="fr">Disponible pour des missions Roblox</span><span lang="en">Available for Roblox commissions</span></p>
-        <h1>Moez<em lang="fr">Développeur Roblox</em><em lang="en">Roblox Developer</em></h1>
-        <p class="lead" lang="fr">Scripting, systèmes, IA, combat, VFX, interfaces et build : je prends en charge toutes les tâches de votre jeu Roblox.</p>
-        <p class="lead" lang="en">Scripting, systems, AI, combat, VFX, UI and building: I take on every kind of task your Roblox game needs.</p>
-        <p class="sub" lang="fr">Je code en Luau des jeux complets, construits de zéro : HADAL, un jeu d'horreur coopératif sur quatre places, un jeu de cartes à collectionner avec échanges entre joueurs, et un tycoon de samouraïs avec combat PvP.</p>
-        <p class="sub" lang="en">I write complete games in Luau, built from scratch: HADAL, a four-place co-op horror game, a collectible card game with player trading, and a samurai tycoon with PvP combat.</p>
-        <div class="cta">
-          <a class="btn btn-primary" href="#projets"><span lang="fr">Voir les projets</span><span lang="en">See the projects</span> ↓</a>
-          <a class="btn btn-ghost" href="#contact"><span lang="fr">Me contacter</span><span lang="en">Contact me</span></a>
-        </div>
+<main id="main">
+  <header class="topbar">
+    <a class="brand" href="#top">Moez</a>
+    <div class="topbar-right">
+      <div class="lang" role="group" aria-label="Langue / Language">
+        <button type="button" data-set-lang="fr" aria-pressed="true">FR</button>
+        <button type="button" data-set-lang="en" aria-pressed="false">EN</button>
       </div>
-      <div class="porthole">
-        <div class="porthole-main">
-          <img src="img/hadal-vignette.jpg" alt="Vignette de HADAL : le monstre du niveau 1 dans le sas d'un sous-marin, rendue dans Blender" width="1600" height="900">
-          <span class="porthole-tag">HADAL · vignette</span>
-        </div>
-        <div class="porthole-inset">
-          <img src="img/pack-cartes.jpg" alt="Six cartes de créatures originales du jeu Pack Opener &amp; Collector" width="1600" height="900" loading="lazy">
-        </div>
-      </div>
+      <button class="menu-btn" type="button" aria-controls="explorer" aria-expanded="false" data-menu><svg width="16" height="16"><use href="#i-menu"/></svg><span lang="fr">Explorateur</span><span lang="en">Explorer</span></button>
     </div>
+  </header>
+
+  <!-- ======================= ACCUEIL ======================= -->
+  <section class="hero" id="top" data-spy="top">
     <div class="wrap">
-      <div class="gauges">
-        <div class="gauge"><b>63 000</b><span lang="fr">lignes de Luau écrites</span><span lang="en">lines of Luau written</span></div>
-        <div class="gauge"><b>5</b><span lang="fr">jeux et prototypes</span><span lang="en">games and prototypes</span></div>
-        <div class="gauge"><b>2</b><span lang="fr">places publiées sur Roblox</span><span lang="en">places published on Roblox</span></div>
-        <div class="gauge"><b>100&nbsp;%</b><span lang="fr">des interfaces construites en code</span><span lang="en">of UI built in code</span></div>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="avail"><span class="dot-live"></span><span lang="fr">Disponible pour des missions Roblox</span><span lang="en">Available for Roblox commissions</span></p>
+          <h1>Moez</h1>
+          <p class="role"><span lang="fr">Développeur Roblox</span><span lang="en">Roblox developer</span></p>
+          <p class="lede">
+            <span lang="fr">Scripting, systèmes, combat, IA, interfaces, VFX et build : je prends en charge toutes les tâches de votre jeu Roblox, du premier script à la version prête à publier.</span>
+            <span lang="en">Scripting, systems, combat, AI, UI, VFX and building: I take on every task your Roblox game needs, from the first script to a build that's ready to publish.</span>
+          </p>
+          <p class="note">
+            <span lang="fr">Toutes les vidéos de cette page ont été tournées dans Roblox Studio, dans mes propres jeux.</span>
+            <span lang="en">Every video on this page was recorded in Roblox Studio, in my own games.</span>
+          </p>
+          <div class="cta">
+            <a class="btn primary" href="#contact"><svg><use href="#i-chat"/></svg><span lang="fr">Écrire sur Discord</span><span lang="en">Message me on Discord</span></a>
+            <a class="btn" href="#projets"><span lang="fr">Voir les projets</span><span lang="en">See the projects</span></a>
+          </div>
+        </div>
+
+        <div class="viewport sel boot" id="reel-box">
+          <div class="vp-bar">
+            <span class="vp-tab"><svg><use href="#i-film"/></svg><span lang="fr">Bande démo</span><span lang="en">Showreel</span></span>
+            <span class="vp-now" aria-live="off"><span lang="fr">À l'écran :</span><span lang="en">On screen:</span> <i id="now-dot"></i><a id="now-link" href="#treadmill">Treadmill Legends</a></span>
+            <button class="icon-btn" type="button" id="reel-toggle" aria-label="Pause"><svg><use href="#i-pause"/></svg></button>
+          </div>
+          <div class="screen" style="background-image: url(img/v/reel.jpg)">
+            <video id="reel" muted loop playsinline preload="metadata" poster="img/v/reel.jpg" aria-label="Bande démo : Treadmill Legends, Pack Opener & Collector, Tycoon Samouraï et Steal a Meteor"></video>
+          </div>
+          <div class="timeline" id="timeline" aria-label="Chapitres"></div>
+          <div class="legend" id="legend"></div>
+        </div>
+      </div>
+
+      <dl class="stats">
+        <div class="stat"><dt>76 000+</dt><dd><span lang="fr">lignes de Luau écrites</span><span lang="en">lines of Luau written</span></dd></div>
+        <div class="stat"><dt>6</dt><dd><span lang="fr">jeux et prototypes</span><span lang="en">games and prototypes</span></dd></div>
+        <div class="stat"><dt>100 %</dt><dd><span lang="fr">des interfaces construites en code</span><span lang="en">of UI built in code</span></dd></div>
+        <div class="stat"><dt>2</dt><dd><span lang="fr">langues dans mes jeux : français et anglais</span><span lang="en">languages in my games: French and English</span></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ======================= PROJETS ======================= -->
+  <section id="projets" data-spy="projets" style="padding-top: clamp(32px, 5vw, 64px)">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2><span lang="fr">Projets</span><span lang="en">Projects</span></h2>
+        <p>
+          <span lang="fr">Des jeux que j'ai conçus et codés seul, filmés en mode test dans Roblox Studio. Choisissez une vignette pour changer de plan.</span>
+          <span lang="en">Games I designed and coded on my own, filmed in Play mode in Roblox Studio. Pick a thumbnail to switch shots.</span>
+        </p>
+      </div>
+
+      <div class="projects">
+
+        <!-- Pack Opener & Collector -->
+        <article class="project" id="pack" data-spy="pack" style="--g: var(--c-pack)">
+          <header class="p-head">
+            <div class="p-title">
+              <svg class="cube"><use href="#i-part"/></svg>
+              <h3>Pack Opener &amp; Collector</h3>
+              <span class="pill"><span lang="fr">En développement</span><span lang="en">In development</span></span>
+            </div>
+            <p class="p-tag"><span lang="fr">Jeu de collection de cartes avec échanges entre joueurs</span><span lang="en">A card-collecting game with player trading</span></p>
+          </header>
+          <div class="p-body">
+            <div class="media" data-gallery>
+              <div class="stage sel">
+                <video class="loop" muted loop playsinline preload="none" poster="img/v/pack.jpg" data-src="img/v/pack.mp4" aria-label="Pack Opener & Collector, extrait vidéo"></video>
+                <img alt="" hidden>
+              </div>
+              <div class="thumbs">
+                <button type="button" aria-current="true" data-kind="video" data-fr="Ouverture d'un booster, puis la salle principale." data-en="Opening a booster pack, then the main hall."><img src="img/v/pack.jpg" alt="" loading="lazy"><span class="vid-mark"><svg><use href="#i-play"/></svg><span lang="fr">Vidéo</span><span lang="en">Video</span></span></button>
+                <button type="button" aria-current="false" data-img="img/pack-reveal.jpg" data-fr="La meilleure carte arrive en dernier, ici une Holo Rare." data-en="The best card lands last, here a Holo Rare."><img src="img/t/pack-reveal.jpg" alt="Reveal d'une carte Holo Rare" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/pack-cartes.jpg" data-fr="Des cartes de toutes les raretés, de la Commune à la Secrète Or." data-en="Cards across every rarity, from Common to Gold Secret."><img src="img/t/pack-cartes.jpg" alt="Éventail de cartes" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/pack-shiny.jpg" data-fr="Chaque carte existe en version normale et Shiny." data-en="Every card comes in a normal and a Shiny version."><img src="img/t/pack-shiny.jpg" alt="Cartes normales et Shiny" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/pk-classeur.jpg" data-fr="Le classeur : filtres, progression de la collection et revente des doublons." data-en="The binder: filters, collection progress and selling duplicates."><img src="img/t/pk-classeur.jpg" alt="Classeur de cartes" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/pk-resume.jpg" data-fr="Le résumé après ouverture, avec la meilleure carte mise en avant." data-en="The summary after opening, with the best card in front."><img src="img/t/pk-resume.jpg" alt="Résumé d'ouverture" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/pk-salle.jpg" data-fr="La salle principale : stands, zone AFK, classements et collection." data-en="The main hall: stands, AFK zone, leaderboards and collection."><img src="img/t/pk-salle.jpg" alt="Salle principale" loading="lazy"></button>
+              </div>
+              <p class="caption" data-cap></p>
+            </div>
+            <aside class="props" aria-label="Propriétés">
+              <div class="pane-head"><span lang="fr">Propriétés</span><span lang="en">Properties</span><b>PackOpener</b></div>
+              <div class="prop-group"><p><span lang="fr">Jeu</span><span lang="en">Game</span></p>
+                <dl>
+                  <dt>Genre</dt><dd><span lang="fr">Collection, échanges</span><span lang="en">Collecting, trading</span></dd>
+                  <dt>MaxPlayers</dt><dd class="num">12</dd>
+                  <dt><span lang="fr">Cartes</span><span lang="en">Cards</span></dt><dd><span lang="fr">81 originales, 4 séries</span><span lang="en">81 originals, 4 sets</span></dd>
+                  <dt><span lang="fr">Raretés</span><span lang="en">Rarities</span></dt><dd><span lang="fr">7 paliers</span><span lang="en">7 tiers</span></dd>
+                </dl>
+              </div>
+              <div class="prop-group"><p>Code</p>
+                <dl>
+                  <dt><span lang="fr">Lignes Luau</span><span lang="en">Luau lines</span></dt><dd class="num">36 000</dd>
+                  <dt><span lang="fr">Sauvegarde</span><span lang="en">Saves</span></dt><dd>ProfileService</dd>
+                  <dt><span lang="fr">Plateformes</span><span lang="en">Platforms</span></dt><dd><span lang="fr">PC, mobile</span><span lang="en">PC, mobile</span></dd>
+                </dl>
+              </div>
+            </aside>
+          </div>
+          <p class="pitch">
+            <span lang="fr">Ouvrir des boosters, compléter son Créadex, échanger et exposer ses plus belles cartes à tout le serveur.</span>
+            <span lang="en">Open booster packs, complete your Créadex, trade and show off your best cards to the whole server.</span>
+          </p>
+          <p class="pitch">
+            <span lang="fr">Un univers original : 81 cartes, 69 créatures et 4 séries, chaque carte en version normale et Shiny. Tout le jeu tourne autour d'un reveal qui fait monter la tension selon la rareté.</span>
+            <span lang="en">An original universe: 81 cards, 69 creatures and 4 sets, each card in a normal and a Shiny version. The whole game is built around a reveal that builds tension with rarity.</span>
+          </p>
+          <ul class="features">
+            <li lang="fr"><b>Tirage côté serveur.</b> 7 paliers de rareté, probabilités affichées en boutique, garantie Ultra Rare au 40e booster, cooldown et vérification de chaque requête.</li>
+            <li lang="en"><b>Server-side rolls.</b> 7 rarity tiers, odds shown in the shop, a guaranteed Ultra Rare on the 40th pack, cooldowns and validation of every request.</li>
+            <li lang="fr"><b>Reveal en plusieurs temps.</b> Le booster tremble et se déchire, les cartes faibles se retournent en éventail, la meilleure arrive en dernier avec ralenti cinéma à partir d'Ultra Rare.</li>
+            <li lang="en"><b>Multi-stage reveal.</b> The pack shakes and tears open, weak cards flip in a fan, the best one lands last with cinematic slow motion from Ultra Rare up.</li>
+            <li lang="fr"><b>Échanges sécurisés.</b> Jusqu'à 8 cartes par offre, double validation avec compte à rebours, anti-arnaque et échange en une seule opération côté serveur contre la duplication.</li>
+            <li lang="en"><b>Secure trading.</b> Up to 8 cards per offer, double confirmation with a countdown, anti-scam rules and a single server-side swap that prevents duplication.</li>
+            <li lang="fr"><b>Stands d'exposition.</b> 12 stands de joueurs avec 3 cartes en 3D, plus 5 classements mondiaux affichés dans la map.</li>
+            <li lang="en"><b>Showcase stands.</b> 12 player stands showing 3 cards in 3D, plus 5 global leaderboards displayed in the map.</li>
+            <li lang="fr"><b>Rétention.</b> Quêtes, série quotidienne sur 7 jours, récompenses de temps de jeu, zone AFK et coffre mystère.</li>
+            <li lang="en"><b>Retention.</b> Quests, a 7-day daily streak, playtime rewards, an AFK zone and a mystery chest.</li>
+            <li lang="fr"><b>Économie et sauvegarde.</b> Revente calculée par rareté, profils ProfileService, Game Passes et Developer Products, interface en code sur PC et mobile.</li>
+            <li lang="en"><b>Economy and saves.</b> Sell values tuned per rarity, ProfileService profiles, Game Passes and Developer Products, UI built in code for PC and mobile.</li>
+          </ul>
+        </article>
+
+        <!-- Treadmill Legends -->
+        <article class="project" id="treadmill" data-spy="treadmill" style="--g: var(--c-tread)">
+          <header class="p-head">
+            <div class="p-title">
+              <svg class="cube"><use href="#i-part"/></svg>
+              <h3>Treadmill Legends</h3>
+              <span class="pill"><span lang="fr">En finition</span><span lang="en">Finishing touches</span></span>
+            </div>
+            <p class="p-tag"><span lang="fr">Vitesse, rythme et course à obstacles sur des tapis géants</span><span lang="en">Speed, rhythm and obstacle races on giant treadmills</span></p>
+          </header>
+          <div class="p-body">
+            <div class="media" data-gallery>
+              <div class="stage sel">
+                <video class="loop" muted loop playsinline preload="none" poster="img/v/treadmill.jpg" data-src="img/v/treadmill.mp4" aria-label="Treadmill Legends, extrait vidéo"></video>
+                <img alt="" hidden>
+              </div>
+              <div class="thumbs">
+                <button type="button" aria-current="true" data-kind="video" data-fr="La piste néon, une course, puis l'arène NEON FLEX." data-en="The neon track, a race, then the NEON FLEX arena."><img src="img/v/treadmill.jpg" alt="" loading="lazy"><span class="vid-mark"><svg><use href="#i-play"/></svg><span lang="fr">Vidéo</span><span lang="en">Video</span></span></button>
+                <button type="button" aria-current="false" data-img="img/tl-titre.jpg" data-fr="Le hall et son titre en lettres-pixels au-dessus des tapis." data-en="The hall and its pixel-letter title above the treadmills."><img src="img/t/tl-titre.jpg" alt="Hall de Treadmill Legends" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/tl-course.jpg" data-fr="En course : chrono, distance, place en direct et turbo." data-en="Mid-race: timer, distance, live position and boost."><img src="img/t/tl-course.jpg" alt="Interface de course" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/tl-flex.jpg" data-fr="NEON FLEX : chaque joueur passe sur scène, les autres tapent HYPE." data-en="NEON FLEX: each player takes the stage while the others hit HYPE."><img src="img/t/tl-flex.jpg" alt="Scène NEON FLEX" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/tl-piste.jpg" data-fr="L'autoroute néon de 1 980 studs, ici la zone Paradis." data-en="The 1,980-stud neon highway, here the Paradise zone."><img src="img/t/tl-piste.jpg" alt="Piste néon" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/tl-arene.jpg" data-fr="L'arène NEON FLEX et ses zones ouvertes par la vitesse." data-en="The NEON FLEX arena and its speed-locked zones."><img src="img/t/tl-arene.jpg" alt="Arène néon" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/tl-tapis.jpg" data-fr="Les tapis légendaires et leurs panneaux holographiques." data-en="The legendary treadmills and their holographic signs."><img src="img/t/tl-tapis.jpg" alt="Tapis légendaires" loading="lazy"></button>
+              </div>
+              <p class="caption" data-cap></p>
+            </div>
+            <aside class="props" aria-label="Propriétés">
+              <div class="pane-head"><span lang="fr">Propriétés</span><span lang="en">Properties</span><b>TreadmillLegends</b></div>
+              <div class="prop-group"><p><span lang="fr">Jeu</span><span lang="en">Game</span></p>
+                <dl>
+                  <dt>Genre</dt><dd><span lang="fr">Simulateur de vitesse, course</span><span lang="en">Speed simulator, racing</span></dd>
+                  <dt><span lang="fr">Tapis</span><span lang="en">Treadmills</span></dt><dd><span lang="fr">9 légendaires</span><span lang="en">9 legendary</span></dd>
+                  <dt><span lang="fr">Piste</span><span lang="en">Track</span></dt><dd><span lang="fr">1 980 studs, 9 zones</span><span lang="en">1,980 studs, 9 zones</span></dd>
+                  <dt><span lang="fr">Événement</span><span lang="en">Event</span></dt><dd><span lang="fr">NEON FLEX, 1 course sur 4</span><span lang="en">NEON FLEX, 1 race in 4</span></dd>
+                </dl>
+              </div>
+              <div class="prop-group"><p>Code</p>
+                <dl>
+                  <dt><span lang="fr">Lignes Luau</span><span lang="en">Luau lines</span></dt><dd class="num"><span lang="fr">8 350</span><span lang="en">8,350</span></dd>
+                  <dt><span lang="fr">Sauvegarde</span><span lang="en">Saves</span></dt><dd>ProfileStore</dd>
+                  <dt><span lang="fr">Langues</span><span lang="en">Languages</span></dt><dd><span lang="fr">Français, anglais</span><span lang="en">French, English</span></dd>
+                </dl>
+              </div>
+            </aside>
+          </div>
+          <p class="pitch">
+            <span lang="fr">Neuf tapis géants (Néon, Feu, Paradis, Vide, Glace, Électrique, Cristal, Lune de sang, Toxique) dans un hall de nuit brumeux. On court en rythme pour gagner de la vitesse, puis toutes les 90 secondes le serveur entier s'élance sur une autoroute néon pour gagner des trophées.</span>
+            <span lang="en">Nine giant treadmills (Neon, Fire, Paradise, Void, Ice, Electric, Crystal, Blood Moon, Toxic) in a misty night-time hall. You run in rhythm to build speed, then every 90 seconds the whole server races down a neon highway to earn trophies.</span>
+          </p>
+          <ul class="features">
+            <li lang="fr"><b>Foulée en rythme.</b> Des notes glissent au rythme du tapis : sauter au bon moment (Parfait ou Bien) fait monter un combo jusqu'à ×2 de gain.</li>
+            <li lang="en"><b>Rhythm running.</b> Notes slide with the belt: jumping on time (Perfect or Good) builds a combo up to a ×2 gain.</li>
+            <li lang="fr"><b>Course synchronisée.</b> 5 couloirs, murs laser, haies, plaques turbo, départ parfait et faux départ, place en direct et podium, avec contrôle anti-téléportation côté serveur.</li>
+            <li lang="en"><b>Server-synced races.</b> 5 lanes, laser walls, hurdles, boost pads, perfect starts and false starts, live position and podium, with server-side anti-teleport checks.</li>
+            <li lang="fr"><b>NEON FLEX.</b> Une course sur quatre, tout le serveur part dans une arène néon : chacun monte sur scène, les autres tapent HYPE, et le plus hypé devient FLEX KING avec sa statue géante dans le hall.</li>
+            <li lang="en"><b>NEON FLEX.</b> One race in four, the whole server moves to a neon arena: each player takes the stage, the others hit HYPE, and the most hyped becomes FLEX KING with a giant statue in the hall.</li>
+            <li lang="fr"><b>Décor construit par script.</b> Hall, ville néon et 9 zones de piste, chacune avec son ciel et son décor : lave, nuages, planètes, icebergs, éclairs, cristaux, tombes, fûts toxiques.</li>
+            <li lang="en"><b>Script-built world.</b> The hall, a neon city and 9 track zones, each with its own sky and set: lava, clouds, planets, icebergs, lightning, crystals, graves, toxic barrels.</li>
+            <li lang="fr"><b>Progression.</b> Tapis débloqués par la vitesse, 9 traînées, renaissance, 3 quêtes du jour, connexion sur 7 jours, cadeau toutes les 5 minutes, codes et bonus entre amis.</li>
+            <li lang="en"><b>Progression.</b> Treadmills unlocked by speed, 9 trails, rebirths, 3 daily quests, a 7-day login reward, a gift every 5 minutes, codes and a friends bonus.</li>
+            <li lang="fr"><b>Prêt pour la boutique.</b> 4 Game Passes et 12 Developer Products, bonus Premium, tutoriel en 4 étapes et tout le texte en français et en anglais.</li>
+            <li lang="en"><b>Store-ready.</b> 4 Game Passes and 12 Developer Products, a Premium bonus, a 4-step tutorial and every line of text in French and English.</li>
+          </ul>
+        </article>
+
+        <!-- Tycoon Samouraï -->
+        <article class="project" id="tycoon" data-spy="tycoon" style="--g: var(--c-tycoon)">
+          <header class="p-head">
+            <div class="p-title">
+              <svg class="cube"><use href="#i-part"/></svg>
+              <h3>Tycoon Samouraï</h3>
+              <span class="pill"><span lang="fr">En développement avancé</span><span lang="en">Late development</span></span>
+            </div>
+            <p class="p-tag"><span lang="fr">Tycoon et combat PvP dans le Japon féodal</span><span lang="en">Tycoon and PvP combat in feudal Japan</span></p>
+          </header>
+          <div class="p-body">
+            <div class="media" data-gallery>
+              <div class="stage sel">
+                <video class="loop" muted loop playsinline preload="none" poster="img/v/tycoon.jpg" data-src="img/v/tycoon.mp4" aria-label="Tycoon Samouraï, extrait vidéo"></video>
+                <img alt="" hidden>
+              </div>
+              <div class="thumbs">
+                <button type="button" aria-current="true" data-kind="video" data-fr="Le village, le Grand Temple, un combat contre un Oni et la base du clan du Phénix." data-en="The village, the Great Temple, a fight with an Oni and the Phoenix clan base."><img src="img/v/tycoon.jpg" alt="" loading="lazy"><span class="vid-mark"><svg><use href="#i-play"/></svg><span lang="fr">Vidéo</span><span lang="en">Video</span></span></button>
+                <button type="button" aria-current="false" data-img="img/ty-menu.jpg" data-fr="Le menu principal : récompenses du jour, clans, forge, arsenal et techniques." data-en="The main menu: daily rewards, clans, forge, arsenal and techniques."><img src="img/t/ty-menu.jpg" alt="Menu principal" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/tycoon-arsenal-ui.jpg" data-fr="L'arsenal : 29 armes en 6 styles de combat." data-en="The arsenal: 29 weapons across 6 fighting styles."><img src="img/t/tycoon-arsenal-ui.jpg" alt="Arsenal" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/ty-combat.jpg" data-fr="Combat contre un Oni, l'un des 4 ennemis avec IA et réapparition." data-en="Fighting an Oni, one of 4 enemies with AI and respawn."><img src="img/t/ty-combat.jpg" alt="Combat contre un Oni" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/tycoon-base-phenix.jpg" data-fr="La base du clan du Phénix Rouge, prête à être prise." data-en="The Red Phoenix clan base, ready to be claimed."><img src="img/t/tycoon-base-phenix.jpg" alt="Base du clan du Phénix" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/tycoon-temple.jpg" data-fr="Les 8 bases de clans autour du Grand Temple." data-en="The 8 clan bases around the Great Temple."><img src="img/t/tycoon-temple.jpg" alt="Grand Temple" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/tycoon-arene-shogun.jpg" data-fr="L'arène du Shogun, une des 3 arènes PvP." data-en="The Shogun arena, one of 3 PvP arenas."><img src="img/t/tycoon-arene-shogun.jpg" alt="Arène du Shogun" loading="lazy"></button>
+              </div>
+              <p class="caption" data-cap></p>
+            </div>
+            <aside class="props" aria-label="Propriétés">
+              <div class="pane-head"><span lang="fr">Propriétés</span><span lang="en">Properties</span><b>TycoonSamourai</b></div>
+              <div class="prop-group"><p><span lang="fr">Jeu</span><span lang="en">Game</span></p>
+                <dl>
+                  <dt>Genre</dt><dd><span lang="fr">Tycoon, combat PvP</span><span lang="en">Tycoon, PvP combat</span></dd>
+                  <dt>Clans</dt><dd><span lang="fr">8, avec base et pouvoir</span><span lang="en">8, each with a base and power</span></dd>
+                  <dt><span lang="fr">Armes</span><span lang="en">Weapons</span></dt><dd><span lang="fr">29 en 6 styles</span><span lang="en">29 in 6 styles</span></dd>
+                  <dt><span lang="fr">Ennemis</span><span lang="en">Enemies</span></dt><dd><span lang="fr">4 Oni avec IA</span><span lang="en">4 Oni with AI</span></dd>
+                </dl>
+              </div>
+              <div class="prop-group"><p>Code</p>
+                <dl>
+                  <dt><span lang="fr">Lignes Luau</span><span lang="en">Luau lines</span></dt><dd class="num"><span lang="fr">9 700</span><span lang="en">9,700</span></dd>
+                  <dt><span lang="fr">Menus</span><span lang="en">Menus</span></dt><dd><span lang="fr">13, tout en code</span><span lang="en">13, all in code</span></dd>
+                  <dt><span lang="fr">Plateformes</span><span lang="en">Platforms</span></dt><dd><span lang="fr">PC, mobile, manette</span><span lang="en">PC, mobile, gamepad</span></dd>
+                </dl>
+              </div>
+            </aside>
+          </div>
+          <p class="pitch">
+            <span lang="fr">Japon féodal : 8 clans, chacun avec sa maison sur 3 étages, son animal et son pouvoir. Chaque joueur construit la base de son clan pour gagner des Ryō, s'équipe à la forge et se bat au village ou dans les arènes.</span>
+            <span lang="en">Feudal Japan: 8 clans, each with a 3-floor house, an animal and a special power. Each player builds their clan base to earn Ryō, gears up at the forge and fights in the village or the arenas.</span>
+          </p>
+          <ul class="features">
+            <li lang="fr"><b>Boucle tycoon.</b> 27 achats par base avec prérequis, générateurs, coffre à vider, lasers et gardiens contre les intrus.</li>
+            <li lang="en"><b>Tycoon loop.</b> 27 purchases per base with prerequisites, generators, a collector, lasers and guardians against intruders.</li>
+            <li lang="fr"><b>Combat côté serveur.</b> 29 armes en 6 styles, combo de 3 coups, garde directionnelle, parade, bris de garde et esquive.</li>
+            <li lang="en"><b>Server-side combat.</b> 29 weapons in 6 styles, 3-hit combos, directional block, parry, guard break and dodge.</li>
+            <li lang="fr"><b>Pouvoirs de clan.</b> 8 pouvoirs avec VFX texturés, préchargés, et un mode performance pour mobile.</li>
+            <li lang="en"><b>Clan powers.</b> 8 powers with preloaded textured VFX and a performance mode for mobile.</li>
+            <li lang="fr"><b>Arènes et ennemis.</b> 3 arènes PvP par portails, 4 Oni avec IA qui patrouillent, poursuivent et réapparaissent.</li>
+            <li lang="en"><b>Arenas and enemies.</b> 3 PvP arenas through portals, 4 Oni with AI that patrol, chase and respawn.</li>
+            <li lang="fr"><b>Méta-jeu.</b> Niveaux 1 à 100, quêtes du jour, roue, forge +10, coffres, renaissance et événement Halloween.</li>
+            <li lang="en"><b>Meta game.</b> Levels 1–100, daily quests, a wheel, +10 forge, chests, rebirth and a Halloween event.</li>
+            <li lang="fr"><b>Sauvegarde et classements.</b> DataStore avec nouvelles tentatives, 3 classements mondiaux en OrderedDataStore, boutique à 10 onglets et aperçus 3D.</li>
+            <li lang="en"><b>Saves and leaderboards.</b> DataStore with retries, 3 global leaderboards on OrderedDataStore, a 10-tab shop and 3D previews.</li>
+          </ul>
+        </article>
+
+        <!-- Steal a Meteor -->
+        <article class="project" id="meteor" data-spy="meteor" style="--g: var(--c-meteor)">
+          <header class="p-head">
+            <div class="p-title">
+              <svg class="cube"><use href="#i-part"/></svg>
+              <h3>Steal a Meteor</h3>
+              <span class="pill"><span lang="fr">En développement</span><span lang="en">In development</span></span>
+            </div>
+            <p class="p-tag"><span lang="fr">Attraper des météorites, les protéger des voleurs et les faire éclore</span><span lang="en">Catch meteors, keep them from thieves and hatch them</span></p>
+          </header>
+          <div class="p-body">
+            <div class="media" data-gallery>
+              <div class="stage sel">
+                <video class="loop" muted loop playsinline preload="none" poster="img/v/meteor.jpg" data-src="img/v/meteor.mp4" aria-label="Steal a Meteor, extrait vidéo"></video>
+                <img alt="" hidden>
+              </div>
+              <div class="thumbs">
+                <button type="button" aria-current="true" data-kind="video" data-fr="Un stand rempli de créatures cosmiques, la nuit puis le jour." data-en="A stand full of cosmic pets, at night then by day."><img src="img/v/meteor.jpg" alt="" loading="lazy"><span class="vid-mark"><svg><use href="#i-play"/></svg><span lang="fr">Vidéo</span><span lang="en">Video</span></span></button>
+                <button type="button" aria-current="false" data-img="img/sam-jour.jpg" data-fr="Chaque créature affiche sa mutation, sa taille, son poids et ce qu'elle rapporte." data-en="Each pet shows its mutation, size, weight and earnings."><img src="img/t/sam-jour.jpg" alt="Créatures sur un stand" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/sam-grue.jpg" data-fr="Le stand de nuit, avec ses socles classés par rareté." data-en="The stand at night, its pedestals sorted by rarity."><img src="img/t/sam-grue.jpg" alt="Stand de nuit" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/sam-nuit.jpg" data-fr="La grande place et la statue du record du serveur." data-en="The main plaza and the server record statue."><img src="img/t/sam-nuit.jpg" alt="Grande place" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/sam-stand.jpg" data-fr="Créatures Géantes et Colossales, avec leurs mutations." data-en="Giant and Colossal pets with their mutations."><img src="img/t/sam-stand.jpg" alt="Créatures géantes" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/sam-aube.jpg" data-fr="Le cycle jour et nuit, ici au lever du jour." data-en="The day and night cycle, here at dawn."><img src="img/t/sam-aube.jpg" alt="Lever du jour" loading="lazy"></button>
+              </div>
+              <p class="caption" data-cap></p>
+            </div>
+            <aside class="props" aria-label="Propriétés">
+              <div class="pane-head"><span lang="fr">Propriétés</span><span lang="en">Properties</span><b>StealAMeteor</b></div>
+              <div class="prop-group"><p><span lang="fr">Jeu</span><span lang="en">Game</span></p>
+                <dl>
+                  <dt>Genre</dt><dd><span lang="fr">Collection, incrémental</span><span lang="en">Collecting, idle</span></dd>
+                  <dt>MaxPlayers</dt><dd class="num">8</dd>
+                  <dt><span lang="fr">Stands</span><span lang="en">Stands</span></dt><dd><span lang="fr">1 par joueur</span><span lang="en">1 per player</span></dd>
+                  <dt><span lang="fr">Plateformes</span><span lang="en">Platforms</span></dt><dd><span lang="fr">Mobile, PC, manette</span><span lang="en">Mobile, PC, gamepad</span></dd>
+                </dl>
+              </div>
+              <div class="prop-group"><p>Code</p>
+                <dl>
+                  <dt><span lang="fr">Lignes Luau</span><span lang="en">Luau lines</span></dt><dd class="num"><span lang="fr">5 060</span><span lang="en">5,060</span></dd>
+                  <dt>Tests</dt><dd><span lang="fr">33 vérifications</span><span lang="en">33 checks</span></dd>
+                  <dt><span lang="fr">Sauvegarde</span><span lang="en">Saves</span></dt><dd>ProfileStore</dd>
+                </dl>
+              </div>
+            </aside>
+          </div>
+          <p class="pitch">
+            <span lang="fr">Des météorites tombent du ciel : on les attrape au vol ou on les déterre, on les ramène à son stand sans se les faire voler, puis elles éclosent en créatures cosmiques qui rapportent de la Poussière d'étoile.</span>
+            <span lang="en">Meteors fall from the sky: catch them mid-air or dig them out, carry them back to your stand without getting robbed, then hatch them into cosmic pets that earn Stardust.</span>
+          </p>
+          <ul class="features">
+            <li lang="fr"><b>Attraper ou creuser.</b> Un gros bouton au bon moment pour l'attraper en vol, sinon on la déterre de son cratère. Le jetpack aide à rentrer vite.</li>
+            <li lang="en"><b>Catch or dig.</b> One big button at the right moment to catch it mid-air, otherwise dig it out of its crater. The jetpack helps you get home fast.</li>
+            <li lang="fr"><b>Vol entre joueurs.</b> Maintenir E près d'un joueur qui porte une météorite pour la lui prendre : chaque trajet vers son stand devient une course.</li>
+            <li lang="en"><b>Player theft.</b> Hold E next to a player carrying a meteor to take it: every trip back to your stand turns into a race.</li>
+            <li lang="fr"><b>Événements du ciel.</b> Comète géante, pluie d'étoiles filantes, tempête solaire, aurore, éclipse et cycle jour et nuit.</li>
+            <li lang="en"><b>Sky events.</b> A giant comet, meteor showers, solar storms, auroras, eclipses and a day and night cycle.</li>
+            <li lang="fr"><b>Tailles et mutations.</b> De Mini à Colossale, mutations Solaire, Aurore ou Cométaire : chaque créature affiche sa taille, son poids et ses gains.</li>
+            <li lang="en"><b>Sizes and mutations.</b> From Mini to Colossal, Solar, Aurora or Comet mutations: every pet shows its size, weight and earnings.</li>
+            <li lang="fr"><b>Style briques à tenons.</b> Créatures low-poly générées en morceaux avec des parties en néon, sol et décor à tenons, carte construite par script.</li>
+            <li lang="en"><b>Studded-brick style.</b> Low-poly pets generated in pieces with neon parts, studded ground and props, and a map built by script.</li>
+            <li lang="fr"><b>Testé dans Studio.</b> 33 vérifications automatiques de toute la boucle, tutoriel guidé par un personnage, textes en français et en anglais.</li>
+            <li lang="en"><b>Tested in Studio.</b> 33 automated checks across the whole loop, a character-guided tutorial, text in French and English.</li>
+          </ul>
+        </article>
+
+        <!-- Prototype Pouvoir -->
+        <article class="project" id="pouvoir" data-spy="pouvoir" style="--g: var(--c-power)">
+          <header class="p-head">
+            <div class="p-title">
+              <svg class="cube"><use href="#i-part"/></svg>
+              <h3><span lang="fr">Attaque « Pouvoir »</span><span lang="en">“Pouvoir” special attack</span></h3>
+              <span class="pill"><span lang="fr">Prototype</span><span lang="en">Prototype</span></span>
+            </div>
+            <p class="p-tag"><span lang="fr">Une attaque spéciale cinématique d'environ 15 secondes, recréée d'après une vidéo de référence</span><span lang="en">A cinematic special attack of about 15 seconds, recreated from a reference video</span></p>
+          </header>
+          <div class="p-body">
+            <div class="media" data-gallery>
+              <div class="stage sel">
+                <video class="loop" muted loop playsinline preload="none" poster="img/pouvoir-1.jpg" data-src="img/pouvoir.mp4" aria-label="Attaque Pouvoir, extrait vidéo"></video>
+                <img alt="" hidden>
+              </div>
+              <div class="thumbs">
+                <button type="button" aria-current="true" data-kind="video" data-fr="Extrait de la séquence : tous les effets sont générés en code." data-en="Clip of the sequence: every effect is generated in code."><img src="img/t/pouvoir-1.jpg" alt="" loading="lazy"><span class="vid-mark"><svg><use href="#i-play"/></svg><span lang="fr">Vidéo</span><span lang="en">Video</span></span></button>
+                <button type="button" aria-current="false" data-img="img/pouvoir-1.jpg" data-fr="Cercle magique dessiné en code, sans image importée." data-en="A magic circle drawn in code, with no imported image."><img src="img/t/pouvoir-1.jpg" alt="Cercle magique" loading="lazy"></button>
+                <button type="button" aria-current="false" data-img="img/pouvoir-2.jpg" data-fr="L'explosion finale, avec Bloom et ColorCorrection." data-en="The final blast, with Bloom and ColorCorrection."><img src="img/t/pouvoir-2.jpg" alt="Explosion finale" loading="lazy"></button>
+              </div>
+              <p class="caption" data-cap></p>
+            </div>
+            <aside class="props" aria-label="Propriétés">
+              <div class="pane-head"><span lang="fr">Propriétés</span><span lang="en">Properties</span><b>Pouvoir</b></div>
+              <div class="prop-group"><p>Code</p>
+                <dl>
+                  <dt><span lang="fr">Lignes Luau</span><span lang="en">Luau lines</span></dt><dd class="num">527</dd>
+                  <dt>Phases</dt><dd><span lang="fr">6, minutées</span><span lang="en">6, timed</span></dd>
+                  <dt><span lang="fr">Images importées</span><span lang="en">Imported images</span></dt><dd class="num">0</dd>
+                </dl>
+              </div>
+            </aside>
+          </div>
+          <ul class="features">
+            <li lang="fr"><b>Le serveur décide.</b> Recharge par joueur, position prise côté serveur, dégâts appliqués une seule fois par cible au moment de l'explosion.</li>
+            <li lang="en"><b>The server decides.</b> Per-player cooldown, server-side position, damage applied once per target when the blast lands.</li>
+            <li lang="fr"><b>Les clients affichent.</b> Tous les effets tournent en local, ce qui économise le réseau.</li>
+            <li lang="en"><b>Clients render.</b> Every effect runs locally, which saves bandwidth.</li>
+            <li lang="fr"><b>Cercles magiques en code.</b> Anneaux, hexagramme, chiffres romains et 36 runes, sans aucune image importée.</li>
+            <li lang="en"><b>Magic circles in code.</b> Rings, hexagram, roman numerals and 36 runes, with no imported images.</li>
+            <li lang="fr"><b>Mise en scène.</b> Caméra cinématique scriptée, secousse, passage à la nuit, Bloom et ColorCorrection, puis remise en place garantie par pcall.</li>
+            <li lang="en"><b>Staging.</b> Scripted cinematic camera, screen shake, a switch to night, Bloom and ColorCorrection, then a cleanup guaranteed by pcall.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="side-projects">
+        <div class="side" style="--g: var(--select)">
+          <span class="pill"><span lang="fr">En conception</span><span lang="en">In design</span></span>
+          <h3>Floor Zero</h3>
+          <p>
+            <span lang="fr">Jeu d'extraction coopératif à 10 étages : un monstre qui accélère à chaque étage, du butin pondéré par rareté et des améliorations permanentes. Projet structuré pour Rojo avec des services séparés (données, étages, IA, boutique, monétisation).</span>
+            <span lang="en">A 10-floor co-op extraction game: a monster that speeds up every floor, rarity-weighted loot and permanent upgrades. Built for Rojo with separate services (data, floors, AI, shop, monetization).</span>
+          </p>
+        </div>
+        <div class="side" style="--g: var(--ok)">
+          <span class="pill"><span lang="fr">Outillage</span><span lang="en">Tooling</span></span>
+          <h3><span lang="fr">Studio piloté depuis le terminal</span><span lang="en">Studio driven from the terminal</span></h3>
+          <p>
+            <span lang="fr">Un client Node.js qui envoie les scripts dans Studio, construit les cartes, lance les tests en mode Play et prend des captures. C'est comme ça que je teste chaque système avant de le livrer.</span>
+            <span lang="en">A Node.js client that pushes scripts into Studio, builds maps, runs tests in Play mode and takes screenshots. That is how I test every system before delivering it.</span>
+          </p>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="hazard-band" aria-hidden="true"></div>
-
-  <section class="block" id="competences" data-depth="320" data-label-fr="COMPÉTENCES" data-label-en="SKILLS">
+  <!-- ======================= COMPÉTENCES ======================= -->
+  <section id="competences" data-spy="competences">
     <div class="wrap">
       <div class="sec-head">
-        <div>
-          <p class="depth">−320 m</p>
-          <h2 lang="fr">Ce que je fais pour votre jeu</h2>
-          <h2 lang="en">What I can do for your game</h2>
-        </div>
-        <p lang="fr">Du petit correctif au système complet. Chaque compétence ci-dessous est utilisée dans les projets plus bas.</p>
-        <p lang="en">From a quick fix to a full system. Every skill below is used in the projects further down.</p>
+        <h2><span lang="fr">Tout ce qu'un jeu Roblox demande</span><span lang="en">Everything a Roblox game needs</span></h2>
+        <p>
+          <span lang="fr">Du petit correctif au système complet. Le tableau montre dans quel projet chaque compétence est utilisée.</span>
+          <span lang="en">From a quick fix to a full system. The table shows which project uses each skill.</span>
+        </p>
       </div>
 
-      <div class="skills">
-        <article class="skill">
-          <h3><span lang="fr">Scripting &amp; architecture</span><span lang="en">Scripting &amp; architecture</span></h3>
-          <p lang="fr">Code Luau modulaire, séparation client/serveur propre, ModuleScripts partagés et configuration centralisée.</p>
-          <p lang="en">Modular Luau, clean client/server split, shared ModuleScripts and a single config file.</p>
-          <ul><li>Luau</li><li>ModuleScripts</li><li>RemoteEvents</li><li>RemoteFunctions</li><li>Attributes</li></ul>
-        </article>
-        <article class="skill">
-          <h3><span lang="fr">Systèmes de jeu</span><span lang="en">Game systems</span></h3>
-          <p lang="fr">Tycoon, collection de cartes, inventaire, quêtes, niveaux, succès, coffres, forge, événements saisonniers, classements.</p>
-          <p lang="en">Tycoons, card collecting, inventory, quests, levels, achievements, chests, crafting, seasonal events, leaderboards.</p>
-          <ul><li>Tycoon</li><li>Collection</li><li>Progression</li><li>Économie</li><li>Events</li></ul>
-        </article>
-        <article class="skill">
-          <h3><span lang="fr">Combat &amp; VFX</span><span lang="en">Combat &amp; VFX</span></h3>
-          <p lang="fr">Hitbox côté serveur, combos, garde, parade, esquive, pouvoirs, et effets en Beams, Trails et particules.</p>
-          <p lang="en">Server-side hitboxes, combos, block, parry, dodge, special powers, and effects with Beams, Trails and particles.</p>
-          <ul><li>Hitbox</li><li>ParticleEmitter</li><li>Beam</li><li>Caméra</li></ul>
-        </article>
-        <article class="skill">
-          <h3><span lang="fr">IA de PNJ</span><span lang="en">NPC AI</span></h3>
-          <p lang="fr">Monstres et ennemis avec machine à états, champ de vision par raycast, ouïe, poursuite et fouille.</p>
-          <p lang="en">Monsters and enemies with state machines, raycast line of sight, hearing, chase and search.</p>
-          <ul><li>PathfindingService</li><li>Raycast</li><li>State machine</li></ul>
-        </article>
-        <article class="skill">
-          <h3><span lang="fr">Interfaces (UI/UX)</span><span lang="en">UI / UX</span></h3>
-          <p lang="fr">Menus, boutiques, HUD, écrans de chargement et aperçus 3D, adaptés au PC, au mobile et à la manette.</p>
-          <p lang="en">Menus, shops, HUDs, loading screens and 3D previews for PC, mobile and gamepad.</p>
-          <ul><li>ViewportFrame</li><li>UIScale</li><li>TweenService</li><li>Mobile</li></ul>
-        </article>
-        <article class="skill">
-          <h3><span lang="fr">Multijoueur</span><span lang="en">Multiplayer</span></h3>
-          <p lang="fr">Lobbies, files d'attente par équipe, téléportation de groupe vers des serveurs réservés, échanges sécurisés entre joueurs.</p>
-          <p lang="en">Lobbies, team queues, group teleports to reserved servers, and secure player-to-player trading.</p>
-          <ul><li>TeleportService</li><li>Reserved servers</li><li>TeleportData</li></ul>
-        </article>
-        <article class="skill">
-          <h3><span lang="fr">Données &amp; monétisation</span><span lang="en">Data &amp; monetization</span></h3>
-          <p lang="fr">Sauvegardes qui protègent la progression, classements mondiaux, Developer Products et Game Passes.</p>
-          <p lang="en">Saves that protect player progress, global leaderboards, Developer Products and Game Passes.</p>
-          <ul><li>DataStore</li><li>ProfileService</li><li>OrderedDataStore</li><li>ProcessReceipt</li></ul>
-        </article>
-        <article class="skill">
-          <h3><span lang="fr">Build &amp; level design</span><span lang="en">Building &amp; level design</span></h3>
-          <p lang="fr">Niveaux entiers générés par script, éclairage, ambiance sonore et narration par le décor. Vignettes, icônes et teasers rendus dans Blender.</p>
-          <p lang="en">Whole levels generated by script, lighting, ambient sound and environmental storytelling. Thumbnails, icons and teasers rendered in Blender.</p>
-          <ul><li>Terrain</li><li>Lighting</li><li>Horreur</li><li>Vignettes</li></ul>
-        </article>
-        <article class="skill">
-          <h3><span lang="fr">Animation &amp; rigging</span><span lang="en">Animation &amp; rigging</span></h3>
-          <p lang="fr">Rigs Motor6D montés en code et animations procédurales : démarche, tentacules, poses de combat.</p>
-          <p lang="en">Motor6D rigs built in code and procedural animation: walk cycles, tentacles, combat poses.</p>
-          <ul><li>Motor6D</li><li>R15 / R6</li><li>Procédural</li></ul>
-        </article>
+      <div class="matrix" id="matrix">
+        <div class="m-row m-head" aria-hidden="true">
+          <span><span lang="fr">Compétence</span><span lang="en">Skill</span></span>
+          <span style="color: var(--c-pack)">Pack Opener</span>
+          <span style="color: var(--c-tread)">Treadmill</span>
+          <span style="color: var(--c-tycoon)">Tycoon</span>
+          <span style="color: var(--c-meteor)">Meteor</span>
+          <span style="color: var(--c-power)">Pouvoir</span>
+        </div>
+        <!-- rangées générées depuis SKILLS (script en bas de page) -->
       </div>
 
       <div class="tools">
-        <strong lang="fr">Outils</strong><strong lang="en">Tools</strong>
-        <span>Roblox Studio</span><span>Luau</span><span>Rojo</span><span>Git</span><span>Node.js</span><span>VS Code</span><span>Blender</span><span>Remotion</span>
+        <p><span lang="fr">Outils</span><span lang="en">Tools</span></p>
+        <span>Roblox Studio</span><span>Luau</span><span>Rojo</span><span>Git</span><span>Node.js</span><span>VS Code</span><span>Blender</span>
       </div>
     </div>
   </section>
 
-  <section class="block" id="projets" data-depth="1200" data-label-fr="PROJETS" data-label-en="PROJECTS">
+  <!-- ======================= MÉTHODE ======================= -->
+  <section id="methode" data-spy="methode" style="padding-top: 0">
     <div class="wrap">
       <div class="sec-head">
-        <div>
-          <p class="depth">−1 200 m</p>
-          <h2 lang="fr">Projets</h2>
-          <h2 lang="en">Projects</h2>
-        </div>
-        <p lang="fr">Des jeux que j'ai conçus et codés seul. Les captures viennent de Roblox Studio et des tests en jeu, les rendus de Blender.</p>
-        <p lang="en">Games I designed and coded on my own. Screenshots come from Roblox Studio and in-game tests, renders from Blender.</p>
+        <h2><span lang="fr">Comment je travaille</span><span lang="en">How I work</span></h2>
+        <p>
+          <span lang="fr">Une tâche claire, un résultat testé, et un code que votre équipe peut reprendre.</span>
+          <span lang="en">A clear task, a tested result, and code your team can pick up.</span>
+        </p>
       </div>
-
-      <!-- Projet : HADAL, jeu d'horreur sous-marin -->
-      <article class="project" id="abysse">
-        <div class="media" data-gallery>
-          <figure class="screen" style="margin:0">
-            <img data-main src="img/hadal-vignette.jpg" alt="Vignette de HADAL : le monstre du niveau 1 dans le sas d'un sous-marin" width="1600" height="900">
-            <figcaption data-cap><span lang="fr">La vignette du jeu, rendue dans Blender avec le vrai monstre du niveau 1 exporté de Studio.</span><span lang="en">The game thumbnail, rendered in Blender with the real level 1 monster exported from Studio.</span></figcaption>
-          </figure>
-          <div class="thumbs">
-            <button type="button" aria-current="true" data-src="img/hadal-vignette.jpg" data-fr="La vignette du jeu, rendue dans Blender avec le vrai monstre du niveau 1 exporté de Studio." data-en="The game thumbnail, rendered in Blender with the real level 1 monster exported from Studio."><img src="img/hadal-vignette.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/abysse-hall.jpg" data-fr="Le hall du lobby et ses sas d'équipe, où les joueurs forment leur groupe." data-en="The lobby hall and its team airlocks, where players form their group."><img src="img/abysse-hall.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/abysse-sonar.jpg" data-fr="Le poste de contrôle : sonar, état des sas et alerte de coque racontent l'histoire." data-en="The control station: sonar, airlock status and hull warnings tell the story."><img src="img/abysse-sonar.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/abysse-sas-trio.jpg" data-fr="Sas TRIO : compteur de joueurs en direct et porte blindée." data-en="TRIO airlock: live player counter and armored door."><img src="img/abysse-sas-trio.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/abysse-equipe.jpg" data-fr="L'aile des équipes de 4, avec le graffiti « NE DESCENDEZ PAS »." data-en="The 4-player wing, with the “DON'T GO DOWN” graffiti."><img src="img/abysse-equipe.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/abysse-bassin.jpg" data-fr="Le sous-marin AB-07 suspendu au-dessus du bassin." data-en="The AB-07 submarine hanging over the pool."><img src="img/abysse-bassin.jpg" alt="" loading="lazy"></button>
-          </div>
-          <div class="teaser">
-            <video src="img/hadal-teaser.mp4" poster="img/hadal-teaser.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Teaser vertical de HADAL : plongée du sous-marin Nautilus-IV, coursive et apparition du monstre"></video>
-            <div>
-              <p class="teaser-label" lang="fr">Teaser TikTok · 19 s</p>
-              <p class="teaser-label" lang="en">TikTok teaser · 19 s</p>
-              <p lang="fr">Plans 3D rendus dans Blender (la plongée du <i>Nautilus-IV</i>, la coursive et le monstre), puis montage, textes et sons assemblés en code avec Remotion.</p>
-              <p lang="en">3D shots rendered in Blender (the <i>Nautilus-IV</i> dive, the corridor and the monster), then editing, titles and sound put together in code with Remotion.</p>
-            </div>
-          </div>
-        </div>
-        <div class="info">
-          <div class="tags">
-            <span class="chip live"><span lang="fr">Lobby + niveau 1 publiés</span><span lang="en">Lobby + level 1 published</span></span>
-            <span class="chip"><span lang="fr">Niveaux 2 et 3 construits</span><span lang="en">Levels 2 and 3 built</span></span>
-            <span class="chip"><span lang="fr">Horreur coop · 1 à 4 joueurs</span><span lang="en">Co-op horror · 1–4 players</span></span>
-          </div>
-          <h3>HADAL
-            <small lang="fr">« Trois plongées. Une seule remontée. » Un lobby et trois niveaux : le sous-marin <i>Nautilus-IV</i>, le yacht <i>Leviathan</i> et la station Abysse-7, par 8 012 m de fond.</small>
-            <small lang="en">“Three dives. Only one way up.” A lobby and three levels: the <i>Nautilus-IV</i> submarine, the <i>Leviathan</i> yacht and the Abysse-7 station, 8,012 m down.</small>
-          </h3>
-          <p lang="fr">L'équipe se forme dans un sas, part dans son propre serveur, puis fouille le niveau pour trouver badges, fusibles et code du coffre en se cachant des monstres. Chaque niveau réussi débloque le suivant.</p>
-          <p lang="en">The team forms in an airlock, travels to its own server, then searches the level for badges, fuses and a safe code while hiding from monsters. Each level cleared unlocks the next.</p>
-          <ul class="systems" lang="fr">
-            <li><span><b>Matchmaking par sas.</b> 8 sas (solo à 4 joueurs), comptes à rebours, puis téléportation du groupe vers un serveur réservé, au niveau le plus haut débloqué par toute l'équipe.</span></li>
-            <li><span><b>Des monstres différents à chaque niveau.</b> Vue en cône vérifiée par raycast, ouïe, fouille et pathfinding ; au niveau 2, une Sirène qui glisse sans bruit, au niveau 3, le Pêcheur qui entend chaque fusible.</span></li>
-            <li><span><b>Système d'horreur commun.</b> Lampe torche à batterie, peur (cœur, souffle, musique de poursuite), frayeurs scriptées et pannes de courant.</span></li>
-            <li><span><b>Énigmes tirées au sort.</b> Badges qui ouvrent les portes, code à 4 chiffres différent à chaque partie, fusibles cachés au hasard.</span></li>
-            <li><span><b>Cachettes et armes.</b> Armoires, casiers et lits avec caméra dans la fente ; armes contrôlées par le serveur.</span></li>
-            <li><span><b>Progression et boutique.</b> Progression sauvegardée en DataStore ; résurrection, pansements et 2 Game Passes en Robux.</span></li>
-            <li><span><b>Décors générés par script</b> : un sous-marin de 1 926 studs, un yacht de 2 180 studs sur 3 ponts et une station en étoile.</span></li>
-            <li><span><b>Tests automatisés en jeu</b> et outil Node.js qui pilote Roblox Studio depuis le terminal.</span></li>
-          </ul>
-          <ul class="systems" lang="en">
-            <li><span><b>Airlock matchmaking.</b> 8 airlocks (solo to 4 players), countdowns, then a group teleport to a reserved server, at the highest level the whole team has unlocked.</span></li>
-            <li><span><b>Different monsters in every level.</b> Raycast-checked vision cone, hearing, search and pathfinding; in level 2 a Siren that glides without a sound, in level 3 the Angler who hears every fuse.</span></li>
-            <li><span><b>Shared horror system.</b> Battery flashlight, fear (heartbeat, breathing, chase music), scripted jump scares and power cuts.</span></li>
-            <li><span><b>Randomized puzzles.</b> Badges that open doors, a 4-digit code that changes every run, fuses hidden at random.</span></li>
-            <li><span><b>Hiding spots and guns.</b> Wardrobes, lockers and beds with a peek-through camera; server-authoritative guns.</span></li>
-            <li><span><b>Progression and shop.</b> Progress saved in DataStore; revive, bandages and 2 Game Passes for Robux.</span></li>
-            <li><span><b>Script-generated maps</b>: a 1,926-stud submarine, a 2,180-stud three-deck yacht and a star-shaped station.</span></li>
-            <li><span><b>Automated in-game tests</b> and a Node.js tool that drives Roblox Studio from the terminal.</span></li>
-          </ul>
-          <div class="readouts">
-            <div><b>16 400</b><span lang="fr">lignes de Luau</span><span lang="en">lines of Luau</span></div>
-            <div><b>4</b><span lang="fr">places reliées</span><span lang="en">linked places</span></div>
-            <div><b>166</b><span lang="fr">cachettes au niveau 1</span><span lang="en">hiding spots in level 1</span></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Projet : Pack Opener & Collector -->
-      <article class="project flip" id="cartes">
-        <div class="media" data-gallery>
-          <figure class="screen" style="margin:0">
-            <img data-main src="img/pack-cartes.jpg" alt="Six cartes de créatures originales, de la Commune à la Secrète Or" width="1600" height="900" loading="lazy">
-            <figcaption data-cap><span lang="fr">Des cartes de toutes les raretés, de la Commune à la Secrète Or.</span><span lang="en">Cards across every rarity, from Common to Gold Secret.</span></figcaption>
-          </figure>
-          <div class="thumbs">
-            <button type="button" aria-current="true" data-src="img/pack-cartes.jpg" data-fr="Des cartes de toutes les raretés, de la Commune à la Secrète Or." data-en="Cards across every rarity, from Common to Gold Secret."><img src="img/pack-cartes.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/pack-hud.jpg" data-fr="En jeu : menus, sélecteur de boosters, ouverture automatique et compteur de garantie Ultra Rare." data-en="In game: menus, booster picker, auto-open and the Ultra Rare pity counter."><img src="img/pack-hud.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/pack-reveal.jpg" data-fr="Révélation d'une Holo Rare, avec badges « Nouveau » (première version des cartes, dessinées en code)." data-en="Revealing a Holo Rare with “New” badges (first version of the cards, drawn in code)."><img src="img/pack-reveal.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/pack-shiny.jpg" data-fr="Chaque carte existe en version normale et Shiny." data-en="Every card comes in a normal and a Shiny version."><img src="img/pack-shiny.jpg" alt="" loading="lazy"></button>
-          </div>
-        </div>
-        <div class="info">
-          <div class="tags">
-            <span class="chip wip"><span lang="fr">En développement</span><span lang="en">In development</span></span>
-            <span class="chip"><span lang="fr">Collection · échanges · 12 joueurs</span><span lang="en">Collecting · trading · 12 players</span></span>
-          </div>
-          <h3>Pack Opener &amp; Collector
-            <small lang="fr">Ouvrir des boosters, compléter son Créadex, échanger et exposer ses plus belles cartes à tout le serveur.</small>
-            <small lang="en">Open booster packs, complete your Créadex, trade and show off your best cards to the whole server.</small>
-          </h3>
-          <p lang="fr">Un univers original : 81 cartes, 69 créatures et 4 séries, chaque carte en version normale et Shiny. Tout le jeu tourne autour d'un reveal qui fait monter la tension selon la rareté.</p>
-          <p lang="en">An original universe: 81 cards, 69 creatures and 4 sets, each card in a normal and a Shiny version. The whole game is built around a reveal that builds tension with rarity.</p>
-          <ul class="systems" lang="fr">
-            <li><span><b>Tirage côté serveur.</b> 7 paliers de rareté, probabilités affichées en boutique, garantie Ultra Rare au 40<sup>e</sup> booster, cooldown et vérification de chaque requête.</span></li>
-            <li><span><b>Reveal en plusieurs temps.</b> Le booster tremble et se déchire, les cartes faibles se retournent en éventail, la meilleure arrive en dernier avec ralenti cinéma à partir d'Ultra Rare.</span></li>
-            <li><span><b>Échanges sécurisés.</b> Jusqu'à 8 cartes par offre, double validation avec compte à rebours, anti-arnaque et échange en une seule opération côté serveur contre la duplication.</span></li>
-            <li><span><b>Stands d'exposition.</b> 12 stands de joueurs avec 3 cartes en 3D, plus 5 classements mondiaux affichés dans la map.</span></li>
-            <li><span><b>Rétention.</b> Quêtes, série quotidienne sur 7 jours, récompenses de temps de jeu, zone AFK et coffre mystère.</span></li>
-            <li><span><b>Économie équilibrée et sauvegarde.</b> Revente calculée par rareté, profils ProfileService, Game Passes et Developer Products.</span></li>
-            <li><span><b>Interface en code</b> : boutique, classeur, échanges et quêtes, sur PC et mobile.</span></li>
-          </ul>
-          <ul class="systems" lang="en">
-            <li><span><b>Server-side rolls.</b> 7 rarity tiers, odds shown in the shop, a guaranteed Ultra Rare on the 40th pack, cooldowns and validation of every request.</span></li>
-            <li><span><b>Multi-stage reveal.</b> The pack shakes and tears open, weak cards flip in a fan, the best one lands last with cinematic slow motion from Ultra Rare up.</span></li>
-            <li><span><b>Secure trading.</b> Up to 8 cards per offer, double confirmation with a countdown, anti-scam rules and a single server-side swap that prevents duplication.</span></li>
-            <li><span><b>Showcase stands.</b> 12 player stands showing 3 cards in 3D, plus 5 global leaderboards displayed in the map.</span></li>
-            <li><span><b>Retention.</b> Quests, a 7-day daily streak, playtime rewards, an AFK zone and a mystery chest.</span></li>
-            <li><span><b>Balanced economy and saves.</b> Sell values tuned per rarity, ProfileService profiles, Game Passes and Developer Products.</span></li>
-            <li><span><b>UI built in code</b>: shop, binder, trading and quests, on PC and mobile.</span></li>
-          </ul>
-          <div class="readouts">
-            <div><b>36 000</b><span lang="fr">lignes de Luau</span><span lang="en">lines of Luau</span></div>
-            <div><b>81</b><span lang="fr">cartes originales</span><span lang="en">original cards</span></div>
-            <div><b>7</b><span lang="fr">paliers de rareté</span><span lang="en">rarity tiers</span></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Projet : Tycoon Samouraï -->
-      <article class="project" id="tycoon">
-        <div class="media" data-gallery>
-          <figure class="screen" style="margin:0">
-            <img data-main src="img/tycoon-village.jpg" alt="Vue aérienne du village et des bases de clans du Tycoon Samouraï" width="1399" height="665" loading="lazy">
-            <figcaption data-cap><span lang="fr">Les 8 bases de clans autour du Grand Temple.</span><span lang="en">The 8 clan bases around the Great Temple.</span></figcaption>
-          </figure>
-          <div class="thumbs">
-            <button type="button" aria-current="true" data-src="img/tycoon-village.jpg" data-fr="Les 8 bases de clans autour du Grand Temple." data-en="The 8 clan bases around the Great Temple."><img src="img/tycoon-village.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/tycoon-combat-ui.jpg" data-fr="En jeu : HUD, quêtes, clans, compétences et boutons tactiles BLOC et CAPACITÉ." data-en="In game: HUD, quests, clans, skills and the BLOCK and ABILITY touch buttons."><img src="img/tycoon-combat-ui.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/tycoon-arsenal-ui.jpg" data-fr="Barre d'armes, compétences et vie, katana en main." data-en="Weapon bar, skills and health, katana in hand."><img src="img/tycoon-arsenal-ui.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/tycoon-temple.jpg" data-fr="La place centrale : pagode, torii et cerisiers." data-en="The central square: pagoda, torii gates and cherry trees."><img src="img/tycoon-temple.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/tycoon-base-phenix.jpg" data-fr="La base du Clan du Phénix Rouge, avec son pad de prise et ses lasers." data-en="The Red Phoenix Clan base, with its claim pad and lasers."><img src="img/tycoon-base-phenix.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/tycoon-arene-shogun.jpg" data-fr="L'arène du Shogun, une des 3 arènes PvP." data-en="The Shogun arena, one of 3 PvP arenas."><img src="img/tycoon-arene-shogun.jpg" alt="" loading="lazy"></button>
-            <button type="button" data-src="img/tycoon-portails.jpg" data-fr="Les portails vers les arènes, avec le nombre de joueurs en direct." data-en="Portals to the arenas, with live player counts."><img src="img/tycoon-portails.jpg" alt="" loading="lazy"></button>
-          </div>
-        </div>
-        <div class="info">
-          <div class="tags">
-            <span class="chip wip"><span lang="fr">En développement avancé</span><span lang="en">Late development</span></span>
-            <span class="chip"><span lang="fr">Tycoon + combat PvP</span><span lang="en">Tycoon + PvP combat</span></span>
-          </div>
-          <h3>Tycoon Samouraï
-            <small lang="fr">Japon féodal : 8 clans, chacun avec sa maison sur 3 étages, son animal et son pouvoir.</small>
-            <small lang="en">Feudal Japan: 8 clans, each with a 3-floor house, an animal and a special power.</small>
-          </h3>
-          <p lang="fr">Chaque joueur construit la base de son clan pour gagner des Ryō, s'équipe à la forge et se bat au village ou dans les arènes.</p>
-          <p lang="en">Each player builds their clan base to earn Ryō, gears up at the forge and fights in the village or the arenas.</p>
-          <ul class="systems" lang="fr">
-            <li><span><b>Boucle tycoon</b> : 27 achats par base avec prérequis, générateurs, coffre à vider, lasers et gardiens contre les intrus.</span></li>
-            <li><span><b>Combat côté serveur</b> : 29 armes en 6 styles, combo de 3 coups, garde directionnelle, parade, bris de garde et esquive.</span></li>
-            <li><span><b>8 pouvoirs de clan</b> avec VFX texturés, préchargés, et un mode performance pour mobile.</span></li>
-            <li><span><b>Arènes et ennemis</b> : 3 arènes PvP par portails, 4 Oni avec IA et réapparition.</span></li>
-            <li><span><b>Méta-jeu</b> : niveaux 1 à 100, quêtes du jour, roue, forge +10, coffres, renaissance et événement Halloween.</span></li>
-            <li><span><b>Sauvegarde et classements</b> : DataStore avec nouvelles tentatives, 3 classements mondiaux en OrderedDataStore.</span></li>
-            <li><span><b>Interface 100 % en code</b> : 13 menus, boutique à 10 onglets, aperçus 3D, PC, mobile et manette.</span></li>
-          </ul>
-          <ul class="systems" lang="en">
-            <li><span><b>Tycoon loop</b>: 27 purchases per base with prerequisites, generators, a collector, lasers and guardians against intruders.</span></li>
-            <li><span><b>Server-side combat</b>: 29 weapons in 6 styles, 3-hit combos, directional block, parry, guard break and dodge.</span></li>
-            <li><span><b>8 clan powers</b> with preloaded textured VFX and a performance mode for mobile.</span></li>
-            <li><span><b>Arenas and enemies</b>: 3 PvP arenas through portals, 4 Oni with AI and respawn.</span></li>
-            <li><span><b>Meta game</b>: levels 1–100, daily quests, a wheel, +10 forge, chests, rebirth and a Halloween event.</span></li>
-            <li><span><b>Saves and leaderboards</b>: DataStore with retries, 3 global leaderboards on OrderedDataStore.</span></li>
-            <li><span><b>UI fully in code</b>: 13 menus, a 10-tab shop, 3D previews, PC, mobile and gamepad.</span></li>
-          </ul>
-          <div class="readouts">
-            <div><b>9 700</b><span lang="fr">lignes de Luau</span><span lang="en">lines of Luau</span></div>
-            <div><b>29</b><span lang="fr">armes</span><span lang="en">weapons</span></div>
-            <div><b>8</b><span lang="fr">pouvoirs de clan</span><span lang="en">clan powers</span></div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Projet : attaque Pouvoir -->
-      <article class="project flip" id="pouvoir">
-        <div class="media">
-          <figure class="screen contain" style="margin:0">
-            <video src="img/pouvoir.mp4" poster="img/pouvoir-1.jpg" autoplay muted loop playsinline aria-label="Animation de l'attaque Pouvoir : tour d'anneaux runiques, faisceau et dôme d'énergie"></video>
-            <figcaption><span lang="fr">Extrait de la séquence, tous les effets sont générés en code.</span><span lang="en">Clip of the sequence, every effect is generated in code.</span></figcaption>
-          </figure>
-        </div>
-        <div class="info">
-          <div class="tags">
-            <span class="chip"><span lang="fr">VFX · combat</span><span lang="en">VFX · combat</span></span>
-            <span class="chip"><span lang="fr">Prototype</span><span lang="en">Prototype</span></span>
-          </div>
-          <h3><span lang="fr">Attaque « Pouvoir »</span><span lang="en">“Pouvoir” special attack</span>
-            <small lang="fr">Une attaque spéciale cinématique d'environ 15 secondes, recréée d'après une vidéo de référence.</small>
-            <small lang="en">A cinematic special attack of about 15 seconds, recreated from a reference video.</small>
-          </h3>
-          <ul class="systems" lang="fr">
-            <li><span><b>Le serveur décide</b> : recharge par joueur, position prise côté serveur, dégâts appliqués une seule fois par cible au moment de l'explosion.</span></li>
-            <li><span><b>Les clients affichent</b> : tous les effets tournent en local, ce qui économise le réseau.</span></li>
-            <li><span><b>Cercles magiques dessinés en code</b> : anneaux, hexagramme, chiffres romains et 36 runes, sans aucune image importée.</span></li>
-            <li><span><b>Caméra cinématique</b> scriptée, secousse, passage à la nuit et post-traitement Bloom et ColorCorrection.</span></li>
-            <li><span><b>Nettoyage garanti</b> : la séquence est protégée par pcall et remet toujours l'éclairage et la caméra en place.</span></li>
-          </ul>
-          <ul class="systems" lang="en">
-            <li><span><b>The server decides</b>: per-player cooldown, server-side position, damage applied once per target when the blast lands.</span></li>
-            <li><span><b>Clients render</b>: every effect runs locally, which saves bandwidth.</span></li>
-            <li><span><b>Magic circles drawn in code</b>: rings, hexagram, roman numerals and 36 runes, with no imported images.</span></li>
-            <li><span><b>Scripted cinematic camera</b>, screen shake, a switch to night and Bloom and ColorCorrection post-processing.</span></li>
-            <li><span><b>Guaranteed cleanup</b>: the sequence runs under pcall and always restores lighting and camera.</span></li>
-          </ul>
-          <div class="readouts">
-            <div><b>527</b><span lang="fr">lignes de Luau</span><span lang="en">lines of Luau</span></div>
-            <div><b>6</b><span lang="fr">phases minutées</span><span lang="en">timed phases</span></div>
-            <div><b>0</b><span lang="fr">image importée</span><span lang="en">imported images</span></div>
-          </div>
-        </div>
-      </article>
-
-      <div class="other">
-        <article class="card">
-          <div class="tags"><span class="chip wip"><span lang="fr">En conception</span><span lang="en">In design</span></span></div>
-          <h4>Floor Zero</h4>
-          <p lang="fr">Jeu d'extraction coopératif à 10 étages : monstre qui accélère à chaque étage, butin pondéré par rareté, améliorations permanentes. Projet structuré pour Rojo avec services séparés (données, étages, IA, boutique, monétisation).</p>
-          <p lang="en">A 10-floor co-op extraction game: a monster that speeds up every floor, rarity-weighted loot, permanent upgrades. Built for Rojo with separate services (data, floors, AI, shop, monetization).</p>
-        </article>
-        <article class="card">
-          <div class="tags"><span class="chip"><span lang="fr">Outillage</span><span lang="en">Tooling</span></span></div>
-          <h4 lang="fr">Pilotage de Studio en ligne de commande</h4>
-          <h4 lang="en">Driving Studio from the command line</h4>
-          <p lang="fr">Un client Node.js qui envoie les scripts dans Studio, lance les tests en mode Play et prend des captures, sur plusieurs places à la fois. C'est comme ça que je teste chaque système avant de le livrer.</p>
-          <p lang="en">A Node.js client that pushes scripts into Studio, runs tests in Play mode and takes screenshots across several places. That is how I test each system before delivering it.</p>
-        </article>
+      <div class="output">
+        <div class="pane-head"><span lang="fr">Sortie</span><span lang="en">Output</span></div>
+        <ol>
+          <li><div><b><span lang="fr">Le brief</span><span lang="en">The brief</span></b><span lang="fr">On fixe ensemble ce que la tâche doit faire, sur quelle place, et comment on saura qu'elle est finie.</span><span lang="en">We agree on what the task must do, in which place, and how we'll know it's done.</span></div></li>
+          <li><div><b><span lang="fr">Un premier jet jouable</span><span lang="en">A playable first pass</span></b><span lang="fr">Vous voyez vite une version qui marche en jeu, avec une capture ou une vidéo, pour corriger le cap tôt.</span><span lang="en">You quickly see a version that works in game, with a screenshot or clip, so we can adjust early.</span></div></li>
+          <li><div><b><span lang="fr">Testé dans Studio</span><span lang="en">Tested in Studio</span></b><span lang="fr">Je teste chaque système en mode Play, avec des scripts de test quand c'est utile, côté serveur comme côté client.</span><span lang="en">I test every system in Play mode, with test scripts when useful, on both server and client.</span></div></li>
+          <li><div><b><span lang="fr">Livraison propre</span><span lang="en">Clean handoff</span></b><span lang="fr">Code commenté et rangé en modules, réglages regroupés dans une config, et une courte notice d'utilisation.</span><span lang="en">Commented code organized in modules, settings grouped in one config, and a short how-to.</span></div></li>
+        </ol>
+        <p class="done"><span lang="fr">Tâche livrée.</span><span lang="en">Task delivered.</span></p>
       </div>
     </div>
   </section>
 
-  <section class="block" id="methode" data-depth="2400" data-label-fr="MÉTHODE" data-label-en="PROCESS">
+  <!-- ======================= CONTACT ======================= -->
+  <section id="contact" data-spy="contact" style="padding-top: 0">
     <div class="wrap">
-      <div class="sec-head">
-        <div>
-          <p class="depth">−2 400 m</p>
-          <h2 lang="fr">Comment je travaille</h2>
-          <h2 lang="en">How I work</h2>
+      <div class="contact-card">
+        <div class="intro">
+          <h2><span lang="fr">Une tâche pour votre jeu ?</span><span lang="en">Got a task for your game?</span></h2>
+          <p>
+            <span lang="fr">Script, système complet, correction de bug, interface ou VFX : écrivez-moi sur Discord avec ce dont vous avez besoin et je vous réponds rapidement.</span>
+            <span lang="en">A script, a full system, a bug fix, UI or VFX: message me on Discord with what you need and I'll get back to you quickly.</span>
+          </p>
+          <p class="avail"><span class="dot-live"></span><span lang="fr">Disponible maintenant, en français et en anglais</span><span lang="en">Available now, in French and English</span></p>
         </div>
-        <p lang="fr">Une tâche claire, un résultat testé, et un code que votre équipe peut reprendre.</p>
-        <p lang="en">A clear task, a tested result, and code your team can pick up.</p>
-      </div>
-      <div class="method">
-        <div class="step">
-          <h3><span lang="fr">Le brief</span><span lang="en">The brief</span></h3>
-          <p lang="fr">On fixe ensemble ce que la tâche doit faire, sur quelle place, et comment on saura qu'elle est finie.</p>
-          <p lang="en">We agree on what the task must do, in which place, and how we'll know it's done.</p>
-        </div>
-        <div class="step">
-          <h3><span lang="fr">Un premier jet jouable</span><span lang="en">A playable first pass</span></h3>
-          <p lang="fr">Vous voyez vite une version qui marche en jeu, avec une capture ou une vidéo, pour corriger le cap tôt.</p>
-          <p lang="en">You quickly see a version that works in game, with a screenshot or clip, so we can adjust early.</p>
-        </div>
-        <div class="step">
-          <h3><span lang="fr">Testé dans Studio</span><span lang="en">Tested in Studio</span></h3>
-          <p lang="fr">Je teste chaque système en mode Play, avec des scripts de test quand c'est utile, côté serveur comme côté client.</p>
-          <p lang="en">I test every system in Play mode, with test scripts when useful, on both server and client.</p>
-        </div>
-        <div class="step">
-          <h3><span lang="fr">Livraison propre</span><span lang="en">Clean handoff</span></h3>
-          <p lang="fr">Code commenté et rangé en modules, réglages regroupés dans une config, et une courte notice d'utilisation.</p>
-          <p lang="en">Commented code organized in modules, settings grouped in one config, and a short how-to.</p>
+        <div class="handles">
+          <div class="handle discord">
+            <div class="who"><span>Discord</span><b data-copy-text>moez_21</b></div>
+            <button class="copy" type="button"><svg><use href="#i-copy"/></svg><span lang="fr">Copier</span><span lang="en">Copy</span></button>
+          </div>
+          <div class="handle">
+            <div class="who"><span>Roblox</span><b data-copy-text>Moez200821</b></div>
+            <button class="copy" type="button"><svg><use href="#i-copy"/></svg><span lang="fr">Copier</span><span lang="en">Copy</span></button>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="block contact" id="contact" data-depth="3214" data-label-fr="CONTACT" data-label-en="CONTACT">
+  <footer>
     <div class="wrap">
-      <div class="contact-grid">
-        <div>
-          <p class="depth">−3 214 m</p>
-          <h2 lang="fr">Une tâche pour votre jeu ?</h2>
-          <h2 lang="en">Got a task for your game?</h2>
-          <p lang="fr">Script, système complet, correction de bug, interface ou VFX : écrivez-moi sur Discord avec ce dont vous avez besoin et je vous réponds rapidement.</p>
-          <p lang="en">A script, a full system, a bug fix, UI or VFX: message me on Discord with what you need and I'll get back to you quickly.</p>
-          <p class="avail"><span class="eyebrow" style="gap:0"><span class="dot"></span></span><span lang="fr">Disponible maintenant · français et anglais</span><span lang="en">Available now · French and English</span></p>
-        </div>
-        <div class="channels">
-          <div class="channel">
-            <div><small>Discord</small><strong data-copy-text>moez_21</strong></div>
-            <button type="button" class="copy" id="copy-discord"><span lang="fr">Copier</span><span lang="en">Copy</span></button>
-          </div>
-          <div class="channel">
-            <div><small>Roblox</small><strong data-copy-text>Moez200821</strong></div>
-            <button type="button" class="copy" id="copy-roblox"><span lang="fr">Copier</span><span lang="en">Copy</span></button>
-          </div>
-        </div>
-      </div>
+      <span>© 2026 Moez</span>
+      <span><span lang="fr">Vidéos et captures réalisées dans Roblox Studio</span><span lang="en">Videos and screenshots recorded in Roblox Studio</span></span>
     </div>
-  </section>
+  </footer>
 </main>
-
-<footer>
-  <div class="wrap">
-    <span>© 2026 Moez</span>
-    <span lang="fr">Captures réalisées dans Roblox Studio</span><span lang="en">Screenshots taken in Roblox Studio</span>
-  </div>
-</footer>
 
 <script>
 (function () {
   var root = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- tableau des compétences ---------- */
+  // p = Pack Opener, t = Treadmill, y = Tycoon, m = Steal a Meteor, w = prototype Pouvoir
+  var GAMES = {
+    p: { name: 'Pack Opener', color: 'var(--c-pack)' },
+    t: { name: 'Treadmill', color: 'var(--c-tread)' },
+    y: { name: 'Tycoon', color: 'var(--c-tycoon)' },
+    m: { name: 'Meteor', color: 'var(--c-meteor)' },
+    w: { name: 'Pouvoir', color: 'var(--c-power)' }
+  };
+  var SKILLS = [
+    { fr: 'Scripting & architecture', en: 'Scripting & architecture', dfr: 'Luau modulaire, séparation client/serveur propre, ModuleScripts partagés et réglages regroupés dans une config.', den: 'Modular Luau, a clean client/server split, shared ModuleScripts and every setting in one config.', tags: ['Luau', 'ModuleScript', 'RemoteEvent', 'Attributes'], use: 'ptymw' },
+    { fr: 'Systèmes de jeu', en: 'Game systems', dfr: 'Tycoon, collection, inventaire, quêtes, niveaux, renaissance, forge, coffres et classements.', den: 'Tycoons, collecting, inventory, quests, levels, rebirths, crafting, chests and leaderboards.', tags: ['Tycoon', 'Progression', 'leaderstats'], use: 'ptym' },
+    { fr: 'Combat', en: 'Combat', dfr: 'Hitbox côté serveur, combos, garde, parade, esquive, armes et pouvoirs avec recharge.', den: 'Server-side hitboxes, combos, block, parry, dodge, weapons and powers with cooldowns.', tags: ['Hitbox', 'Raycast', 'Cooldowns'], use: 'yw' },
+    { fr: 'VFX', en: 'VFX', dfr: 'Particules, Beams et Trails, cercles magiques dessinés en code, reveals et effets de vitesse.', den: 'Particles, Beams and Trails, magic circles drawn in code, reveals and speed effects.', tags: ['ParticleEmitter', 'Beam', 'Trail', 'TweenService'], use: 'ptymw' },
+    { fr: 'IA de PNJ', en: 'NPC AI', dfr: 'Ennemis qui patrouillent, repèrent le joueur, le poursuivent et réapparaissent.', den: 'Enemies that patrol, spot the player, chase and respawn.', tags: ['PathfindingService', 'Humanoid'], use: 'y' },
+    { fr: 'Interfaces UI/UX', en: 'UI / UX', dfr: 'Menus, boutiques, HUD, tutoriels et aperçus 3D, en code, pour PC, mobile et manette, en plusieurs langues.', den: 'Menus, shops, HUDs, tutorials and 3D previews, in code, for PC, mobile and gamepad, in several languages.', tags: ['ViewportFrame', 'UIScale', 'TweenService'], use: 'ptym' },
+    { fr: 'Multijoueur', en: 'Multiplayer', dfr: 'Échanges sécurisés, vols entre joueurs, courses synchronisées pour tout le serveur et arènes PvP, sans faire confiance au client.', den: 'Secure trading, player theft, server-wide synced races and PvP arenas, without trusting the client.', tags: ['RemoteEvent', 'Server authority'], use: 'ptym' },
+    { fr: 'Données & monétisation', en: 'Data & monetization', dfr: 'Sauvegardes qui protègent la progression, classements mondiaux, Game Passes et Developer Products.', den: 'Saves that protect player progress, global leaderboards, Game Passes and Developer Products.', tags: ['DataStore', 'ProfileStore', 'OrderedDataStore', 'MarketplaceService'], use: 'ptym' },
+    { fr: 'Build & level design', en: 'Building & level design', dfr: 'Cartes entières construites par script, éclairage, ciel et ambiance propres à chaque zone.', den: 'Whole maps built by script, with lighting, sky and mood for each zone.', tags: ['Terrain', 'Lighting', 'Atmosphere'], use: 'ptym' },
+    { fr: 'Caméra & animation', en: 'Camera & animation', dfr: 'Caméras cinématiques scriptées, secousses, ralentis, décor et créatures animés.', den: 'Scripted cinematic cameras, shakes, slow motion, animated sets and creatures.', tags: ['Camera', 'CFrame', 'Motor6D'], use: 'ptymw' },
+    { fr: 'Son & ambiance', en: 'Sound & mood', dfr: 'Musiques par zone, sons de récompense, cycle jour et nuit et météo.', den: 'Music per area, reward sounds, a day and night cycle and weather.', tags: ['SoundService', 'Lighting'], use: 'tm' },
+    { fr: 'Événements & live-ops', en: 'Events & live-ops', dfr: 'Événements serveur, saisonniers et quotidiens : arène NEON FLEX, comète géante, Halloween, séries de connexion.', den: 'Server, seasonal and daily events: the NEON FLEX arena, a giant comet, Halloween, login streaks.', tags: ['Events', 'Daily rewards'], use: 'ptym' },
+    { fr: 'Tests & outillage', en: 'Testing & tooling', dfr: 'Tests automatiques lancés dans Studio et outil Node.js qui pilote Studio depuis le terminal.', den: 'Automated tests run inside Studio and a Node.js tool that drives Studio from the terminal.', tags: ['Node.js', 'Rojo', 'Git'], use: 'tm' },
+    { fr: 'Performance mobile', en: 'Mobile performance', dfr: 'Mode performance, effets préchargés et interfaces pensées pour le tactile.', den: 'A performance mode, preloaded effects and touch-first interfaces.', tags: ['ContentProvider', 'Mobile'], use: 'ym' }
+  ];
+  var matrix = document.getElementById('matrix');
+  SKILLS.forEach(function (s) {
+    var row = document.createElement('div');
+    row.className = 'm-row';
+    var tags = s.tags.map(function (t) { return '<code>' + t + '</code>'; }).join('');
+    var dots = '', used = '';
+    'ptymw'.split('').forEach(function (k) {
+      var on = s.use.indexOf(k) >= 0;
+      dots += '<i class="' + (on ? 'y' : '') + '" style="--g:' + GAMES[k].color + '" title="' + GAMES[k].name + '"></i>';
+      if (on) used += '<span style="--g:' + GAMES[k].color + '">' + GAMES[k].name + '</span>';
+    });
+    row.innerHTML =
+      '<div class="m-skill"><h3><span lang="fr">' + s.fr + '</span><span lang="en">' + s.en + '</span></h3>' +
+      '<p class="m-desc"><span lang="fr">' + s.dfr + '</span><span lang="en">' + s.den + '</span></p>' +
+      '<div class="tags">' + tags + '</div>' +
+      '<p class="m-used">' + used + '</p></div>' +
+      '<div class="m-dots" aria-hidden="true">' + dots + '</div>';
+    matrix.appendChild(row);
+  });
 
   /* ---------- langue ---------- */
   function setLang(l) {
@@ -723,106 +922,221 @@ footer .wrap { padding-block: 26px 34px; display: flex; flex-wrap: wrap; justify
       b.setAttribute('aria-pressed', String(b.getAttribute('data-set-lang') === l));
     });
     document.querySelectorAll('[data-gallery]').forEach(syncCaption);
+    updateNow(true);
     try { localStorage.setItem('lang', l); } catch (e) {}
-    placeTicks();
   }
-  var saved = null;
-  try { saved = localStorage.getItem('lang'); } catch (e) {}
-  var initial = saved || ((navigator.language || 'fr').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en');
   document.querySelectorAll('[data-set-lang]').forEach(function (b) {
     b.addEventListener('click', function () { setLang(b.getAttribute('data-set-lang')); });
   });
+  function lang() { return root.getAttribute('data-lang') === 'en' ? 'en' : 'fr'; }
 
-  /* ---------- galeries ---------- */
-  function syncCaption(g) {
-    var cur = g.querySelector('.thumbs [aria-current="true"]');
-    var cap = g.querySelector('[data-cap]');
-    if (!cur || !cap) return;
-    var l = root.getAttribute('data-lang') === 'en' ? 'en' : 'fr';
-    cap.textContent = cur.getAttribute('data-' + l);
+  /* ---------- bande démo : frise synchronisée avec les jeux à l'écran ---------- */
+  var REEL_GAMES = {
+    t: { name: 'Treadmill Legends', color: 'var(--c-tread)', href: '#treadmill' },
+    p: { name: 'Pack Opener & Collector', color: 'var(--c-pack)', href: '#pack' },
+    y: { name: 'Tycoon Samouraï', color: 'var(--c-tycoon)', href: '#tycoon' },
+    m: { name: 'Steal a Meteor', color: 'var(--c-meteor)', href: '#meteor' }
+  };
+  // plans du montage (jeu, durée en s), fondus de 0,4 s entre deux plans
+  var CUTS = [['t', 4], ['p', 4.8], ['y', 4], ['m', 4], ['t', 3.6], ['y', 2.3], ['p', 3.6], ['y', 3.6], ['p', 4.8], ['m', 3.6], ['t', 4], ['y', 3], ['p', 3.2], ['m', 3.6], ['t', 3.6], ['t', 4.5]];
+  var FADE = 0.4, starts = [], acc = 0;
+  CUTS.forEach(function (c, i) { starts.push(i === 0 ? 0 : acc - FADE); acc = (i === 0 ? 0 : acc - FADE) + c[1]; });
+  var TOTAL = acc;
+  var reel = document.getElementById('reel');
+  var timeline = document.getElementById('timeline');
+  var legend = document.getElementById('legend');
+  var nowLink = document.getElementById('now-link');
+  var nowDot = document.getElementById('now-dot');
+  var segBtns = [];
+  CUTS.forEach(function (c, i) {
+    var end = i + 1 < CUTS.length ? starts[i + 1] + FADE / 2 : TOTAL;
+    var beg = i === 0 ? 0 : starts[i] + FADE / 2;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.style.setProperty('--w', (end - beg).toFixed(2));
+    b.style.setProperty('--g', REEL_GAMES[c[0]].color);
+    b.setAttribute('aria-label', REEL_GAMES[c[0]].name + ' · ' + Math.round(beg) + ' s');
+    b.innerHTML = '<span></span>';
+    b.addEventListener('click', function () { seek(beg + 0.05); });
+    b._beg = beg; b._end = end; b._g = c[0];
+    timeline.appendChild(b); segBtns.push(b);
+  });
+  ['t', 'p', 'y', 'm'].forEach(function (k) {
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.style.setProperty('--g', REEL_GAMES[k].color);
+    b.innerHTML = '<i></i>' + REEL_GAMES[k].name;
+    b.addEventListener('click', function () {
+      var first = segBtns.filter(function (s) { return s._g === k; })[0];
+      seek(first._beg + 0.05);
+    });
+    legend.appendChild(b);
+  });
+  function seek(t) {
+    if (!reel.currentSrc) loadReel();
+    try { reel.currentTime = t; } catch (e) {}
+    updateNow(true);
+    playReel();
   }
+  var cur = -1;
+  function updateNow(force) {
+    var t = reel.currentTime || 0, idx = 0;
+    for (var i = 0; i < segBtns.length; i++) { if (t >= segBtns[i]._beg) idx = i; }
+    segBtns.forEach(function (b, i) {
+      var p = i < idx ? 100 : i > idx ? 0 : Math.min(100, (t - b._beg) / (b._end - b._beg) * 100);
+      b.firstChild.style.width = p + '%';
+    });
+    if (idx === cur && !force) return;
+    cur = idx;
+    segBtns.forEach(function (b, i) { b.classList.toggle('on', i === idx); });
+    var g = REEL_GAMES[segBtns[idx]._g];
+    nowLink.textContent = g.name;
+    nowLink.setAttribute('href', g.href);
+    nowDot.style.setProperty('--g', g.color);
+  }
+  var raf = 0;
+  function tick() { updateNow(false); raf = reel.paused ? 0 : requestAnimationFrame(tick); }
+  reel.addEventListener('play', function () { if (!raf) raf = requestAnimationFrame(tick); setToggle(true); });
+  reel.addEventListener('pause', function () { setToggle(false); });
+  reel.addEventListener('seeked', function () { updateNow(true); });
+
+  var toggle = document.getElementById('reel-toggle');
+  function setToggle(playing) {
+    toggle.innerHTML = '<svg><use href="#i-' + (playing ? 'pause' : 'play') + '"/></svg>';
+    toggle.setAttribute('aria-label', playing ? (lang() === 'en' ? 'Pause' : 'Pause') : (lang() === 'en' ? 'Play' : 'Lecture'));
+  }
+  function loadReel() {
+    var small = window.matchMedia('(max-width: 699px)').matches;
+    var conn = navigator.connection || {};
+    if (conn.saveData) small = true;
+    reel.src = small ? 'img/v/reel-480.mp4' : 'img/v/reel-720.mp4';
+  }
+  function playReel() { var p = reel.play(); if (p && p.catch) p.catch(function () { setToggle(false); }); }
+  toggle.addEventListener('click', function () {
+    if (!reel.currentSrc) { loadReel(); playReel(); return; }
+    if (reel.paused) { reel._userPaused = false; playReel(); } else { reel._userPaused = true; reel.pause(); }
+  });
+  loadReel();
+  if (!reduce) playReel(); else setToggle(false);
+  updateNow(true);
+  // la bande démo s'arrête quand on ne la voit plus
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { if (!reel._userPaused && !reduce) playReel(); }
+        else if (!reel.paused) reel.pause();
+      });
+    }, { threshold: 0.2 }).observe(reel);
+  }
+
+  /* ---------- galeries des projets ---------- */
+  function syncCaption(g) {
+    var curBtn = g.querySelector('.thumbs [aria-current="true"]');
+    var cap = g.querySelector('[data-cap]');
+    if (curBtn && cap) cap.textContent = curBtn.getAttribute('data-' + lang());
+  }
+  var loops = [];
   document.querySelectorAll('[data-gallery]').forEach(function (g) {
-    var main = g.querySelector('[data-main]');
+    var video = g.querySelector('video');
+    var img = g.querySelector('.stage > img');
+    var stage = g.querySelector('.stage');
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'play';
+    stage.appendChild(btn);
+    function label() {
+      btn.innerHTML = video.paused
+        ? '<svg><use href="#i-play"/></svg><span lang="fr">Lecture</span><span lang="en">Play</span>'
+        : '<svg><use href="#i-pause"/></svg><span lang="fr">Pause</span><span lang="en">Pause</span>';
+    }
+    function ensureSrc() { if (!video.getAttribute('src')) video.setAttribute('src', video.getAttribute('data-src')); }
+    function play() { ensureSrc(); var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+    video.addEventListener('play', label); video.addEventListener('pause', label);
+    btn.addEventListener('click', function () {
+      if (video.hidden) return;
+      if (video.paused) { video._userPaused = false; play(); } else { video._userPaused = true; video.pause(); }
+    });
+    label();
     g.querySelectorAll('.thumbs button').forEach(function (b) {
       b.addEventListener('click', function () {
         g.querySelectorAll('.thumbs button').forEach(function (x) { x.setAttribute('aria-current', 'false'); });
         b.setAttribute('aria-current', 'true');
-        main.src = b.getAttribute('data-src');
+        if (b.getAttribute('data-kind') === 'video') {
+          img.hidden = true; video.hidden = false; btn.hidden = false; video._userPaused = false; play();
+        } else {
+          video.pause(); video.hidden = true; btn.hidden = true;
+          img.src = b.getAttribute('data-img');
+          img.alt = b.querySelector('img').alt;
+          img.hidden = false;
+        }
         syncCaption(g);
       });
     });
+    syncCaption(g);
+    loops.push({ el: g, video: video, play: play });
+  });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        var l = loops.filter(function (x) { return x.el === e.target; })[0];
+        if (!l) return;
+        if (e.isIntersecting) { if (!reduce && !l.video.hidden && !l.video._userPaused) l.play(); }
+        else if (!l.video.paused) l.video.pause();
+      });
+    }, { threshold: 0.35 });
+    loops.forEach(function (l) { io.observe(l.el); });
+  }
+  document.querySelectorAll('.thumbs').forEach(function (t) {
+    function edge() { t.classList.toggle('more', t.scrollLeft + t.clientWidth < t.scrollWidth - 4); }
+    t.addEventListener('scroll', edge, { passive: true });
+    window.addEventListener('resize', edge);
+    edge();
   });
 
-
   /* ---------- copier ---------- */
-  document.querySelectorAll('.copy').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var t = btn.parentElement.querySelector('[data-copy-text]');
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var t = b.parentElement.querySelector('[data-copy-text]');
       var text = t ? t.textContent.trim() : '';
-      function done() { var old = btn.innerHTML; btn.textContent = '✓'; setTimeout(function () { btn.innerHTML = old; }, 1400); }
+      function done() { var old = b.innerHTML; b.innerHTML = '<span lang="fr">Copié</span><span lang="en">Copied</span>'; setTimeout(function () { b.innerHTML = old; }, 1400); }
       function fallback() { var r = document.createRange(); r.selectNodeContents(t); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
       else fallback();
     });
   });
 
-  /* ---------- rail de profondeur ---------- */
-  var track = document.getElementById('rail-track');
-  var probe = document.getElementById('rail-probe');
-  var readout = document.getElementById('rail-depth');
-  var sections = Array.prototype.slice.call(document.querySelectorAll('[data-depth]'));
-  var MAX = 3214;
-  var ticks = [];
-  function placeTicks() {
-    ticks.forEach(function (t) { t.remove(); });
-    ticks = [];
-    var l = root.getAttribute('data-lang') === 'en' ? 'en' : 'fr';
-    sections.forEach(function (s) {
-      var d = +s.getAttribute('data-depth');
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'rail-tick';
-      b.style.top = (d / MAX * 100) + '%';
-      b.innerHTML = '<span>' + (d ? '−' + d.toLocaleString('fr-FR') : '0') + ' m<br>' + s.getAttribute('data-label-' + l) + '</span>';
-      b.addEventListener('click', function () { s.scrollIntoView(); });
-      track.appendChild(b);
-      ticks.push(b);
-    });
-    onScroll();
-  }
-  function depthAt(y) {
-    // interpole la profondeur entre les sections selon la position de lecture
-    var probeY = y + window.innerHeight * 0.35;
-    var tops = sections.map(function (s) { return s.getBoundingClientRect().top + window.scrollY; });
-    for (var i = sections.length - 1; i >= 0; i--) {
-      if (probeY >= tops[i]) {
-        var d0 = +sections[i].getAttribute('data-depth');
-        if (i === sections.length - 1) return { d: d0, i: i };
-        var d1 = +sections[i + 1].getAttribute('data-depth');
-        var f = (probeY - tops[i]) / Math.max(1, tops[i + 1] - tops[i]);
-        return { d: d0 + (d1 - d0) * Math.min(1, f), i: i };
-      }
-    }
-    return { d: 0, i: 0 };
-  }
-  var raf = 0;
-  function onScroll() {
-    if (raf) return;
-    raf = requestAnimationFrame(function () {
-      raf = 0;
-      var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-      var r = atBottom ? { d: MAX, i: sections.length - 1 } : depthAt(window.scrollY);
-      probe.style.top = (r.d / MAX * 100) + '%';
-      readout.textContent = (r.d < 1 ? '0' : '−' + Math.round(r.d).toLocaleString('fr-FR')) + ' m';
-      ticks.forEach(function (t, i) { t.classList.toggle('on', i === r.i); });
-    });
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
+  /* ---------- explorateur : section en cours + tiroir sur mobile ---------- */
+  var explorer = document.getElementById('explorer');
+  var menuBtn = document.querySelector('[data-menu]');
+  function closeMenu() { explorer.classList.remove('open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+  menuBtn.addEventListener('click', function () {
+    var open = !explorer.classList.contains('open');
+    explorer.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    if (open) { var a = explorer.querySelector('.tree a'); if (a) a.focus(); }
+  });
+  explorer.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeMenu(); });
+  document.addEventListener('click', function (e) {
+    if (explorer.classList.contains('open') && !explorer.contains(e.target) && !menuBtn.contains(e.target)) closeMenu();
+  });
 
-  setLang(initial);
+  var spies = Array.prototype.slice.call(document.querySelectorAll('[data-spy]'));
+  var links = explorer.querySelectorAll('[data-spy-link]');
+  function spy() {
+    var y = window.innerHeight * 0.35, active = spies[0];
+    spies.forEach(function (s) { if (s.getBoundingClientRect().top <= y) active = s; });
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) active = spies[spies.length - 1];
+    var id = active.getAttribute('data-spy');
+    links.forEach(function (a) { a.setAttribute('aria-current', String(a.getAttribute('data-spy-link') === id)); });
+  }
+  var spyQueued = false;
+  window.addEventListener('scroll', function () { if (!spyQueued) { spyQueued = true; requestAnimationFrame(function () { spyQueued = false; spy(); }); } }, { passive: true });
+
+  var saved = null;
+  try { saved = localStorage.getItem('lang'); } catch (e) {}
+  setLang(saved || ((navigator.language || 'fr').toLowerCase().indexOf('fr') === 0 ? 'fr' : 'en'));
+  spy();
 })();
 </script>
-
 </body>
 </html>
