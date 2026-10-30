@@ -36,7 +36,6 @@
   --c-tread: #5ee3ff;    /* néon des tapis */
   --c-tycoon: #ff6b6b;   /* laque rouge des clans */
   --c-meteor: #b59bff;   /* violet cosmique */
-  --c-power: #ffa24c;    /* cercles de feu du prototype */
   --ok: #79e08a;
   --font-display: "Unbounded", "Arial Black", system-ui, sans-serif;
   --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
@@ -271,7 +270,7 @@ section { padding-block: clamp(56px, 8vw, 110px); }
 .m-used span { display: inline-flex; align-items: center; gap: 6px; }
 .m-used span::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--g); }
 @media (min-width: 900px) {
-  .m-row { grid-template-columns: minmax(0, 1fr) repeat(5, 64px); gap: 0 4px; align-items: center; }
+  .m-row { grid-template-columns: minmax(0, 1fr) repeat(4, 64px); gap: 0 4px; align-items: center; }
   .m-head { display: grid; position: sticky; top: 0; background: var(--panel-2); padding-block: 10px; }
   .m-head span { font-size: .78rem; font-weight: 600; color: var(--muted); text-align: center; line-height: 1.25; }
   .m-head span:first-child { text-align: left; }
@@ -350,7 +349,6 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
             <li><a href="#treadmill" style="--lvl:2" data-spy-link="treadmill"><span class="twisty"></span><svg class="ico-part" style="--part: var(--c-tread)"><use href="#i-part"/></svg>Treadmill Legends</a></li>
             <li><a href="#tycoon" style="--lvl:2" data-spy-link="tycoon"><span class="twisty"></span><svg class="ico-part" style="--part: var(--c-tycoon)"><use href="#i-part"/></svg>Tycoon Samouraï</a></li>
             <li><a href="#meteor" style="--lvl:2" data-spy-link="meteor"><span class="twisty"></span><svg class="ico-part" style="--part: var(--c-meteor)"><use href="#i-part"/></svg>Steal a Meteor</a></li>
-            <li><a href="#pouvoir" style="--lvl:2" data-spy-link="pouvoir"><span class="twisty"></span><svg class="ico-part" style="--part: var(--c-power)"><use href="#i-part"/></svg><span lang="fr">Attaque « Pouvoir »</span><span lang="en">“Pouvoir” attack</span></a></li>
           </ul>
         </li>
         <li><a href="#competences" style="--lvl:1" data-spy-link="competences"><span class="twisty"></span><svg class="ico-folder"><use href="#i-folder"/></svg><span lang="fr">Compétences</span><span lang="en">Skills</span></a></li>
@@ -696,51 +694,6 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           </ul>
         </article>
 
-        <!-- Prototype Pouvoir -->
-        <article class="project" id="pouvoir" data-spy="pouvoir" style="--g: var(--c-power)">
-          <header class="p-head">
-            <div class="p-title">
-              <svg class="cube"><use href="#i-part"/></svg>
-              <h3><span lang="fr">Attaque « Pouvoir »</span><span lang="en">“Pouvoir” special attack</span></h3>
-              <span class="pill"><span lang="fr">Prototype</span><span lang="en">Prototype</span></span>
-            </div>
-            <p class="p-tag"><span lang="fr">Une attaque spéciale cinématique d'environ 15 secondes, recréée d'après une vidéo de référence</span><span lang="en">A cinematic special attack of about 15 seconds, recreated from a reference video</span></p>
-          </header>
-          <div class="p-body">
-            <div class="media" data-gallery>
-              <div class="stage sel">
-                <video class="loop" muted loop playsinline preload="none" poster="img/pouvoir-1.jpg" data-src="img/pouvoir.mp4" aria-label="Attaque Pouvoir, extrait vidéo"></video>
-                <img alt="" hidden>
-              </div>
-              <div class="thumbs">
-                <button type="button" aria-current="true" data-kind="video" data-fr="Extrait de la séquence : tous les effets sont générés en code." data-en="Clip of the sequence: every effect is generated in code."><img src="img/t/pouvoir-1.jpg" alt="" loading="lazy"><span class="vid-mark"><svg><use href="#i-play"/></svg><span lang="fr">Vidéo</span><span lang="en">Video</span></span></button>
-                <button type="button" aria-current="false" data-img="img/pouvoir-1.jpg" data-fr="Cercle magique dessiné en code, sans image importée." data-en="A magic circle drawn in code, with no imported image."><img src="img/t/pouvoir-1.jpg" alt="Cercle magique" loading="lazy"></button>
-                <button type="button" aria-current="false" data-img="img/pouvoir-2.jpg" data-fr="L'explosion finale, avec Bloom et ColorCorrection." data-en="The final blast, with Bloom and ColorCorrection."><img src="img/t/pouvoir-2.jpg" alt="Explosion finale" loading="lazy"></button>
-              </div>
-              <p class="caption" data-cap></p>
-            </div>
-            <aside class="props" aria-label="Propriétés">
-              <div class="pane-head"><span lang="fr">Propriétés</span><span lang="en">Properties</span><b>Pouvoir</b></div>
-              <div class="prop-group"><p>Code</p>
-                <dl>
-                  <dt><span lang="fr">Lignes Luau</span><span lang="en">Luau lines</span></dt><dd class="num">527</dd>
-                  <dt>Phases</dt><dd><span lang="fr">6, minutées</span><span lang="en">6, timed</span></dd>
-                  <dt><span lang="fr">Images importées</span><span lang="en">Imported images</span></dt><dd class="num">0</dd>
-                </dl>
-              </div>
-            </aside>
-          </div>
-          <ul class="features">
-            <li lang="fr"><b>Le serveur décide.</b> Recharge par joueur, position prise côté serveur, dégâts appliqués une seule fois par cible au moment de l'explosion.</li>
-            <li lang="en"><b>The server decides.</b> Per-player cooldown, server-side position, damage applied once per target when the blast lands.</li>
-            <li lang="fr"><b>Les clients affichent.</b> Tous les effets tournent en local, ce qui économise le réseau.</li>
-            <li lang="en"><b>Clients render.</b> Every effect runs locally, which saves bandwidth.</li>
-            <li lang="fr"><b>Cercles magiques en code.</b> Anneaux, hexagramme, chiffres romains et 36 runes, sans aucune image importée.</li>
-            <li lang="en"><b>Magic circles in code.</b> Rings, hexagram, roman numerals and 36 runes, with no imported images.</li>
-            <li lang="fr"><b>Mise en scène.</b> Caméra cinématique scriptée, secousse, passage à la nuit, Bloom et ColorCorrection, puis remise en place garantie par pcall.</li>
-            <li lang="en"><b>Staging.</b> Scripted cinematic camera, screen shake, a switch to night, Bloom and ColorCorrection, then a cleanup guaranteed by pcall.</li>
-          </ul>
-        </article>
       </div>
 
       <div class="side-projects">
@@ -782,7 +735,6 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
           <span style="color: var(--c-tread)">Treadmill</span>
           <span style="color: var(--c-tycoon)">Tycoon</span>
           <span style="color: var(--c-meteor)">Meteor</span>
-          <span style="color: var(--c-power)">Pouvoir</span>
         </div>
         <!-- rangées générées depuis SKILLS (script en bas de page) -->
       </div>
@@ -857,25 +809,24 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---------- tableau des compétences ---------- */
-  // p = Pack Opener, t = Treadmill, y = Tycoon, m = Steal a Meteor, w = prototype Pouvoir
+  // p = Pack Opener, t = Treadmill, y = Tycoon, m = Steal a Meteor
   var GAMES = {
     p: { name: 'Pack Opener', color: 'var(--c-pack)' },
     t: { name: 'Treadmill', color: 'var(--c-tread)' },
     y: { name: 'Tycoon', color: 'var(--c-tycoon)' },
-    m: { name: 'Meteor', color: 'var(--c-meteor)' },
-    w: { name: 'Pouvoir', color: 'var(--c-power)' }
+    m: { name: 'Meteor', color: 'var(--c-meteor)' }
   };
   var SKILLS = [
-    { fr: 'Scripting & architecture', en: 'Scripting & architecture', dfr: 'Luau modulaire, séparation client/serveur propre, ModuleScripts partagés et réglages regroupés dans une config.', den: 'Modular Luau, a clean client/server split, shared ModuleScripts and every setting in one config.', tags: ['Luau', 'ModuleScript', 'RemoteEvent', 'Attributes'], use: 'ptymw' },
+    { fr: 'Scripting & architecture', en: 'Scripting & architecture', dfr: 'Luau modulaire, séparation client/serveur propre, ModuleScripts partagés et réglages regroupés dans une config.', den: 'Modular Luau, a clean client/server split, shared ModuleScripts and every setting in one config.', tags: ['Luau', 'ModuleScript', 'RemoteEvent', 'Attributes'], use: 'ptym' },
     { fr: 'Systèmes de jeu', en: 'Game systems', dfr: 'Tycoon, collection, inventaire, quêtes, niveaux, renaissance, forge, coffres et classements.', den: 'Tycoons, collecting, inventory, quests, levels, rebirths, crafting, chests and leaderboards.', tags: ['Tycoon', 'Progression', 'leaderstats'], use: 'ptym' },
-    { fr: 'Combat', en: 'Combat', dfr: 'Hitbox côté serveur, combos, garde, parade, esquive, armes et pouvoirs avec recharge.', den: 'Server-side hitboxes, combos, block, parry, dodge, weapons and powers with cooldowns.', tags: ['Hitbox', 'Raycast', 'Cooldowns'], use: 'yw' },
-    { fr: 'VFX', en: 'VFX', dfr: 'Particules, Beams et Trails, cercles magiques dessinés en code, reveals et effets de vitesse.', den: 'Particles, Beams and Trails, magic circles drawn in code, reveals and speed effects.', tags: ['ParticleEmitter', 'Beam', 'Trail', 'TweenService'], use: 'ptymw' },
+    { fr: 'Combat', en: 'Combat', dfr: 'Hitbox côté serveur, combos, garde, parade, esquive, armes et pouvoirs avec recharge.', den: 'Server-side hitboxes, combos, block, parry, dodge, weapons and powers with cooldowns.', tags: ['Hitbox', 'Raycast', 'Cooldowns'], use: 'y' },
+    { fr: 'VFX', en: 'VFX', dfr: 'Particules, Beams et Trails, VFX des pouvoirs, reveals et effets de vitesse.', den: 'Particles, Beams and Trails, power VFX, reveals and speed effects.', tags: ['ParticleEmitter', 'Beam', 'Trail', 'TweenService'], use: 'ptym' },
     { fr: 'IA de PNJ', en: 'NPC AI', dfr: 'Ennemis qui patrouillent, repèrent le joueur, le poursuivent et réapparaissent.', den: 'Enemies that patrol, spot the player, chase and respawn.', tags: ['PathfindingService', 'Humanoid'], use: 'y' },
     { fr: 'Interfaces UI/UX', en: 'UI / UX', dfr: 'Menus, boutiques, HUD, tutoriels et aperçus 3D, en code, pour PC, mobile et manette, en plusieurs langues.', den: 'Menus, shops, HUDs, tutorials and 3D previews, in code, for PC, mobile and gamepad, in several languages.', tags: ['ViewportFrame', 'UIScale', 'TweenService'], use: 'ptym' },
     { fr: 'Multijoueur', en: 'Multiplayer', dfr: 'Échanges sécurisés, vols entre joueurs, courses synchronisées pour tout le serveur et arènes PvP, sans faire confiance au client.', den: 'Secure trading, player theft, server-wide synced races and PvP arenas, without trusting the client.', tags: ['RemoteEvent', 'Server authority'], use: 'ptym' },
     { fr: 'Données & monétisation', en: 'Data & monetization', dfr: 'Sauvegardes qui protègent la progression, classements mondiaux, Game Passes et Developer Products.', den: 'Saves that protect player progress, global leaderboards, Game Passes and Developer Products.', tags: ['DataStore', 'ProfileStore', 'OrderedDataStore', 'MarketplaceService'], use: 'ptym' },
     { fr: 'Build & level design', en: 'Building & level design', dfr: 'Cartes entières construites par script, éclairage, ciel et ambiance propres à chaque zone.', den: 'Whole maps built by script, with lighting, sky and mood for each zone.', tags: ['Terrain', 'Lighting', 'Atmosphere'], use: 'ptym' },
-    { fr: 'Caméra & animation', en: 'Camera & animation', dfr: 'Caméras cinématiques scriptées, secousses, ralentis, décor et créatures animés.', den: 'Scripted cinematic cameras, shakes, slow motion, animated sets and creatures.', tags: ['Camera', 'CFrame', 'Motor6D'], use: 'ptymw' },
+    { fr: 'Caméra & animation', en: 'Camera & animation', dfr: 'Caméras cinématiques scriptées, secousses, ralentis, décor et créatures animés.', den: 'Scripted cinematic cameras, shakes, slow motion, animated sets and creatures.', tags: ['Camera', 'CFrame', 'Motor6D'], use: 'ptym' },
     { fr: 'Son & ambiance', en: 'Sound & mood', dfr: 'Musiques par zone, sons de récompense, cycle jour et nuit et météo.', den: 'Music per area, reward sounds, a day and night cycle and weather.', tags: ['SoundService', 'Lighting'], use: 'tm' },
     { fr: 'Événements & live-ops', en: 'Events & live-ops', dfr: 'Événements serveur, saisonniers et quotidiens : arène NEON FLEX, comète géante, Halloween, séries de connexion.', den: 'Server, seasonal and daily events: the NEON FLEX arena, a giant comet, Halloween, login streaks.', tags: ['Events', 'Daily rewards'], use: 'ptym' },
     { fr: 'Tests & outillage', en: 'Testing & tooling', dfr: 'Tests automatiques lancés dans Studio et outil Node.js qui pilote Studio depuis le terminal.', den: 'Automated tests run inside Studio and a Node.js tool that drives Studio from the terminal.', tags: ['Node.js', 'Rojo', 'Git'], use: 'tm' },
@@ -887,7 +838,7 @@ footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: s
     row.className = 'm-row';
     var tags = s.tags.map(function (t) { return '<code>' + t + '</code>'; }).join('');
     var dots = '', used = '';
-    'ptymw'.split('').forEach(function (k) {
+    'ptym'.split('').forEach(function (k) {
       var on = s.use.indexOf(k) >= 0;
       dots += '<i class="' + (on ? 'y' : '') + '" style="--g:' + GAMES[k].color + '" title="' + GAMES[k].name + '"></i>';
       if (on) used += '<span style="--g:' + GAMES[k].color + '">' + GAMES[k].name + '</span>';
